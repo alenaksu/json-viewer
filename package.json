@@ -1,0 +1,14 @@
+{
+  "name": "json-viewer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@webcomponents/custom-elements": "^1.1.0",
+    "tiny-lit": "^1.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1"
+  }
+}

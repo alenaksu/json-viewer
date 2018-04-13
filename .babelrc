@@ -1,0 +1,17 @@
+{
+    "plugins": [
+        "transform-class-properties"
+    ],
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "browsers": [
+                        "IE 9"
+                    ]
+                }
+            }
+        ]
+    ]
+}
