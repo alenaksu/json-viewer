@@ -1,0 +1,69 @@
+json-viewer {
+    white-space-collapse: discard;
+    display: block;
+    background-color: #23241f;
+    color: #f8f8f2;
+    padding: 0.5em;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+json-viewer ul,
+json-viewer li {
+    list-style: none;
+    position: relative;
+}
+
+json-viewer ul:before {
+    content: '';
+    border-left: 1px solid #333;
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+    bottom: 0.5em;
+}
+
+json-viewer ul {
+    padding-left: 1.2em;
+    clear: both;
+}
+
+json-viewer ul.hover:before {
+    border-left: 1px solid #666;
+}
+
+.collapsed ul {
+    display: none;
+}
+
+.key { 
+    color: #f9857b;
+    display: inline-block;
+}
+.key:hover { 
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.string {
+    color: #a3eea0;
+}
+
+.number {
+    color: #d19a66;
+}
+
+.boolean {
+    color: #4ba7ef;
+}
+
+.bracket {
+}
+
+.collapsed {
+    font-size: 10px;
+    background-color: #66d9ef;
+    color: #fff;
+    padding: 0.3em;
+    border-radius: 2px;
+}
