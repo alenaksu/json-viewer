@@ -4,6 +4,12 @@ function getType(obj) {
     return obj === null ? 'null' : Array.isArray(obj) ? 'array' : typeof obj;
 }
 
+function toggleCollapse(key) {
+    return prevState => ({
+        [key]: !prevState[key]
+    })
+}
+
 class ObjectNode extends Element {
      static get is() {
          return 'json-object-node';
@@ -20,6 +26,11 @@ class ObjectNode extends Element {
         })
      }
 
+     handleKeyClick = key => e => {
+         e.preventDefault();
+         this.setState(toggleCollapse(key));
+     }
+
      getTemplate() {
          const { json } = this.state;
 
@@ -30,14 +41,14 @@ class ObjectNode extends Element {
                     <li>
                         <span 
                             class="key" 
-                            onClick=${() => this.setState({ [key]: !this.state[key] }) }>
+                            onClick=${this.handleKeyClick(key)}>
                             "${key}"
                         </span>:
                         ${this.state[key]
                             ? html`<span class="collapsed">...</span>` 
                             : html`${renderNode(json[key])}${index < Object.keys(json).length - 1 ? `, `: null}`
                         }
-                    </li>`
+                    </li>`.withKey(key)
                 ))}
             </ul>
             <span class="bracket">}</span>`;
