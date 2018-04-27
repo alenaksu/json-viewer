@@ -56,8 +56,7 @@ class JsonObjectNode extends Element {
                                     [styles.collapsableCollapsed]: this.state[key]
                                 }
                             ])}
-                            onClick=${isObject(json[key]) && this.handleKeyClick(key)}>
-                            ${isArray ? key : `"${key}"`}
+                            onClick=${isObject(json[key]) && this.handleKeyClick(key)}>${isArray ? key : `"${key}"`}
                         </span>:
                         ${this.state[key]
                             ? html`<span class=${styles.collapsed}>{ ... }</span>` 
