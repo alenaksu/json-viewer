@@ -1,8 +1,17 @@
 json-viewer {
-    white-space-collapse: discard;
+    --background-color: #23241f;
+    --color: #f8f8f2;
+    --string-color: #a3eea0;
+    --number-color: #d19a66;
+    --boolean-color: #4ba7ef;
+    --null-color: #df9cf3;
+    --key-color: #f9857b;
+    --collapsed-color: #fff;
+    --collapsed-background: #66d9ef;
+
     display: block;
-    background-color: #23241f;
-    color: #f8f8f2;
+    background-color: var(--background-color);
+    color: var(--color);
     padding: 0.5em;
     font-family: monospace;
     font-size: 13px;
@@ -36,25 +45,41 @@ json-viewer ul.hover:before {
     display: none;
 }
 
+.null {
+    color: var(--null-color, #df9cf3)
+}
+
 .key { 
-    color: #f9857b;
+    color: var(--key-color);
     display: inline-block;
 }
-.key:hover { 
-    text-decoration: underline;
+
+.collapsable:before {
+    color: var(--color);
+    content: '-';
+}
+
+.collapsable.collapsableCollapsed:before {
+    content: '+';
+}
+
+.collapsable {
     cursor: pointer;
+}
+.collapsable:hover {
+    text-decoration: underline;
 }
 
 .string {
-    color: #a3eea0;
+    color: var(--string-color);
 }
 
 .number {
-    color: #d19a66;
+    color: var(--number-color);
 }
 
 .boolean {
-    color: #4ba7ef;
+    color: var(--boolean-color);
 }
 
 .bracket {
@@ -62,8 +87,8 @@ json-viewer ul.hover:before {
 
 .collapsed {
     font-size: 10px;
-    background-color: #66d9ef;
-    color: #fff;
+    background-color: var(--collapsed-background);
+    color: var(--collapsed-color);
     padding: 0.3em;
     border-radius: 2px;
 }
