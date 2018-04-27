@@ -28,7 +28,8 @@ class JsonObjectNode extends Element {
      connectedCallback() {
         this.setState({
             collapsed: false,
-            json: this.json
+            json: this.json,
+            isArray: this.isarray
         })
      }
 
@@ -38,32 +39,34 @@ class JsonObjectNode extends Element {
      }
 
      getTemplate() {
-         const { json } = this.state;
+         const { json, isArray } = this.state;
 
-         return html`<span class=${styles.bracket}>{</span>
+         const brackets = isArray ? ['[', ']'] : ['{', '}'];
+        
+         return html`<span class=${styles.bracket}>${brackets[0]}</span>
             <ul>
                 ${collection(Object.keys(json), (key, index) => (
                     html`
                     <li>
                         <span 
                             class=${cn([
-                                styles.key,
                                 {
+                                    [styles.key]: !isArray,
                                     [styles.collapsable]: isObject(json[key]),
                                     [styles.collapsableCollapsed]: this.state[key]
                                 }
                             ])}
                             onClick=${isObject(json[key]) && this.handleKeyClick(key)}>
-                            "${key}"
+                            ${isArray ? key : `"${key}"`}
                         </span>:
                         ${this.state[key]
-                            ? html`<span class=${styles.collapsed}>...</span>` 
+                            ? html`<span class=${styles.collapsed}>{ ... }</span>` 
                             : html`${renderNode(json[key])}${index < Object.keys(json).length - 1 ? `, `: null}`
                         }
                     </li>`.withKey(key)
                 ))}
             </ul>
-            <span class=${styles.bracket}>}</span>`;
+            <span class=${styles.bracket}>${brackets[1]}</span>`;
      }
 }
 JsonObjectNode.define();
@@ -79,13 +82,16 @@ function renderNode(node) {
         case 'boolean':
             return html`<span class=${styles.boolean}>${node}</span>`;
         case 'array':
-            return html`<span class=${styles.bracket}>[</span>
-                <ul>
-                    <li>
-                    ${collection(node, (n, index) => (html`${renderNode(n)}${index < node.length - 1 ? html`, `: null}`))}
-                    </li>
-                </ul>
-                <span class=${styles.bracket}>]</span>`;
+            return html`<json-object-node isArray=${'stocazzo'} json=${node}></json-object-node>`; 
+            // return html`<span class=${styles.bracket}>[</span>
+            //     <ul>
+            //         <li>
+            //         ${collection(node, (n, index) => (
+            //             html`${renderNode(n)}${index < node.length - 1 ? html`, `: null}`)
+            //         )}
+            //         </li>
+            //     </ul>
+            //     <span class=${styles.bracket}>]</span>`;
         case 'object':
             return html`<json-object-node json=${node}></json-object-node>`; 
     }
