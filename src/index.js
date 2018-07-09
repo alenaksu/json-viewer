@@ -1,4 +1,4 @@
-import { html, Element, collection } from 'tiny-lit/lib/es5';
+import { html, Element } from 'tiny-lit/lib/es5';
 import cn from 'classnames';
 import styles from './styles.css';
 
@@ -25,11 +25,13 @@ class JsonObjectNode extends Element {
          customElements.define(JsonObjectNode.is, JsonObjectNode);
      }
 
+     json = '';
+
      connectedCallback() {
         this.setState({
             collapsed: false,
             json: this.json,
-            isArray: this.isarray
+            isArray: Array.isArray(this.json)
         })
      }
 
@@ -45,7 +47,7 @@ class JsonObjectNode extends Element {
         
          return html`<span class=${styles.bracket}>${brackets[0]}</span>
             <ul>
-                ${collection(Object.keys(json), (key, index) => (
+                ${Object.keys(json).map((key, index) => (
                     html`
                     <li>
                         <span 
@@ -59,7 +61,7 @@ class JsonObjectNode extends Element {
                             onClick=${isObject(json[key]) && this.handleKeyClick(key)}>${isArray ? key : `"${key}"`}
                         </span>:
                         ${this.state[key]
-                            ? html`<span class=${styles.collapsed}>{ ... }</span>` 
+                            ? html`<span class=${styles.collapsed}>${(Array.isArray(json[key]) ? ['[', ']'] : ['{', '}']).join(' ... ')}</span>` 
                             : html`${renderNode(json[key])}${index < Object.keys(json).length - 1 ? `, `: null}`
                         }
                     </li>`.withKey(key)
@@ -81,16 +83,7 @@ function renderNode(node) {
         case 'boolean':
             return html`<span class=${styles.boolean}>${node}</span>`;
         case 'array':
-            return html`<json-object-node isArray=${'stocazzo'} json=${node}></json-object-node>`; 
-            // return html`<span class=${styles.bracket}>[</span>
-            //     <ul>
-            //         <li>
-            //         ${collection(node, (n, index) => (
-            //             html`${renderNode(n)}${index < node.length - 1 ? html`, `: null}`)
-            //         )}
-            //         </li>
-            //     </ul>
-            //     <span class=${styles.bracket}>]</span>`;
+            return html`<json-object-node json=${node}></json-object-node>`; 
         case 'object':
             return html`<json-object-node json=${node}></json-object-node>`; 
     }

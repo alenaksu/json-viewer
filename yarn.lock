@@ -528,11 +528,9 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-tiny-lit@^1.2.3:
-  version "1.2.3"
-  resolved "http://sinopia.rete.farm:4873/tiny-lit/-/tiny-lit-1.2.3.tgz#1e2ed58fae1c6a29af2814b14db421baa792267a"
-  dependencies:
-    typescript "^2.7.1"
+tiny-lit@^1.3.2:
+  version "1.3.2"
+  resolved "http://sinopia.rete.farm:4873/tiny-lit/-/tiny-lit-1.3.2.tgz#9daffcba8926d75f0b3ec5cb820441dd8e34cb85"
 
 to-fast-properties@^1.0.3:
   version "1.0.3"
@@ -541,7 +539,3 @@ to-fast-properties@^1.0.3:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "http://sinopia.rete.farm:4873/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
-
-typescript@^2.7.1:
-  version "2.8.3"
-  resolved "http://sinopia.rete.farm:4873/typescript/-/typescript-2.8.3.tgz#5d817f9b6f31bb871835f4edf0089f21abe6c170"

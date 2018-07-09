@@ -50,12 +50,14 @@ json-viewer ul.hover:before {
 }
 
 .key { 
-    color: var(--key-color);
+    color: var(--key-color, #f9857b);
     display: inline-block;
 }
 
 .collapsable:before {
     color: var(--color);
+    padding-right: 5px;
+    padding-left: 5px;
     content: '-';
 }
 
@@ -67,7 +69,8 @@ json-viewer ul.hover:before {
     cursor: pointer;
 }
 .collapsable:hover {
-    text-decoration: underline;
+    color: white;
+    background-color: var(--collapsed-background);
 }
 
 .string {
