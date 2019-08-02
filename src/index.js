@@ -1,117 +1,129 @@
-import { html, Element } from 'tiny-lit/lib/es5';
+import { Element as TinyElement } from '@tiny-lit/element';
+import { html } from '@tiny-lit/core';
 import cn from 'classnames';
 import styles from './styles.css';
+import { getType, isPrimitive, JsonObject, generateNodePreview } from './utils';
 
-function getType(obj) {
-    return obj === null ? 'null' : Array.isArray(obj) ? 'array' : typeof obj;
-}
+const ObjectKey = ({ isCollapsable, collapsed, onClick, key }) => html`
+    <span
+        class=${cn([
+            {
+                [styles.key]: key,
+                [styles.collapsable]: isCollapsable,
+                [styles.collapsableCollapsed]: collapsed
+            }
+        ])}
+        onClick=${onClick}
+    >
+        ${key}:
+    </span>
+`;
 
-function isObject(obj) {
-    return obj !== null && typeof obj === 'object';
-}
+class JsonNestedObjectNode extends TinyElement {
+    data = null;
+    collapsed = true;
 
-function toggleCollapse(key) {
-    return prevState => ({
-        [key]: !prevState[key]
-    })
-}
+    static get properties() {
+        return {
+            data: JsonObject,
+            collapsed: Boolean,
+            key: String
+        };
+    }
 
-class JsonObjectNode extends Element {
-     static get is() {
-         return 'json-object-node';
-     }
+    static get is() {
+        return 'json-nested-object-node';
+    }
 
-     static define() {
-         customElements.define(JsonObjectNode.is, JsonObjectNode);
-     }
+    handleKeyClick = e => {
+        e.preventDefault();
+        this.collapsed = !this.collapsed;
+    };
 
-     json = '';
+    renderValue(node) {
+        const type = getType(node);
 
-     connectedCallback() {
-        this.setState({
-            collapsed: false,
-            json: this.json,
-            isArray: Array.isArray(this.json)
-        })
-     }
+        return html`
+            <span class=${styles[type]}>${JSON.stringify(node)}</span>
+        `;
+    }
 
-     handleKeyClick = key => e => {
-         e.preventDefault();
-         this.setState(toggleCollapse(key));
-     }
+    renderChild(node) {
+        return this.collapsed
+            ? html`
+                  <span class=${styles.preview}>
+                      ${generateNodePreview(node)}
+                  </span>
+              `
+            : html`
+                  <json-object-node data=${node}></json-object-node>
+              `;
+    }
 
-     getTemplate() {
-         const { json, isArray } = this.state;
+    render() {
+        const { data, key } = this;
 
-         const brackets = isArray ? ['[', ']'] : ['{', '}'];
-        
-         return html`<span class=${styles.bracket}>${brackets[0]}</span>
-            <ul>
-                ${Object.keys(json).map((key, index) => (
-                    html`
-                    <li>
-                        <span 
-                            class=${cn([
-                                {
-                                    [styles.key]: !isArray,
-                                    [styles.collapsable]: isObject(json[key]),
-                                    [styles.collapsableCollapsed]: this.state[key]
-                                }
-                            ])}
-                            onClick=${isObject(json[key]) && this.handleKeyClick(key)}>${isArray ? key : `"${key}"`}
-                        </span>:
-                        ${this.state[key]
-                            ? html`<span class=${styles.collapsed}>${(Array.isArray(json[key]) ? ['[', ']'] : ['{', '}']).join(' ... ')}</span>` 
-                            : html`${renderNode(json[key])}${index < Object.keys(json).length - 1 ? `, `: null}`
-                        }
-                    </li>`.withKey(key)
-                ))}
-            </ul>
-            <span class=${styles.bracket}>${brackets[1]}</span>`;
-     }
-}
-JsonObjectNode.define();
-
-function renderNode(node) {
-    switch(getType(node)) {
-        case 'null':
-            return html`<span class=${styles.null}>null</span>`;
-        case 'string':
-            return html`<span class=${styles.string}>"${node}"</span>`;
-        case 'number':
-            return html`<span class=${styles.number}>${node}</span>`;
-        case 'boolean':
-            return html`<span class=${styles.boolean}>${node}</span>`;
-        case 'array':
-            return html`<json-object-node json=${node}></json-object-node>`; 
-        case 'object':
-            return html`<json-object-node json=${node}></json-object-node>`; 
+        return html`
+            ${ObjectKey({
+                isCollapsable: !isPrimitive(data),
+                collapsed: this.collapsed,
+                key,
+                onClick: !isPrimitive(data) && this.handleKeyClick
+            })}
+            ${isPrimitive(data) ? this.renderValue(data) : this.renderChild(data)}
+        `;
     }
 }
 
-class JsonViewer extends Element {
-    state = {
-        json: null
-    };
+class JsonObjectNode extends TinyElement {
+    data = null;
+    collapsed = true;
+
+    static get is() {
+        return 'json-object-node';
+    }
+
+    static get properties() {
+        return {
+            data: JsonObject,
+            collapsed: Boolean
+        };
+    }
+
+    render() {
+        const { data } = this;
+
+        return html`
+            <ul>
+                ${Object.keys(data).map(key =>
+                    html`
+                        <li><json-nested-object-node key=${key} data=${data[key]}></json-nested-object-node></li>
+                    `.withKey(key)
+                )}
+            </ul>
+        `;
+    }
+}
+
+class JsonViewer extends TinyElement {
+    json = null;
 
     static get is() {
         return 'json-viewer';
     }
 
     connectedCallback() {
-        const json = JSON.parse(this.innerText);
-        this.innerHTML = '';
-        this.setState({ json });
+        this.data = JSON.parse(this.innerText);
+
+        super.connectedCallback();
     }
 
-    getTemplate() {
+    render() {
         return html`
-            <ul>
-                <li>
-                    ${renderNode(this.state.json)}
-                </li>
-            </ul>
-        `
+            <json-object-node data=${this.data}></json-object-node>
+        `;
     }
 }
+customElements.define(JsonObjectNode.is, JsonObjectNode);
+customElements.define(JsonNestedObjectNode.is, JsonNestedObjectNode);
 customElements.define(JsonViewer.is, JsonViewer);
