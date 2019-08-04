@@ -5,10 +5,23 @@
     "main": "build/index.js",
     "source": "src/index.js",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alenaksu/json-viewer.git"
+    },
+    "keywords": [
+        "json",
+        "viewer",
+        "webcomponents"
+    ],
+    "author": "alenaksu",
+    "bugs": {
+        "url": "https://github.com/alenaksu/json-viewer/issues"
+    },
     "scripts": {
         "start": "parcel ./index.html",
         "build": "rm -rf dist && rollup -c rollup.config.js",
-        "demo": "rm -rf docs/ && parcel build index.html -d docs/"
+        "demo": "rm -rf docs/ && parcel build index.html --public-url /json-viewer/ -d docs/"
     },
     "dependencies": {
         "@tiny-lit/element": "^2.0.0-alpha.0",
