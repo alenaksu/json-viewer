@@ -9,7 +9,9 @@ export function isPrimitive(obj) {
 export function JsonObject(obj) {
     try {
         if (typeof obj === 'string') return JSON.parse(obj);
-    } catch (ex) {}
+    } catch (ex) {
+        console.error(ex);
+    }
     return obj;
 }
 
