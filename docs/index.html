@@ -1,22 +1,21 @@
 <html>
     <head>
-        <!-- <link rel="stylesheet" href="./src/styles.css"> -->
-        <script src="node_modules/@webcomponents/custom-elements/src/native-shim.js"></script>
-
+        <script src="/native-shim.7777f102.js"></script>
         <style>
-            html, body {
+            body,
+            html {
                 margin: 0;
+            }
+            .container,
+            body,
+            html {
                 height: 100%;
                 width: 100%;
             }
-
             .container {
                 display: flex;
                 flex-direction: row;
-                height: 100%;
-                width: 100%;
             }
-
             .panel {
                 width: 50%;
                 padding: 20px;
@@ -28,7 +27,6 @@
             }
         </style>
     </head>
-
     <body>
         <div class="container">
             <div class="panel">
@@ -42,23 +40,23 @@ Bulls", "Los Angeles Kings", "Golden State Warriros", "Huston Rocket" ], "answer
             </div>
             <div class="panel">
                 <json-viewer>
-{ "quiz": { "sport": { "q1": { "question": "Which one is correct team name in NBA?", "options": [ "New York
-Bulls", "Los Angeles Kings", "Golden State Warriros", "Huston Rocket" ], "answer": "Huston Rocket" } },
-"maths": { "q1": { "question": "5 + 7 = ?", "options": [ "10", "11", "12", "13" ], "answer": "12" }, "q2": {
-"question": "12 - 8 = ?", "options": [ "1", "2", "3", "4" ], "answer": "4" } } } }
+                    { "quiz": { "sport": { "q1": { "question": "Which one is correct team name in NBA?", "options": [
+                    "New York Bulls", "Los Angeles Kings", "Golden State Warriros", "Huston Rocket" ], "answer": "Huston
+                    Rocket" } }, "maths": { "q1": { "question": "5 + 7 = ?", "options": [ "10", "11", "12", "13" ],
+                    "answer": "12" }, "q2": { "question": "12 - 8 = ?", "options": [ "1", "2", "3", "4" ], "answer": "4"
+                    } } } }
                 </json-viewer>
             </div>
-        <script src="./src/index.js"></script>
-        <script>
-            (() => {
-                const json = document.querySelector('#json');
-                const viewer = document.querySelector('json-viewer');
-                const button = document.querySelector('button');
-
-                button.addEventListener('click', () => {
-                    viewer.data = JSON.parse(json.value);
-                })
-            })();
-        </script>
+            <script src="/src.e0230378.js"></script>
+            <script>
+                (() => {
+                    const e = document.querySelector('#json'),
+                        t = document.querySelector('json-viewer');
+                    document.querySelector('button').addEventListener('click', () => {
+                        t.data = JSON.parse(e.value);
+                    });
+                })();
+            </script>
+        </div>
     </body>
 </html>
