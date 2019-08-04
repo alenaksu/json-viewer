@@ -1,16 +1,20 @@
 {
     "name": "@alenaksu/json-viewer",
     "version": "0.0.0",
-    "main": "index.js",
+    "module": "build/index.js",
+    "main": "build/index.js",
     "source": "src/index.js",
     "license": "MIT",
     "scripts": {
-        "start": "parcel ./index.html"
+        "start": "parcel ./index.html",
+        "build": "rm -rf dist && rollup -c rollup.config.js",
+        "demo": "rm -rf docs/ && parcel build index.html -d docs/"
     },
     "dependencies": {
         "@tiny-lit/element": "^2.0.0-alpha.0",
         "@webcomponents/custom-elements": "^1.1.0",
-        "classnames": "^2.2.5"
+        "classnames": "^2.2.5",
+        "rollup-plugin-node-resolve": "^5.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
@@ -20,7 +24,9 @@
         "parcel-bundler": "^1.12.3",
         "postcss-modules": "^1.1.0",
         "prettier": "^1.18.2",
-        "pretty-quick": "^1.11.1"
+        "pretty-quick": "^1.11.1",
+        "rollup": "^1.18.0",
+        "rollup-plugin-babel": "^4.3.3"
     },
     "husky": {
         "hooks": {
