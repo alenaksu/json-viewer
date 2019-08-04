@@ -904,7 +904,6 @@ parcelRequire = (function(e, r, t, n) {
                     padding-top: 0.25rem;
                     margin-left: 1.5rem;
                     padding-left: 0px;
-                    white-space: nowrap;
                 }
 
                 ul:before {
@@ -933,4 +932,4 @@ parcelRequire = (function(e, r, t, n) {
     ['H99C'],
     null
 );
-//# sourceMappingURL=/json-viewer/src.e0230378.js.map
+//# sourceMappingURL=/json-viewer/src.a2fd150f.js.map
