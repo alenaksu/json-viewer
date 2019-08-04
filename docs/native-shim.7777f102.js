@@ -84,4 +84,4 @@ parcelRequire = (function(e, r, t, n) {
     ['wW0Y'],
     null
 );
-//# sourceMappingURL=/native-shim.7777f102.js.map
+//# sourceMappingURL=/json-viewer/native-shim.7777f102.js.map
