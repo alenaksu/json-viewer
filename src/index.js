@@ -227,7 +227,6 @@ class JsonViewer extends TinyElement {
                     padding-top: 0.25rem;
                     margin-left: 1.5rem;
                     padding-left: 0px;
-                    white-space: nowrap;
                 }
 
                 ul:before {
