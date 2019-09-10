@@ -1,17 +1,10 @@
 import { Element as TinyElement } from '@tiny-lit/element';
 import { html } from '@tiny-lit/core';
-import cn from 'classnames';
-import { getType, isPrimitive, JsonObject, generateNodePreview } from './utils';
+import { getType, isPrimitive, JsonObject, generateNodePreview, isNode, classNames } from './utils';
 
 const ObjectKey = ({ isCollapsable, collapsed, onClick, key }) => html`
     <span
-        class=${cn([
-            {
-                key: key,
-                collapsable: isCollapsable,
-                collapsableCollapsed: collapsed
-            }
-        ])}
+        class=${classNames(key && 'key', isCollapsable && 'collapsable', collapsed && 'collapsableCollapsed')}
         onClick=${onClick}
     >
         ${key}:
@@ -40,11 +33,11 @@ class JsonNestedObjectNode extends TinyElement {
     };
 
     renderValue(node) {
-        const type = getType(node);
-
-        return html`
-            <span class=${type}>${JSON.stringify(node)}</span>
-        `;
+        return isNode(node)
+            ? node
+            : html`
+                  <span class=${getType(node)}>${JSON.stringify(node)}</span>
+              `;
     }
 
     renderChild(node) {
@@ -61,15 +54,16 @@ class JsonNestedObjectNode extends TinyElement {
 
     render() {
         const { data, key } = this;
+        const isPrimitiveOrNode = isPrimitive(data) || isNode(data);
 
         return html`
             ${ObjectKey({
-                isCollapsable: !isPrimitive(data),
+                isCollapsable: !isPrimitiveOrNode,
                 collapsed: this.collapsed,
                 key,
-                onClick: !isPrimitive(data) && this.handleKeyClick
+                onClick: !isPrimitiveOrNode && this.handleKeyClick
             })}
-            ${isPrimitive(data) ? this.renderValue(data) : this.renderChild(data)}
+            ${isPrimitiveOrNode ? this.renderValue(data) : this.renderChild(data)}
         `;
     }
 }
@@ -107,8 +101,7 @@ class JsonObjectNode extends TinyElement {
 }
 
 class JsonViewer extends TinyElement {
-    json = null;
-    data = '';
+    data = null;
 
     static get is() {
         return 'json-viewer';
@@ -121,10 +114,10 @@ class JsonViewer extends TinyElement {
     }
 
     connectedCallback() {
-        const data = JSON.parse(this.innerText);
+        const json = this.innerText.trim();
+        if (json) this.data = JSON.parse(json);
 
         this.attachShadow({ mode: 'open' });
-        this.data = data;
 
         super.connectedCallback();
     }
