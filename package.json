@@ -26,11 +26,10 @@
     "dependencies": {
         "@tiny-lit/element": "^2.0.0-alpha.0",
         "@webcomponents/custom-elements": "^1.1.0",
-        "classnames": "^2.2.5",
         "rollup-plugin-node-resolve": "^5.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.5.5",
+        "@babel/core": "^7.6.0",
         "@babel/plugin-proposal-class-properties": "^7.5.5",
         "@babel/preset-env": "^7.5.5",
         "husky": "^3.0.2",
