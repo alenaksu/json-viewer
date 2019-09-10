@@ -1,3 +1,5 @@
+import { isTemplate } from '@tiny-lit/core/dist/esm/utils';
+
 export function getType(obj) {
     return obj === null ? 'null' : Array.isArray(obj) ? 'array' : typeof obj;
 }
@@ -6,11 +8,19 @@ export function isPrimitive(obj) {
     return obj !== Object(obj);
 }
 
+export function isNode(obj) {
+    return !!obj && (!!obj.nodeType || isTemplate(obj));
+}
+
 export function JsonObject(obj) {
     try {
         if (typeof obj === 'string') return JSON.parse(obj);
     } catch (ex) {}
     return obj;
+}
+
+export function classNames(...classes) {
+    return classes.filter(Boolean).join(' ');
 }
 
 export function generateNodePreview(node, options) {

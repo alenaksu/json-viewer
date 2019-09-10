@@ -12,5 +12,32 @@
             "question": "12 - 8 = ?", "options": [ "1", "2", "3", "4" ], "answer": "4" } } } }
         </json-viewer>
         <script src="./src/index.js"></script>
+
+        <script>
+            const s = document.createElement('span');
+
+            s.innerHTML = `<s>pippo</s> ==> pluto`;
+
+            const viewer = document.querySelector('json-viewer');
+            viewer.data = {
+                quiz: {
+                    sport: {
+                        q1: {
+                            question: 'Which one is correct team name in NBA?',
+                            options: ['New York Bulls', 'Los Angeles Kings', 'Golden State Warriros', 'Huston Rocket'],
+                            answer: s
+                        }
+                    },
+                    maths: {
+                        q1: { question: '5 + 7 = ?', options: ['10', '11', '12', '13'], answer: '12' },
+                        q2: {
+                            question: '12 - 8 = ?',
+                            options: ['1', '2', '3', '4'],
+                            answer: '4'
+                        }
+                    }
+                }
+            };
+        </script>
     </body>
 </html>

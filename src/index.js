@@ -1,18 +1,15 @@
 import { Element as TinyElement } from '@tiny-lit/element';
 import { html } from '@tiny-lit/core';
-import cn from 'classnames';
 import styles from './styles.css';
-import { getType, isPrimitive, JsonObject, generateNodePreview } from './utils';
+import { getType, isPrimitive, JsonObject, generateNodePreview, isNode, classNames } from './utils';
 
 const ObjectKey = ({ isCollapsable, collapsed, onClick, key }) => html`
     <span
-        class=${cn([
-            {
-                [styles.key]: key,
-                [styles.collapsable]: isCollapsable,
-                [styles.collapsableCollapsed]: collapsed
-            }
-        ])}
+        class=${classNames(
+            key && styles.key,
+            isCollapsable && styles.collapsable,
+            collapsed && styles.collapsableCollapsed
+        )}
         onClick=${onClick}
     >
         ${key}:
@@ -41,11 +38,11 @@ class JsonNestedObjectNode extends TinyElement {
     };
 
     renderValue(node) {
-        const type = getType(node);
-
-        return html`
-            <span class=${styles[type]}>${JSON.stringify(node)}</span>
-        `;
+        return isNode(node)
+            ? node
+            : html`
+                  <span class=${styles[getType(node)]}>${JSON.stringify(node)}</span>
+              `;
     }
 
     renderChild(node) {
@@ -62,15 +59,16 @@ class JsonNestedObjectNode extends TinyElement {
 
     render() {
         const { data, key } = this;
+        const isPrimitiveOrNode = isPrimitive(data) || isNode(data);
 
         return html`
             ${ObjectKey({
-                isCollapsable: !isPrimitive(data),
+                isCollapsable: !isPrimitiveOrNode,
                 collapsed: this.collapsed,
                 key,
-                onClick: !isPrimitive(data) && this.handleKeyClick
+                onClick: !isPrimitiveOrNode && this.handleKeyClick
             })}
-            ${isPrimitive(data) ? this.renderValue(data) : this.renderChild(data)}
+            ${isPrimitiveOrNode ? this.renderValue(data) : this.renderChild(data)}
         `;
     }
 }
@@ -106,14 +104,22 @@ class JsonObjectNode extends TinyElement {
 }
 
 class JsonViewer extends TinyElement {
-    json = null;
+    data = null;
 
     static get is() {
         return 'json-viewer';
     }
 
+    static get properties() {
+        return {
+            data: JsonObject
+        };
+    }
+
     connectedCallback() {
-        this.data = JSON.parse(this.innerText);
+        const json = this.innerText.trim();
+
+        if (json) this.data = JSON.parse(json);
 
         super.connectedCallback();
     }
