@@ -1,6 +1,6 @@
 import { Element } from '@tiny-lit/element';
 import { html } from '@tiny-lit/core';
-import cn from 'classnames';
+import { isTemplate } from '@tiny-lit/core/dist/esm/utils';
 
 function _extends() {
     _extends =
@@ -37,6 +37,9 @@ function getType(obj) {
 function isPrimitive(obj) {
     return obj !== Object(obj);
 }
+function isNode(obj) {
+    return !!obj && (!!obj.nodeType || isTemplate(obj));
+}
 function JsonObject(obj) {
     try {
         if (typeof obj === 'string') return JSON.parse(obj);
@@ -45,6 +48,13 @@ function JsonObject(obj) {
     }
 
     return obj;
+}
+function classNames() {
+    for (var _len = arguments.length, classes = new Array(_len), _key = 0; _key < _len; _key++) {
+        classes[_key] = arguments[_key];
+    }
+
+    return classes.filter(Boolean).join(' ');
 }
 function generateNodePreview(node, options) {
     var { nodeCount, maxLength } = _extends(
@@ -156,7 +166,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-    var data = _taggedTemplateLiteralLoose(['\n            <span class=', '>', '</span>\n        ']);
+    var data = _taggedTemplateLiteralLoose(['\n                  <span class=', '>', '</span>\n              ']);
 
     _templateObject2 = function _templateObject2() {
         return data;
@@ -184,13 +194,7 @@ var ObjectKey = _ref => {
     var { isCollapsable, collapsed, onClick, key } = _ref;
     return html(
         _templateObject(),
-        cn([
-            {
-                key: key,
-                collapsable: isCollapsable,
-                collapsableCollapsed: collapsed
-            }
-        ]),
+        classNames(key && 'key', isCollapsable && 'collapsable', collapsed && 'collapsableCollapsed'),
         onClick,
         key
     );
@@ -221,8 +225,7 @@ class JsonNestedObjectNode extends Element {
     }
 
     renderValue(node) {
-        var type = getType(node);
-        return html(_templateObject2(), type, JSON.stringify(node));
+        return isNode(node) ? node : html(_templateObject2(), getType(node), JSON.stringify(node));
     }
 
     renderChild(node) {
@@ -231,15 +234,16 @@ class JsonNestedObjectNode extends Element {
 
     render() {
         var { data, key } = this;
+        var isPrimitiveOrNode = isPrimitive(data) || isNode(data);
         return html(
             _templateObject5(),
             ObjectKey({
-                isCollapsable: !isPrimitive(data),
+                isCollapsable: !isPrimitiveOrNode,
                 collapsed: this.collapsed,
                 key,
-                onClick: !isPrimitive(data) && this.handleKeyClick
+                onClick: !isPrimitiveOrNode && this.handleKeyClick
             }),
-            isPrimitive(data) ? this.renderValue(data) : this.renderChild(data)
+            isPrimitiveOrNode ? this.renderValue(data) : this.renderChild(data)
         );
     }
 }
@@ -274,8 +278,7 @@ class JsonObjectNode extends Element {
 class JsonViewer extends Element {
     constructor() {
         super(...arguments);
-        this.json = null;
-        this.data = '';
+        this.data = null;
     }
 
     static get is() {
@@ -289,11 +292,11 @@ class JsonViewer extends Element {
     }
 
     connectedCallback() {
-        var data = JSON.parse(this.innerText);
+        var json = this.innerText.trim();
+        if (json) this.data = JSON.parse(json);
         this.attachShadow({
             mode: 'open'
         });
-        this.data = data;
         super.connectedCallback();
     }
 

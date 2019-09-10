@@ -580,42 +580,18 @@ parcelRequire = (function(e, r, t, n) {
             },
             { './Element': '1r+i', './withProps': '+8EU', './withElement': '6Let' }
         ],
-        G1XI: [
-            function(require, module, exports) {
-                var define;
-                var e;
-                !(function() {
-                    'use strict';
-                    var r = {}.hasOwnProperty;
-                    function n() {
-                        for (var e = [], t = 0; t < arguments.length; t++) {
-                            var o = arguments[t];
-                            if (o) {
-                                var a = typeof o;
-                                if ('string' === a || 'number' === a) e.push(o);
-                                else if (Array.isArray(o) && o.length) {
-                                    var s = n.apply(null, o);
-                                    s && e.push(s);
-                                } else if ('object' === a) for (var u in o) r.call(o, u) && o[u] && e.push(u);
-                            }
-                        }
-                        return e.join(' ');
-                    }
-                    'undefined' != typeof module && module.exports
-                        ? ((n.default = n), (module.exports = n))
-                        : 'function' == typeof e && 'object' == typeof e.amd && e.amd
-                        ? e('classnames', [], function() {
-                              return n;
-                          })
-                        : (window.classNames = n);
-                })();
-            },
-            {}
-        ],
         K0yk: [
             function(require, module, exports) {
                 'use strict';
-                function e(e, r) {
+                Object.defineProperty(exports, '__esModule', { value: !0 }),
+                    (exports.getType = o),
+                    (exports.isPrimitive = i),
+                    (exports.isNode = s),
+                    (exports.JsonObject = u),
+                    (exports.classNames = c),
+                    (exports.generateNodePreview = p);
+                var e = require('@tiny-lit/core/dist/esm/utils');
+                function r(e, r) {
                     var t = Object.keys(e);
                     if (Object.getOwnPropertySymbols) {
                         var n = Object.getOwnPropertySymbols(e);
@@ -627,22 +603,22 @@ parcelRequire = (function(e, r, t, n) {
                     }
                     return t;
                 }
-                function r(r) {
-                    for (var n = 1; n < arguments.length; n++) {
-                        var o = null != arguments[n] ? arguments[n] : {};
-                        n % 2
-                            ? e(o, !0).forEach(function(e) {
-                                  t(r, e, o[e]);
+                function t(e) {
+                    for (var t = 1; t < arguments.length; t++) {
+                        var o = null != arguments[t] ? arguments[t] : {};
+                        t % 2
+                            ? r(o, !0).forEach(function(r) {
+                                  n(e, r, o[r]);
                               })
                             : Object.getOwnPropertyDescriptors
-                            ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(o))
-                            : e(o).forEach(function(e) {
-                                  Object.defineProperty(r, e, Object.getOwnPropertyDescriptor(o, e));
+                            ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(o))
+                            : r(o).forEach(function(r) {
+                                  Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(o, r));
                               });
                     }
-                    return r;
+                    return e;
                 }
-                function t(e, r, t) {
+                function n(e, r, t) {
                     return (
                         r in e
                             ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 })
@@ -650,11 +626,14 @@ parcelRequire = (function(e, r, t, n) {
                         e
                     );
                 }
-                function n(e) {
+                function o(e) {
                     return null === e ? 'null' : Array.isArray(e) ? 'array' : typeof e;
                 }
-                function o(e) {
+                function i(e) {
                     return e !== Object(e);
+                }
+                function s(r) {
+                    return !!r && (!!r.nodeType || (0, e.isTemplate)(r));
                 }
                 function u(e) {
                     try {
@@ -664,65 +643,59 @@ parcelRequire = (function(e, r, t, n) {
                     }
                     return e;
                 }
-                function c(e, t) {
-                    const { nodeCount: o, maxLength: u } = r({ nodeCount: 3, maxLength: 15 }, t),
-                        c = Array.isArray(e),
-                        i = Object.keys(e),
-                        s = i.slice(0, o),
-                        p = [c ? '[ ' : '{ '];
+                function c(...e) {
+                    return e.filter(Boolean).join(' ');
+                }
+                function p(e, r) {
+                    const { nodeCount: n, maxLength: i } = t({ nodeCount: 3, maxLength: 15 }, r),
+                        s = Array.isArray(e),
+                        u = Object.keys(e),
+                        c = u.slice(0, n),
+                        p = [s ? '[ ' : '{ '];
                     return (
                         p.push(
-                            s
+                            c
                                 .reduce((r, t) => {
-                                    const o = [],
-                                        i = e[t],
-                                        s = n(i);
+                                    const n = [],
+                                        u = e[t],
+                                        c = o(u);
                                     return (
-                                        c || o.push(`${t}: `),
-                                        'object' === s
-                                            ? o.push('{ ... }')
-                                            : 'array' === s
-                                            ? o.push('[ ... ]')
-                                            : 'string' === s
-                                            ? o.push(`"${i.substring(0, u)}${i.length > u ? '...' : ''}"`)
-                                            : o.push(String(i)),
-                                        r.concat(o.join(''))
+                                        s || n.push(`${t}: `),
+                                        'object' === c
+                                            ? n.push('{ ... }')
+                                            : 'array' === c
+                                            ? n.push('[ ... ]')
+                                            : 'string' === c
+                                            ? n.push(`"${u.substring(0, i)}${u.length > i ? '...' : ''}"`)
+                                            : n.push(String(u)),
+                                        r.concat(n.join(''))
                                     );
                                 }, [])
                                 .join(', ')
                         ),
-                        i.length > o && p.push(', ...'),
-                        p.push(c ? ' ]' : ' }'),
+                        u.length > n && p.push(', ...'),
+                        p.push(s ? ' ]' : ' }'),
                         p.join('')
                     );
                 }
-                Object.defineProperty(exports, '__esModule', { value: !0 }),
-                    (exports.getType = n),
-                    (exports.isPrimitive = o),
-                    (exports.JsonObject = u),
-                    (exports.generateNodePreview = c);
             },
-            {}
+            { '@tiny-lit/core/dist/esm/utils': 'MrFm' }
         ],
         H99C: [
             function(require, module, exports) {
                 'use strict';
                 var e = require('@tiny-lit/element'),
                     o = require('@tiny-lit/core'),
-                    l = r(require('classnames')),
-                    t = require('./utils');
-                function r(e) {
-                    return e && e.__esModule ? e : { default: e };
-                }
-                const s = ({ isCollapsable: e, collapsed: t, onClick: r, key: s }) => o.html`
+                    l = require('./utils');
+                const t = ({ isCollapsable: e, collapsed: t, onClick: r, key: s }) => o.html`
     <span
-        class=${(0, l.default)([{ key: s, collapsable: e, collapsableCollapsed: t }])}
+        class=${(0, l.classNames)(s && 'key', e && 'collapsable', t && 'collapsableCollapsed')}
         onClick=${r}
     >
         ${s}:
     </span>
 `;
-                class a extends e.Element {
+                class r extends e.Element {
                     constructor(...e) {
                         super(...e),
                             (this.data = null),
@@ -732,22 +705,23 @@ parcelRequire = (function(e, r, t, n) {
                             });
                     }
                     static get properties() {
-                        return { data: t.JsonObject, collapsed: Boolean, key: String };
+                        return { data: l.JsonObject, collapsed: Boolean, key: String };
                     }
                     static get is() {
                         return 'json-nested-object-node';
                     }
                     renderValue(e) {
-                        const l = (0, t.getType)(e);
-                        return o.html`
-            <span class=${l}>${JSON.stringify(e)}</span>
-        `;
+                        return (0, l.isNode)(e)
+                            ? e
+                            : o.html`
+                  <span class=${(0, l.getType)(e)}>${JSON.stringify(e)}</span>
+              `;
                     }
                     renderChild(e) {
                         return this.collapsed
                             ? o.html`
                   <span class="preview">
-                      ${(0, t.generateNodePreview)(e)}
+                      ${(0, l.generateNodePreview)(e)}
                   </span>
               `
                             : o.html`
@@ -755,19 +729,15 @@ parcelRequire = (function(e, r, t, n) {
               `;
                     }
                     render() {
-                        const { data: e, key: l } = this;
+                        const { data: e, key: r } = this,
+                            s = (0, l.isPrimitive)(e) || (0, l.isNode)(e);
                         return o.html`
-            ${s({
-                isCollapsable: !(0, t.isPrimitive)(e),
-                collapsed: this.collapsed,
-                key: l,
-                onClick: !(0, t.isPrimitive)(e) && this.handleKeyClick
-            })}
-            ${(0, t.isPrimitive)(e) ? this.renderValue(e) : this.renderChild(e)}
+            ${t({ isCollapsable: !s, collapsed: this.collapsed, key: r, onClick: !s && this.handleKeyClick })}
+            ${s ? this.renderValue(e) : this.renderChild(e)}
         `;
                     }
                 }
-                class n extends e.Element {
+                class s extends e.Element {
                     constructor(...e) {
                         super(...e), (this.data = null), (this.collapsed = !0);
                     }
@@ -775,7 +745,7 @@ parcelRequire = (function(e, r, t, n) {
                         return 'json-object-node';
                     }
                     static get properties() {
-                        return { data: t.JsonObject, collapsed: Boolean };
+                        return { data: l.JsonObject, collapsed: Boolean };
                     }
                     render() {
                         const { data: e } = this;
@@ -792,19 +762,21 @@ parcelRequire = (function(e, r, t, n) {
         `;
                     }
                 }
-                class i extends e.Element {
+                class a extends e.Element {
                     constructor(...e) {
-                        super(...e), (this.json = null), (this.data = '');
+                        super(...e), (this.data = null);
                     }
                     static get is() {
                         return 'json-viewer';
                     }
                     static get properties() {
-                        return { data: t.JsonObject };
+                        return { data: l.JsonObject };
                     }
                     connectedCallback() {
-                        const e = JSON.parse(this.innerText);
-                        this.attachShadow({ mode: 'open' }), (this.data = e), super.connectedCallback();
+                        const e = this.innerText.trim();
+                        e && (this.data = JSON.parse(e)),
+                            this.attachShadow({ mode: 'open' }),
+                            super.connectedCallback();
                     }
                     render() {
                         return o.html`
@@ -923,13 +895,13 @@ parcelRequire = (function(e, r, t, n) {
         `;
                     }
                 }
-                customElements.define(n.is, n), customElements.define(a.is, a), customElements.define(i.is, i);
+                customElements.define(s.is, s), customElements.define(r.is, r), customElements.define(a.is, a);
             },
-            { '@tiny-lit/element': 'aqGt', '@tiny-lit/core': 'gjkP', classnames: 'G1XI', './utils': 'K0yk' }
+            { '@tiny-lit/element': 'aqGt', '@tiny-lit/core': 'gjkP', './utils': 'K0yk' }
         ]
     },
     {},
     ['H99C'],
     null
 );
-//# sourceMappingURL=/json-viewer/src.a2fd150f.js.map
+//# sourceMappingURL=/json-viewer/src.7c4c900b.js.map
