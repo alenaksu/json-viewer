@@ -1,4 +1,45 @@
-# Usage
+[![GitHub release](https://img.shields.io/github/v/release/alenaksu/json-viewer.svg)](https://github.com/alenaksu/json-viewer/releases)
+[![npm](https://badgen.net/npm/v/@alenaksu/json-viewer)](https://www.npmjs.com/package/@alenaksu/json-viewer)
+[![downloads](https://badgen.net/npm/dt/@alenaksu/json-viewer)](https://www.npmjs.com/package/@alenaksu/json-viewer)
+[![Known Vulnerabilities](https://snyk.io/test/npm/@alenaksu/json-viewer/badge.svg)](https://snyk.io/test/npm/@alenaksu/json-viewer)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/alenaksu/json-viewer/master/LICENSE)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/alenaksu/json-viewer)
+
+A Web Component to visualize JSON data in a tree view
+
+---
+
+## Installation
+
+```sh
+npm i @alenaksu/json-viewer
+```
+
+Then import the package to your project.
+
+```js
+import '@alenaksu/json-viewer';
+```
+
+---
+
+## Usage
+
+```html
+<json-viewer></json-viewer>
+```
+
+**Attributes**
+
+-   `data` - the string representation of JSON object to load
+
+**Properties**
+
+-   `data` - get/set the JSON object
+
+### Basic Usage
+
+Put the JSON inside the element
 
 ```html
 <json-viewer>
@@ -9,6 +50,43 @@
 </json-viewer>
 ```
 
-```js
-document.querySelector('json-viewer').data = {...};
+### Load the JSON dinamically
+
+```html
+<json-viewer id="json"></json-viewer>
+
+<script>
+    document.querySelector('#json').data = { prop1: true, prop2: 'test' };
+</script>
+```
+
+### Theming
+
+The appereance of the component can be modified by changing the CSS variables
+
+```css
+json-viewver {
+    /* Background, font and color */
+    --background-color: rgb(42, 47, 58);
+    --color: #f8f8f2;
+    --font-family: monaco, Consolas, 'Lucida Console', monospace;
+
+    /* Types colors */
+    --string-color: #a3eea0;
+    --number-color: #d19a66;
+    --boolean-color: #4ba7ef;
+    --null-color: #df9cf3;
+    --key-color: rgb(111, 179, 210);
+
+    /* Collapsed node preview */
+    --preview-color: rgba(222, 175, 143, 0.9);
+}
+```
+
+## Demo
+
+The demo can also be run locally with
+
+```sh
+npm run start
 ```

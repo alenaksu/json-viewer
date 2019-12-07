@@ -68,10 +68,11 @@ parcelRequire = (function(e, r, t, n) {
                         window.customElements.polyfillWrapFlushCallback
                     )
                         return;
-                    const t = HTMLElement;
-                    (window.HTMLElement = function() {
-                        return Reflect.construct(t, [], this.constructor);
-                    }),
+                    const t = HTMLElement,
+                        e = function() {
+                            return Reflect.construct(t, [], this.constructor);
+                        };
+                    (window.HTMLElement = e),
                         (HTMLElement.prototype = t.prototype),
                         (HTMLElement.prototype.constructor = HTMLElement),
                         Object.setPrototypeOf(HTMLElement, t);
@@ -84,4 +85,4 @@ parcelRequire = (function(e, r, t, n) {
     ['wW0Y'],
     null
 );
-//# sourceMappingURL=/json-viewer/native-shim.7777f102.js.map
+//# sourceMappingURL=/json-viewer/native-shim.cfa5deb7.js.map

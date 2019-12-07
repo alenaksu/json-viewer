@@ -59,7 +59,7 @@ parcelRequire = (function(e, r, t, n) {
     return f;
 })(
     {
-        '+8EU': [
+        EUVP: [
             function(require, module, exports) {
                 'use strict';
                 function t(t) {
@@ -233,7 +233,7 @@ parcelRequire = (function(e, r, t, n) {
                 function p(e, n = 1) {
                     const t = { task: e, args: [], pending: !1, firstRun: !0 };
                     return (...s) => {
-                        t.firstRun || !o ? ((t.firstRun = !1), e(...s)) : t.pending || ((t.args = s), c(t, n));
+                        t.firstRun || !o ? ((t.firstRun = !1), e(...s)) : ((t.args = s), t.pending || c(t, n));
                     };
                 }
             },
@@ -389,19 +389,15 @@ parcelRequire = (function(e, r, t, n) {
                 var e = require('./linker'),
                     t = require('./utils');
                 const n = new WeakMap();
-                function s(n, s) {
-                    const r = document.createElement('template');
-                    r.innerHTML = s ? `<${s}>${n}</${s}>` : n;
-                    let o = r.content;
-                    if (s) {
+                function s(t, n) {
+                    const s = document.createElement('template');
+                    s.innerHTML = n ? `<${n}>${t}</${n}>` : t;
+                    let r = s.content;
+                    if (n) {
                         const e = document.createRange();
-                        e.selectNodeContents(o.firstChild), (o = e.extractContents());
+                        e.selectNodeContents(r.firstChild), (r = e.extractContents());
                     }
-                    return (
-                        o.insertBefore((0, t.comment)(), o.firstChild),
-                        o.appendChild((0, t.comment)()),
-                        { content: o, expressions: (0, e.linkExpressions)(o) }
-                    );
+                    return { content: r, expressions: (0, e.linkExpressions)(r) };
                 }
                 function r(e) {
                     const n = new RegExp(
@@ -434,33 +430,35 @@ parcelRequire = (function(e, r, t, n) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.Template = void 0);
                 var e,
-                    s = require('./parser'),
-                    t = require('./utils');
+                    t = require('./parser'),
+                    s = require('./utils');
                 class i {
-                    constructor(s, t, i) {
-                        (this[e] = !0), (this.values = t), (this.strings = s), (this.context = i);
+                    constructor(t, s, i) {
+                        (this[e] = !0), (this.values = s), (this.strings = t), (this.context = i);
                     }
                     withKey(e) {
                         return (this.key = e), this;
                     }
                     update(e) {
-                        for (let s = 0; s < e.length; s++)
-                            void 0 !== this.expressions[s] && this.expressions[s].update(e[s]);
+                        for (let t = 0; t < e.length; t++)
+                            void 0 !== this.expressions[t] && this.expressions[t].update(e[t]);
                     }
                     delete() {
-                        (0, t.removeNodes)(...this.range), (this.range = void 0), (this.expressions = void 0);
+                        (0, s.removeNodes)(this.range[0], this.range[1].nextSibling),
+                            (this.range = void 0),
+                            (this.expressions = void 0);
                     }
                     create() {
-                        const { fragment: e, expressions: t } = (0, s.parseTemplate)(this.strings, this.context);
+                        const { fragment: e, expressions: i } = (0, t.parseTemplate)(this.strings, this.context);
                         return (
-                            (this.expressions = t),
-                            (this.range = [e.firstChild, e.lastChild]),
+                            (this.expressions = i),
+                            (this.range = [e.insertBefore((0, s.text)(), e.firstChild), e.appendChild((0, s.text)())]),
                             this.update(this.values),
                             e
                         );
                     }
                 }
-                (exports.Template = i), (e = t.TemplateSymbol);
+                (exports.Template = i), (e = s.TemplateSymbol);
             },
             { './parser': 'zbKw', './utils': 'MrFm' }
         ],
@@ -501,7 +499,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             { './template': 'Wi2R', './scheduler': 'Q0P1', './utils': 'MrFm' }
         ],
-        '6Let': [
+        Letq: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.withElement = e);
@@ -541,7 +539,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             { '@tiny-lit/core': 'gjkP' }
         ],
-        '1r+i': [
+        rI01: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.Element = void 0);
@@ -550,7 +548,7 @@ parcelRequire = (function(e, r, t, n) {
                 const r = (0, e.withProps)((0, t.withElement)(HTMLElement));
                 exports.Element = r;
             },
-            { './withProps': '+8EU', './withElement': '6Let' }
+            { './withProps': 'EUVP', './withElement': 'Letq' }
         ],
         aqGt: [
             function(require, module, exports) {
@@ -578,7 +576,7 @@ parcelRequire = (function(e, r, t, n) {
                     t = require('./withProps'),
                     r = require('./withElement');
             },
-            { './Element': '1r+i', './withProps': '+8EU', './withElement': '6Let' }
+            { './Element': 'rI01', './withProps': 'EUVP', './withElement': 'Letq' }
         ],
         K0yk: [
             function(require, module, exports) {
@@ -607,12 +605,12 @@ parcelRequire = (function(e, r, t, n) {
                     for (var t = 1; t < arguments.length; t++) {
                         var o = null != arguments[t] ? arguments[t] : {};
                         t % 2
-                            ? r(o, !0).forEach(function(r) {
+                            ? r(Object(o), !0).forEach(function(r) {
                                   n(e, r, o[r]);
                               })
                             : Object.getOwnPropertyDescriptors
                             ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(o))
-                            : r(o).forEach(function(r) {
+                            : r(Object(o)).forEach(function(r) {
                                   Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(o, r));
                               });
                     }
@@ -686,16 +684,32 @@ parcelRequire = (function(e, r, t, n) {
                 'use strict';
                 var e = require('@tiny-lit/element'),
                     o = require('@tiny-lit/core'),
-                    l = require('./utils');
-                const t = ({ isCollapsable: e, collapsed: t, onClick: r, key: s }) => o.html`
+                    t = require('./utils');
+                let l,
+                    r,
+                    s,
+                    n,
+                    a,
+                    i,
+                    c,
+                    d,
+                    p = e => e;
+                const u = ({ isCollapsable: e, collapsed: r, onClick: s, key: n }) =>
+                    (0, o.html)(
+                        l ||
+                            (l = p`
     <span
-        class=${(0, l.classNames)(s && 'key', e && 'collapsable', t && 'collapsableCollapsed')}
-        onClick=${r}
+        class=${0}
+        onClick=${0}
     >
-        ${s}:
+        ${0}:
     </span>
-`;
-                class r extends e.Element {
+`),
+                        (0, t.classNames)(n && 'key', e && 'collapsable', r && 'collapsableCollapsed'),
+                        s,
+                        n
+                    );
+                class b extends e.Element {
                     constructor(...e) {
                         super(...e),
                             (this.data = null),
@@ -705,39 +719,62 @@ parcelRequire = (function(e, r, t, n) {
                             });
                     }
                     static get properties() {
-                        return { data: l.JsonObject, collapsed: Boolean, key: String };
+                        return { data: t.JsonObject, collapsed: Boolean, key: String };
                     }
                     static get is() {
                         return 'json-nested-object-node';
                     }
                     renderValue(e) {
-                        return (0, l.isNode)(e)
+                        return (0, t.isNode)(e)
                             ? e
-                            : o.html`
-                  <span class=${(0, l.getType)(e)}>${JSON.stringify(e)}</span>
-              `;
+                            : (0, o.html)(
+                                  r ||
+                                      (r = p`
+                  <span class=${0}>${0}</span>
+              `),
+                                  (0, t.getType)(e),
+                                  JSON.stringify(e)
+                              );
                     }
                     renderChild(e) {
                         return this.collapsed
-                            ? o.html`
+                            ? (0, o.html)(
+                                  s ||
+                                      (s = p`
                   <span class="preview">
-                      ${(0, l.generateNodePreview)(e)}
+                      ${0}
                   </span>
-              `
-                            : o.html`
-                  <json-object-node data=${e}></json-object-node>
-              `;
+              `),
+                                  (0, t.generateNodePreview)(e)
+                              )
+                            : (0, o.html)(
+                                  n ||
+                                      (n = p`
+                  <json-object-node data=${0}></json-object-node>
+              `),
+                                  e
+                              );
                     }
                     render() {
-                        const { data: e, key: r } = this,
-                            s = (0, l.isPrimitive)(e) || (0, l.isNode)(e);
-                        return o.html`
-            ${t({ isCollapsable: !s, collapsed: this.collapsed, key: r, onClick: !s && this.handleKeyClick })}
-            ${s ? this.renderValue(e) : this.renderChild(e)}
-        `;
+                        const { data: e, key: l } = this,
+                            r = (0, t.isPrimitive)(e) || (0, t.isNode)(e);
+                        return (0, o.html)(
+                            a ||
+                                (a = p`
+            ${0}
+            ${0}
+        `),
+                            u({
+                                isCollapsable: !r,
+                                collapsed: this.collapsed,
+                                key: l,
+                                onClick: !r && this.handleKeyClick
+                            }),
+                            r ? this.renderValue(e) : this.renderChild(e)
+                        );
                     }
                 }
-                class s extends e.Element {
+                class m extends e.Element {
                     constructor(...e) {
                         super(...e), (this.data = null), (this.collapsed = !0);
                     }
@@ -745,24 +782,33 @@ parcelRequire = (function(e, r, t, n) {
                         return 'json-object-node';
                     }
                     static get properties() {
-                        return { data: l.JsonObject, collapsed: Boolean };
+                        return { data: t.JsonObject, collapsed: Boolean };
                     }
                     render() {
                         const { data: e } = this;
-                        return o.html`
+                        return (0, o.html)(
+                            i ||
+                                (i = p`
             <ul>
-                ${Object.keys(e).map(l =>
-                    o.html`
-                        <li>
-                            <json-nested-object-node key=${l} data=${e[l]}></json-nested-object-node>
-                        </li>
-                    `.withKey(l)
-                )}
+                ${0}
             </ul>
-        `;
+        `),
+                            Object.keys(e).map(t =>
+                                (0, o.html)(
+                                    c ||
+                                        (c = p`
+                        <li>
+                            <json-nested-object-node key=${0} data=${0}></json-nested-object-node>
+                        </li>
+                    `),
+                                    t,
+                                    e[t]
+                                ).withKey(t)
+                            )
+                        );
                     }
                 }
-                class a extends e.Element {
+                class h extends e.Element {
                     constructor(...e) {
                         super(...e), (this.data = null);
                     }
@@ -770,16 +816,19 @@ parcelRequire = (function(e, r, t, n) {
                         return 'json-viewer';
                     }
                     static get properties() {
-                        return { data: l.JsonObject };
+                        return { data: t.JsonObject };
                     }
                     connectedCallback() {
-                        const e = this.innerText.trim();
-                        e && (this.data = JSON.parse(e)),
-                            this.attachShadow({ mode: 'open' }),
-                            super.connectedCallback();
+                        if (!this.hasAttribute('data')) {
+                            const e = this.innerText.trim();
+                            e && (this.data = JSON.parse(e));
+                        }
+                        this.attachShadow({ mode: 'open' }), super.connectedCallback();
                     }
                     render() {
-                        return o.html`
+                        return (0, o.html)(
+                            d ||
+                                (d = p`
             <style>
                 :host {
                     --background-color: rgb(42, 47, 58);
@@ -789,8 +838,6 @@ parcelRequire = (function(e, r, t, n) {
                     --boolean-color: #4ba7ef;
                     --null-color: #df9cf3;
                     --key-color: rgb(111, 179, 210);
-                    --collapsed-color: #fff;
-                    --collapsed-background: #66d9ef;
                     --font-family: monaco, Consolas, 'Lucida Console', monospace;
                     --preview-color: rgba(222, 175, 143, 0.9);
 
@@ -804,10 +851,6 @@ parcelRequire = (function(e, r, t, n) {
 
                 .preview {
                     color: var(--preview-color);
-                }
-
-                .collapsed ul {
-                    display: none;
                 }
 
                 .null {
@@ -852,14 +895,6 @@ parcelRequire = (function(e, r, t, n) {
                     color: var(--boolean-color);
                 }
 
-                .collapsed {
-                    font-size: 10px;
-                    background-color: var(--collapsed-background);
-                    color: var(--collapsed-color);
-                    padding: 0.3em;
-                    border-radius: 2px;
-                }
-
                 ul {
                     padding: 0;
                     clear: both;
@@ -878,7 +913,7 @@ parcelRequire = (function(e, r, t, n) {
                     padding-left: 0px;
                 }
 
-                ul:before {
+                json-nested-object-node ul:before {
                     content: '';
                     border-left: 1px solid #333;
                     position: absolute;
@@ -887,15 +922,17 @@ parcelRequire = (function(e, r, t, n) {
                     bottom: 0.5rem;
                 }
 
-                ul.hover:before {
+                json-nested-object-node ul:hover:before {
                     border-left: 1px solid #666;
                 }
             </style>
-            <json-object-node data=${this.data}></json-object-node>
-        `;
+            <json-object-node data=${0}></json-object-node>
+        `),
+                            this.data
+                        );
                     }
                 }
-                customElements.define(s.is, s), customElements.define(r.is, r), customElements.define(a.is, a);
+                customElements.define(m.is, m), customElements.define(b.is, b), customElements.define(h.is, h);
             },
             { '@tiny-lit/element': 'aqGt', '@tiny-lit/core': 'gjkP', './utils': 'K0yk' }
         ]
@@ -904,4 +941,4 @@ parcelRequire = (function(e, r, t, n) {
     ['H99C'],
     null
 );
-//# sourceMappingURL=/json-viewer/src.7c4c900b.js.map
+//# sourceMappingURL=/json-viewer/src.6c6695fe.js.map
