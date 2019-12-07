@@ -114,8 +114,10 @@ class JsonViewer extends TinyElement {
     }
 
     connectedCallback() {
-        const json = this.innerText.trim();
-        if (json) this.data = JSON.parse(json);
+        if (!this.hasAttribute('data')) {
+            const json = this.innerText.trim();
+            if (json) this.data = JSON.parse(json);
+        }
 
         this.attachShadow({ mode: 'open' });
 
@@ -133,8 +135,6 @@ class JsonViewer extends TinyElement {
                     --boolean-color: #4ba7ef;
                     --null-color: #df9cf3;
                     --key-color: rgb(111, 179, 210);
-                    --collapsed-color: #fff;
-                    --collapsed-background: #66d9ef;
                     --font-family: monaco, Consolas, 'Lucida Console', monospace;
                     --preview-color: rgba(222, 175, 143, 0.9);
 
@@ -148,10 +148,6 @@ class JsonViewer extends TinyElement {
 
                 .preview {
                     color: var(--preview-color);
-                }
-
-                .collapsed ul {
-                    display: none;
                 }
 
                 .null {
@@ -196,14 +192,6 @@ class JsonViewer extends TinyElement {
                     color: var(--boolean-color);
                 }
 
-                .collapsed {
-                    font-size: 10px;
-                    background-color: var(--collapsed-background);
-                    color: var(--collapsed-color);
-                    padding: 0.3em;
-                    border-radius: 2px;
-                }
-
                 ul {
                     padding: 0;
                     clear: both;
@@ -222,7 +210,7 @@ class JsonViewer extends TinyElement {
                     padding-left: 0px;
                 }
 
-                ul:before {
+                json-nested-object-node ul:before {
                     content: '';
                     border-left: 1px solid #333;
                     position: absolute;
@@ -231,7 +219,7 @@ class JsonViewer extends TinyElement {
                     bottom: 0.5rem;
                 }
 
-                ul.hover:before {
+                json-nested-object-node ul:hover:before {
                     border-left: 1px solid #666;
                 }
             </style>
