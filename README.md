@@ -67,7 +67,7 @@ The appereance of the component can be modified by changing the CSS variables
 ```css
 json-viewver {
     /* Background, font and color */
-    --background-color: rgb(42, 47, 58);
+    --background-color: #2a2f3a;
     --color: #f8f8f2;
     --font-family: monaco, Consolas, 'Lucida Console', monospace;
 
@@ -76,7 +76,7 @@ json-viewver {
     --number-color: #d19a66;
     --boolean-color: #4ba7ef;
     --null-color: #df9cf3;
-    --key-color: rgb(111, 179, 210);
+    --property-color: #6fb3d2;
 
     /* Collapsed node preview */
     --preview-color: rgba(222, 175, 143, 0.9);
