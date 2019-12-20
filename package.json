@@ -1,6 +1,6 @@
 {
     "name": "@alenaksu/json-viewer",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "module": "build/index.js",
     "main": "build/index.js",
     "source": "src/index.js",
