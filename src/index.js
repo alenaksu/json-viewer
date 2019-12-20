@@ -83,18 +83,30 @@ class JsonObjectNode extends TinyElement {
         };
     }
 
+    renderObject(data) {
+        return Object.keys(data).map(key =>
+            html`
+                <li>
+                    <json-nested-object-node key=${key} data=${data[key]}></json-nested-object-node>
+                </li>
+            `.withKey(key)
+        );
+    }
+
+    renderPrimitive(data) {
+        return data !== undefined
+            ? html`
+                  <li>${data}</li>
+              `
+            : null;
+    }
+
     render() {
         const { data } = this;
 
         return html`
             <ul>
-                ${Object.keys(data).map(key =>
-                    html`
-                        <li>
-                            <json-nested-object-node key=${key} data=${data[key]}></json-nested-object-node>
-                        </li>
-                    `.withKey(key)
-                )}
+                ${isPrimitive(data) ? this.renderPrimitive(data) : this.renderObject(data)}
             </ul>
         `;
     }
@@ -128,13 +140,13 @@ class JsonViewer extends TinyElement {
         return html`
             <style>
                 :host {
-                    --background-color: rgb(42, 47, 58);
+                    --background-color: #2a2f3a;
                     --color: #f8f8f2;
                     --string-color: #a3eea0;
                     --number-color: #d19a66;
                     --boolean-color: #4ba7ef;
                     --null-color: #df9cf3;
-                    --key-color: rgb(111, 179, 210);
+                    --property-color: #6fb3d2;
                     --font-family: monaco, Consolas, 'Lucida Console', monospace;
                     --preview-color: rgba(222, 175, 143, 0.9);
 
@@ -155,7 +167,7 @@ class JsonViewer extends TinyElement {
                 }
 
                 .key {
-                    color: var(--key-color, #f9857b);
+                    color: var(--property-color, #f9857b);
                     display: inline-block;
                 }
 
@@ -168,7 +180,7 @@ class JsonViewer extends TinyElement {
                     content: '▶';
                     transition: transform 195ms ease-in;
                     transform: rotate(90deg);
-                    color: var(--key-color);
+                    color: var(--property-color);
                 }
 
                 .collapsable.collapsableCollapsed:before {
