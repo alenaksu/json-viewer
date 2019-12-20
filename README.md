@@ -3,7 +3,7 @@
 [![downloads](https://badgen.net/npm/dt/@alenaksu/json-viewer)](https://www.npmjs.com/package/@alenaksu/json-viewer)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@alenaksu/json-viewer/badge.svg)](https://snyk.io/test/npm/@alenaksu/json-viewer)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/alenaksu/json-viewer/master/LICENSE)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/alenaksu/json-viewer)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/@alenaksu/json-viewer)
 
 A Web Component to visualize JSON data in a tree view
 
