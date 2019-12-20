@@ -37,6 +37,7 @@
         "pretty-quick": "^2.0.1",
         "rollup": "^1.27.13",
         "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-minify-html-literals": "^1.2.2",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-terser": "^5.1.3"
     },
