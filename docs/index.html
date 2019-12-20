@@ -1,250 +1,238 @@
 <html>
     <head>
-        <script src="/json-viewer/native-shim.cfa5deb7.js"></script>
         <style>
             body,
             html {
                 margin: 0;
-            }
-            .container,
-            body,
-            html {
                 height: 100%;
                 width: 100%;
+                background-color: #2a2f3a;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+            .header {
+                color: #fff;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+                margin: 20px 0;
             }
             .container {
                 display: flex;
                 flex-direction: row;
+                height: 100%;
+                width: 100%;
             }
             .panel {
-                width: 50%;
+                max-height: 100%;
+                overflow-y: auto;
                 padding: 20px;
+                flex-grow: 1;
             }
+            .panel:not(:last-child) {
+                border-right: 1px solid #666;
+            }
+            .CodeMirror,
             textarea {
                 display: block;
                 width: 100%;
-                height: 100%;
+                height: 100% !important;
+            }
+            .cm-s-jsv.CodeMirror {
+                background: #2a2f3a;
+                color: #f8f8f2;
+                font-size: 1rem;
+            }
+            .cm-s-jsv div.CodeMirror-selected {
+                background: #49483e;
+            }
+            .cm-s-jsv .CodeMirror-line::selection,
+            .cm-s-jsv .CodeMirror-line > span::selection,
+            .cm-s-jsv .CodeMirror-line > span > span::selection {
+                background: rgba(73, 72, 62, 0.99);
+            }
+            .cm-s-jsv .CodeMirror-line::-moz-selection,
+            .cm-s-jsv .CodeMirror-line > span::-moz-selection,
+            .cm-s-jsv .CodeMirror-line > span > span::-moz-selection {
+                background: rgba(73, 72, 62, 0.99);
+            }
+            .cm-s-jsv .CodeMirror-gutters {
+                background: #2a2f3a;
+                border-right: 0;
+            }
+            .cm-s-jsv .CodeMirror-guttermarker {
+                color: #fff;
+            }
+            .cm-s-jsv .CodeMirror-guttermarker-subtle,
+            .cm-s-jsv .CodeMirror-linenumber {
+                color: #d0d0d0;
+            }
+            .cm-s-jsv .CodeMirror-cursor {
+                border-left: 1px solid #f8f8f0;
+            }
+            .cm-s-jsv span.cm-comment {
+                color: #75715e;
+            }
+            .cm-s-jsv span.cm-atom {
+                color: #4ba7ef;
+            }
+            .cm-s-jsv span.cm-number {
+                color: #d19a66;
+            }
+            .cm-s-jsv span.cm-comment.cm-attribute {
+                color: #97b757;
+            }
+            .cm-s-jsv span.cm-comment.cm-def {
+                color: #bc9262;
+            }
+            .cm-s-jsv span.cm-comment.cm-tag {
+                color: #bc6283;
+            }
+            .cm-s-jsv span.cm-comment.cm-type {
+                color: #5998a6;
+            }
+            .cm-s-jsv span.cm-keyword {
+                color: #f92672;
+            }
+            .cm-s-jsv span.cm-builtin {
+                color: #66d9ef;
+            }
+            .cm-s-jsv span.cm-string {
+                color: #a3eea0;
+            }
+            .cm-s-jsv span.cm-variable {
+                color: #f8f8f2;
+            }
+            .cm-s-jsv span.cm-variable-2 {
+                color: #9effff;
+            }
+            .cm-s-jsv span.cm-type,
+            .cm-s-jsv span.cm-variable-3 {
+                color: #66d9ef;
+            }
+            .cm-s-jsv span.cm-def {
+                color: #fd971f;
+            }
+            .cm-s-jsv span.cm-bracket {
+                color: #f8f8f2;
+            }
+            .cm-s-jsv span.cm-tag {
+                color: #f92672;
+            }
+            .cm-s-jsv span.cm-header,
+            .cm-s-jsv span.cm-link {
+                color: #ae81ff;
+            }
+            .cm-s-jsv span.cm-error {
+                background: #f92672;
+                color: #f8f8f0;
+            }
+            .cm-s-jsv span.cm-attribute,
+            .cm-s-jsv span.cm-property {
+                color: #6fb3d2;
+            }
+            .cm-s-jsv .CodeMirror-activeline-background {
+                background: #373831;
+            }
+            .cm-s-jsv .CodeMirror-matchingbracket {
+                text-decoration: underline;
+                color: #fff !important;
             }
         </style>
+        <link rel="stylesheet" href="https://unpkg.com/codemirror@5.50.0/lib/codemirror.css" />
     </head>
     <body>
+        <div class="header">
+            <h1>@alenaksu/json-viewer</h1>
+            <a
+                class="github-button"
+                href="https://github.com/alenaksu/json-viewver/fork"
+                data-size="large"
+                data-show-count="true"
+                aria-label="Fork alenaksu/json-viewver on GitHub"
+                >Fork</a
+            >
+        </div>
         <div class="container">
             <div class="panel">
-                <button>Load JSON</button>
                 <textarea id="json">
 [
     {
-        "_id": "5d7794d54662ef382cae9b0b",
+        "_id": "5dfccc2c6306753f2876a49e",
         "index": 0,
-        "guid": "d34f2f76-7e70-49ac-8059-d765865b5249",
+        "guid": "f1567a17-b190-4347-8eb1-647a39370348",
         "isActive": true,
-        "balance": "$2,897.06",
+        "balance": "$1,924.63",
         "picture": "http://placehold.it/32x32",
-        "age": 21,
+        "age": 33,
         "eyeColor": "blue",
         "name": {
-        "first": "Odonnell",
-        "last": "Lee"
+        "first": "Robles",
+        "last": "Huffman"
         },
-        "company": "EARTHMARK",
-        "email": "odonnell.lee@earthmark.co.uk",
-        "phone": "+1 (993) 590-2450",
-        "address": "869 Leonard Street, Soham, Tennessee, 1232",
-        "about": "Do adipisicing non fugiat mollit nulla mollit. Occaecat reprehenderit sit qui ipsum nulla irure. Excepteur Lorem mollit reprehenderit dolor labore. Et sint exercitation cillum minim aliquip sint laboris magna exercitation. Fugiat duis officia laboris aliqua aliquip. Sint amet deserunt laborum consequat Lorem consectetur ipsum.",
-        "registered": "Sunday, July 12, 2015 1:26 PM",
-        "latitude": "80.988545",
-        "longitude": "-82.643774",
-        "tags": [
-        "et",
-        "exercitation",
-        "laboris",
-        "reprehenderit",
-        "eiusmod"
-        ],
-        "range": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
-        ],
-        "friends": [
-        {
-            "id": 0,
-            "name": "Zelma Cote"
-        },
-        {
-            "id": 1,
-            "name": "Janna Bean"
-        },
-        {
-            "id": 2,
-            "name": "Rosa Franco"
-        }
-        ],
-        "greeting": "Hello, Odonnell! You have 6 unread messages.",
-        "favoriteFruit": "banana"
+        "company": "NETERIA",
+        "email": "robles.huffman@neteria.info",
+        "phone": "+1 (994) 596-3353",
+        "address": "925 Buffalo Avenue, Richmond, Vermont, 6876",
+        "registered": "Monday, August 3, 2015 11:27 AM",
+        "latitude": "-79.213713",
+        "longitude": "89.9827"
     },
     {
-        "_id": "5d7794d5f08f2b903ab54d48",
+        "_id": "5dfccc2c3828bfab36d46bb3",
         "index": 1,
-        "guid": "f020b215-513a-4f26-b51a-8385e3c7040e",
+        "guid": "391cafd5-d161-4810-9a0d-442118cc64a5",
         "isActive": false,
-        "balance": "$2,707.30",
+        "balance": "$1,764.62",
         "picture": "http://placehold.it/32x32",
-        "age": 37,
-        "eyeColor": "green",
+        "age": 23,
+        "eyeColor": "blue",
         "name": {
-        "first": "Tara",
-        "last": "Castillo"
+        "first": "Eve",
+        "last": "Lowe"
         },
-        "company": "SEQUITUR",
-        "email": "tara.castillo@sequitur.me",
-        "phone": "+1 (849) 565-2149",
-        "address": "780 Drew Street, Swartzville, Guam, 4377",
-        "about": "Adipisicing voluptate voluptate sunt id dolor fugiat dolor qui anim. Aute ad deserunt adipisicing et. Sunt quis ullamco ut ullamco sunt ullamco ad elit laborum sint et reprehenderit ea. Officia voluptate aliquip sint consequat. Fugiat aute dolore elit ut qui eiusmod minim nostrud excepteur proident in ipsum minim. Ex aliquip Lorem quis do commodo Lorem ad commodo.",
-        "registered": "Tuesday, February 3, 2015 6:39 AM",
-        "latitude": "39.681945",
-        "longitude": "-159.529456",
-        "tags": [
-        "incididunt",
-        "velit",
-        "tempor",
-        "reprehenderit",
-        "commodo"
-        ],
-        "range": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
-        ],
-        "friends": [
-        {
-            "id": 0,
-            "name": "Karin Robinson"
-        },
-        {
-            "id": 1,
-            "name": "Elisa Jarvis"
-        },
-        {
-            "id": 2,
-            "name": "Cruz Noble"
-        }
-        ],
-        "greeting": "Hello, Tara! You have 7 unread messages.",
-        "favoriteFruit": "banana"
-    },
-    {
-        "_id": "5d7794d5b7f793c57774abd2",
-        "index": 2,
-        "guid": "1c79be8a-46cb-4d19-955d-faa94b0943fd",
-        "isActive": false,
-        "balance": "$3,163.34",
-        "picture": "http://placehold.it/32x32",
-        "age": 40,
-        "eyeColor": "brown",
-        "name": {
-        "first": "Decker",
-        "last": "Pittman"
-        },
-        "company": "ULTRASURE",
-        "email": "decker.pittman@ultrasure.org",
-        "phone": "+1 (992) 492-2759",
-        "address": "744 Duryea Court, Jardine, Ohio, 8703",
-        "about": "Minim eiusmod aute veniam dolor. Consectetur enim et ipsum ullamco sunt eu ea ut et ipsum. Fugiat excepteur dolore eu id consequat aliqua voluptate cupidatat non.",
-        "registered": "Tuesday, September 5, 2017 7:18 PM",
-        "latitude": "60.974849",
-        "longitude": "-75.534801",
-        "tags": [
-        "aliquip",
-        "consequat",
-        "ut",
-        "velit",
-        "minim"
-        ],
-        "range": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
-        ],
-        "friends": [
-        {
-            "id": 0,
-            "name": "Jeannette Benton"
-        },
-        {
-            "id": 1,
-            "name": "Sondra Moreno"
-        },
-        {
-            "id": 2,
-            "name": "Carlson Cervantes"
-        }
-        ],
-        "greeting": "Hello, Decker! You have 7 unread messages.",
-        "favoriteFruit": "strawberry"
+        "company": "PURIA",
+        "email": "eve.lowe@puria.us",
+        "phone": "+1 (849) 411-3656",
+        "address": "677 Dinsmore Place, Delshire, Minnesota, 3024",
+        "registered": "Wednesday, March 1, 2017 5:40 PM",
+        "latitude": "-66.435424",
+        "longitude": "134.393326"
     }
 ]
                 </textarea>
             </div>
-            <div class="panel">
-                <json-viewer>
-                    [{"_id":"5d7794d54662ef382cae9b0b","index":0,"guid":"d34f2f76-7e70-49ac-8059-d765865b5249","isActive":true,"balance":"$2,897.06","picture":"http://placehold.it/32x32","age":21,"eyeColor":"blue","name":{"first":"Odonnell","last":"Lee"},"company":"EARTHMARK","email":"odonnell.lee@earthmark.co.uk","phone":"+1
-                    (993) 590-2450","address":"869 Leonard Street, Soham, Tennessee, 1232","about":"Do adipisicing non
-                    fugiat mollit nulla mollit. Occaecat reprehenderit sit qui ipsum nulla irure. Excepteur Lorem mollit
-                    reprehenderit dolor labore. Et sint exercitation cillum minim aliquip sint laboris magna
-                    exercitation. Fugiat duis officia laboris aliqua aliquip. Sint amet deserunt laborum consequat Lorem
-                    consectetur ipsum.","registered":"Sunday, July 12, 2015 1:26
-                    PM","latitude":"80.988545","longitude":"-82.643774","tags":["et","exercitation","laboris","reprehenderit","eiusmod"],"range":[0,1,2,3,4,5,6,7,8,9],"friends":[{"id":0,"name":"Zelma
-                    Cote"},{"id":1,"name":"Janna Bean"},{"id":2,"name":"Rosa Franco"}],"greeting":"Hello, Odonnell! You
-                    have 6 unread
-                    messages.","favoriteFruit":"banana"},{"_id":"5d7794d5f08f2b903ab54d48","index":1,"guid":"f020b215-513a-4f26-b51a-8385e3c7040e","isActive":false,"balance":"$2,707.30","picture":"http://placehold.it/32x32","age":37,"eyeColor":"green","name":{"first":"Tara","last":"Castillo"},"company":"SEQUITUR","email":"tara.castillo@sequitur.me","phone":"+1
-                    (849) 565-2149","address":"780 Drew Street, Swartzville, Guam, 4377","about":"Adipisicing voluptate
-                    voluptate sunt id dolor fugiat dolor qui anim. Aute ad deserunt adipisicing et. Sunt quis ullamco ut
-                    ullamco sunt ullamco ad elit laborum sint et reprehenderit ea. Officia voluptate aliquip sint
-                    consequat. Fugiat aute dolore elit ut qui eiusmod minim nostrud excepteur proident in ipsum minim.
-                    Ex aliquip Lorem quis do commodo Lorem ad commodo.","registered":"Tuesday, February 3, 2015 6:39
-                    AM","latitude":"39.681945","longitude":"-159.529456","tags":["incididunt","velit","tempor","reprehenderit","commodo"],"range":[0,1,2,3,4,5,6,7,8,9],"friends":[{"id":0,"name":"Karin
-                    Robinson"},{"id":1,"name":"Elisa Jarvis"},{"id":2,"name":"Cruz Noble"}],"greeting":"Hello, Tara! You
-                    have 7 unread
-                    messages.","favoriteFruit":"banana"},{"_id":"5d7794d5b7f793c57774abd2","index":2,"guid":"1c79be8a-46cb-4d19-955d-faa94b0943fd","isActive":false,"balance":"$3,163.34","picture":"http://placehold.it/32x32","age":40,"eyeColor":"brown","name":{"first":"Decker","last":"Pittman"},"company":"ULTRASURE","email":"decker.pittman@ultrasure.org","phone":"+1
-                    (992) 492-2759","address":"744 Duryea Court, Jardine, Ohio, 8703","about":"Minim eiusmod aute veniam
-                    dolor. Consectetur enim et ipsum ullamco sunt eu ea ut et ipsum. Fugiat excepteur dolore eu id
-                    consequat aliqua voluptate cupidatat non.","registered":"Tuesday, September 5, 2017 7:18
-                    PM","latitude":"60.974849","longitude":"-75.534801","tags":["aliquip","consequat","ut","velit","minim"],"range":[0,1,2,3,4,5,6,7,8,9],"friends":[{"id":0,"name":"Jeannette
-                    Benton"},{"id":1,"name":"Sondra Moreno"},{"id":2,"name":"Carlson Cervantes"}],"greeting":"Hello,
-                    Decker! You have 7 unread messages.","favoriteFruit":"strawberry"}]
-                </json-viewer>
-            </div>
+            <div class="panel"><json-viewer> </json-viewer></div>
         </div>
-        <script src="/json-viewer/src.6c6695fe.js"></script>
+        <script src="https://unpkg.com/codemirror@5.50.0/lib/codemirror.js"></script>
+        <script src="https://unpkg.com/codemirror@5.50.0/mode/javascript/javascript.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script src="/json-viewer/src.0e945c22.js"></script>
         <script>
             (() => {
                 const e = document.querySelector('#json'),
-                    t = document.querySelector('json-viewer');
-                document.querySelector('button').addEventListener('click', () => {
-                    t.data = JSON.parse(e.value);
-                });
+                    t = document.querySelector('json-viewer'),
+                    r = ((e, t = 500) => {
+                        let r;
+                        return (...o) => {
+                            clearTimeout(r), (r = setTimeout(() => e(...o), t));
+                        };
+                    })(e => {
+                        try {
+                            t.data = JSON.parse(e);
+                        } catch (r) {
+                            t.data = r.message;
+                        }
+                    }),
+                    o = CodeMirror.fromTextArea(e, {
+                        mode: { name: 'javascript', json: !0 },
+                        lineNumbers: !0,
+                        theme: 'jsv',
+                        styleActiveLine: !0,
+                        lint: { esversion: 6 }
+                    });
+                o.on('change', () => r(o.getValue())), r(e.value);
             })();
         </script>
     </body>

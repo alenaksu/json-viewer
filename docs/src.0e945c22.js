@@ -693,11 +693,12 @@ parcelRequire = (function(e, r, t, n) {
                     i,
                     c,
                     d,
-                    p = e => e;
-                const u = ({ isCollapsable: e, collapsed: r, onClick: s, key: n }) =>
+                    p,
+                    u = e => e;
+                const b = ({ isCollapsable: e, collapsed: r, onClick: s, key: n }) =>
                     (0, o.html)(
                         l ||
-                            (l = p`
+                            (l = u`
     <span
         class=${0}
         onClick=${0}
@@ -709,7 +710,7 @@ parcelRequire = (function(e, r, t, n) {
                         s,
                         n
                     );
-                class b extends e.Element {
+                class m extends e.Element {
                     constructor(...e) {
                         super(...e),
                             (this.data = null),
@@ -729,7 +730,7 @@ parcelRequire = (function(e, r, t, n) {
                             ? e
                             : (0, o.html)(
                                   r ||
-                                      (r = p`
+                                      (r = u`
                   <span class=${0}>${0}</span>
               `),
                                   (0, t.getType)(e),
@@ -740,7 +741,7 @@ parcelRequire = (function(e, r, t, n) {
                         return this.collapsed
                             ? (0, o.html)(
                                   s ||
-                                      (s = p`
+                                      (s = u`
                   <span class="preview">
                       ${0}
                   </span>
@@ -749,7 +750,7 @@ parcelRequire = (function(e, r, t, n) {
                               )
                             : (0, o.html)(
                                   n ||
-                                      (n = p`
+                                      (n = u`
                   <json-object-node data=${0}></json-object-node>
               `),
                                   e
@@ -760,11 +761,11 @@ parcelRequire = (function(e, r, t, n) {
                             r = (0, t.isPrimitive)(e) || (0, t.isNode)(e);
                         return (0, o.html)(
                             a ||
-                                (a = p`
+                                (a = u`
             ${0}
             ${0}
         `),
-                            u({
+                            b({
                                 isCollapsable: !r,
                                 collapsed: this.collapsed,
                                 key: l,
@@ -774,7 +775,7 @@ parcelRequire = (function(e, r, t, n) {
                         );
                     }
                 }
-                class m extends e.Element {
+                class h extends e.Element {
                     constructor(...e) {
                         super(...e), (this.data = null), (this.collapsed = !0);
                     }
@@ -784,31 +785,45 @@ parcelRequire = (function(e, r, t, n) {
                     static get properties() {
                         return { data: t.JsonObject, collapsed: Boolean };
                     }
+                    renderObject(e) {
+                        return Object.keys(e).map(t =>
+                            (0, o.html)(
+                                i ||
+                                    (i = u`
+                <li>
+                    <json-nested-object-node key=${0} data=${0}></json-nested-object-node>
+                </li>
+            `),
+                                t,
+                                e[t]
+                            ).withKey(t)
+                        );
+                    }
+                    renderPrimitive(e) {
+                        return void 0 !== e
+                            ? (0, o.html)(
+                                  c ||
+                                      (c = u`
+                  <li>${0}</li>
+              `),
+                                  e
+                              )
+                            : null;
+                    }
                     render() {
                         const { data: e } = this;
                         return (0, o.html)(
-                            i ||
-                                (i = p`
+                            d ||
+                                (d = u`
             <ul>
                 ${0}
             </ul>
         `),
-                            Object.keys(e).map(t =>
-                                (0, o.html)(
-                                    c ||
-                                        (c = p`
-                        <li>
-                            <json-nested-object-node key=${0} data=${0}></json-nested-object-node>
-                        </li>
-                    `),
-                                    t,
-                                    e[t]
-                                ).withKey(t)
-                            )
+                            (0, t.isPrimitive)(e) ? this.renderPrimitive(e) : this.renderObject(e)
                         );
                     }
                 }
-                class h extends e.Element {
+                class f extends e.Element {
                     constructor(...e) {
                         super(...e), (this.data = null);
                     }
@@ -827,17 +842,17 @@ parcelRequire = (function(e, r, t, n) {
                     }
                     render() {
                         return (0, o.html)(
-                            d ||
-                                (d = p`
+                            p ||
+                                (p = u`
             <style>
                 :host {
-                    --background-color: rgb(42, 47, 58);
+                    --background-color: #2a2f3a;
                     --color: #f8f8f2;
                     --string-color: #a3eea0;
                     --number-color: #d19a66;
                     --boolean-color: #4ba7ef;
                     --null-color: #df9cf3;
-                    --key-color: rgb(111, 179, 210);
+                    --property-color: #6fb3d2;
                     --font-family: monaco, Consolas, 'Lucida Console', monospace;
                     --preview-color: rgba(222, 175, 143, 0.9);
 
@@ -858,7 +873,7 @@ parcelRequire = (function(e, r, t, n) {
                 }
 
                 .key {
-                    color: var(--key-color, #f9857b);
+                    color: var(--property-color, #f9857b);
                     display: inline-block;
                 }
 
@@ -871,7 +886,7 @@ parcelRequire = (function(e, r, t, n) {
                     content: '▶';
                     transition: transform 195ms ease-in;
                     transform: rotate(90deg);
-                    color: var(--key-color);
+                    color: var(--property-color);
                 }
 
                 .collapsable.collapsableCollapsed:before {
@@ -932,7 +947,7 @@ parcelRequire = (function(e, r, t, n) {
                         );
                     }
                 }
-                customElements.define(m.is, m), customElements.define(b.is, b), customElements.define(h.is, h);
+                customElements.define(h.is, h), customElements.define(m.is, m), customElements.define(f.is, f);
             },
             { '@tiny-lit/element': 'aqGt', '@tiny-lit/core': 'gjkP', './utils': 'K0yk' }
         ]
@@ -941,4 +956,4 @@ parcelRequire = (function(e, r, t, n) {
     ['H99C'],
     null
 );
-//# sourceMappingURL=/json-viewer/src.6c6695fe.js.map
+//# sourceMappingURL=/json-viewer/src.0e945c22.js.map
