@@ -19,7 +19,7 @@
         "url": "https://github.com/alenaksu/json-viewer/issues"
     },
     "scripts": {
-        "start": "parcel ./index.html",
+        "start": "parcel ./website/index.html",
         "build": "rm -rf dist && rollup -c rollup.config.js",
         "demo": "rm -rf docs/ && parcel build index.html --public-url /json-viewer/ -d docs/"
     },
@@ -30,6 +30,7 @@
         "@babel/core": "^7.7.7",
         "@babel/plugin-proposal-class-properties": "^7.7.4",
         "@babel/preset-modules": "^0.1.2",
+        "comlink": "^4.2.0",
         "husky": "^3.1.0",
         "parcel-bundler": "^1.12.4",
         "postcss-modules": "^1.1.0",

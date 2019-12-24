@@ -12,7 +12,18 @@
                 display: flex;
                 flex-direction: column;
             }
+
+            .container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: 100px 1fr;
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
+            }
+
             .header {
+                grid-area: 1 / 1 / 2 / 6;
+
                 color: #fff;
                 font-family: Arial, Helvetica, sans-serif;
                 text-align: center;
@@ -21,24 +32,28 @@
                 align-items: center;
                 justify-content: center;
             }
+            .panel-left {
+                grid-area: 2 / 1 / 3 / 2;
+            }
+            .panel-right {
+                grid-area: 2 / 2 / 3 / 3;
+            }
+
             .header > * {
                 margin: 0 20px;
             }
-            .container {
-                display: flex;
-                flex-direction: row;
-                height: 100%;
-                width: 100%;
-            }
+
             .panel {
                 max-height: 100%;
                 overflow-y: auto;
                 padding: 20px;
                 width: 50%;
             }
+
             .panel:not(:last-child) {
                 border-right: 1px solid #666;
             }
+
             .CodeMirror,
             textarea {
                 display: block;
