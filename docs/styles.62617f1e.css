@@ -90,7 +90,7 @@ html {
     opacity: 1;
 }
 .github-corner {
-    height: 100;
+    height: 100%;
 }
 .github-corner > svg {
     fill: #fff;
@@ -180,4 +180,4 @@ html {
         width: 1344px;
     }
 }
-/*# sourceMappingURL=/json-viewer/styles.2bd5b0b4.css.map */
+/*# sourceMappingURL=/json-viewer/styles.62617f1e.css.map */
