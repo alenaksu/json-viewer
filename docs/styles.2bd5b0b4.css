@@ -89,6 +89,9 @@ html {
 #toggle-panel:hover {
     opacity: 1;
 }
+.github-corner {
+    height: 100;
+}
 .github-corner > svg {
     fill: #fff;
     color: var(--background);
@@ -177,4 +180,4 @@ html {
         width: 1344px;
     }
 }
-/*# sourceMappingURL=/json-viewer/styles.fa93ed94.css.map */
+/*# sourceMappingURL=/json-viewer/styles.2bd5b0b4.css.map */

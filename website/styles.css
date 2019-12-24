@@ -106,6 +106,10 @@ body {
     opacity: 1;
 }
 
+.github-corner {
+    height: 100;
+}
+
 .github-corner > svg {
     fill: #fff;
     color: var(--background);
