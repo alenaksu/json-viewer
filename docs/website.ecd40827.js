@@ -1180,27 +1180,29 @@ parcelRequire = (function(e, r, t, n) {
                     c = document.querySelector('json-viewer'),
                     a = document.querySelector('#toggle-panel'),
                     s = document.querySelector('#container'),
-                    i = (e, t = 500) => {
+                    i = document.querySelector('#link-loader'),
+                    u = (e, t = 500) => {
                         let r;
                         return (...n) => {
                             clearTimeout(r), (r = setTimeout(() => e(...n), t));
                         };
                     },
-                    u = e => {
+                    l = e => {
                         try {
                             c.data = JSON.parse(e);
                         } catch (t) {
                             c.data = t.message;
                         }
                     },
-                    l = () => {
-                        const e = d.getValue();
-                        u(e),
+                    d = () => {
+                        const e = p.getValue();
+                        l(e),
+                            (i.hidden = !1),
                             n.crush(e).then(e => {
-                                location.hash = e;
+                                (location.hash = e), (i.hidden = !0);
                             });
                     },
-                    d = CodeMirror.fromTextArea(o, {
+                    p = CodeMirror.fromTextArea(o, {
                         mode: { name: 'javascript', json: !0 },
                         lineNumbers: !0,
                         theme: 'jsv',
@@ -1210,9 +1212,9 @@ parcelRequire = (function(e, r, t, n) {
                 a.addEventListener('click', () => {
                     s.classList.toggle('collapsed');
                 }),
-                    d.on('change', i(l)),
+                    p.on('change', u(d)),
                     n.uncrush(location.hash.slice(1)).then(e => {
-                        e ? (d.setValue(e), s.classList.add('collapsed')) : l();
+                        e ? (p.setValue(e), s.classList.add('collapsed')) : d();
                     });
             },
             {
@@ -1226,4 +1228,4 @@ parcelRequire = (function(e, r, t, n) {
     ['Focm'],
     null
 );
-//# sourceMappingURL=/json-viewer/website.980b2ba6.js.map
+//# sourceMappingURL=/json-viewer/website.ecd40827.js.map

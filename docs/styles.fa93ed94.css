@@ -41,6 +41,8 @@ html {
 .menu {
     display: flex;
     flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
 }
 .panel {
     max-height: 100%;
@@ -98,15 +100,15 @@ html {
 .loader,
 .loader:after {
     border-radius: 50%;
-    width: 10em;
-    height: 10em;
+    width: 1rem;
+    height: 1rem;
 }
 .loader {
-    margin: 60px auto;
+    margin: 0 10px;
     font-size: 10px;
     position: relative;
     text-indent: -9999em;
-    border: 1.1em solid hsla(0, 0%, 100%, 0.2);
+    border: 0.1rem solid hsla(0, 0%, 100%, 0.2);
     border-left-color: #fff;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
@@ -175,4 +177,4 @@ html {
         width: 1344px;
     }
 }
-/*# sourceMappingURL=/json-viewer/styles.37ac9470.css.map */
+/*# sourceMappingURL=/json-viewer/styles.fa93ed94.css.map */

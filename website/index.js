@@ -7,6 +7,7 @@ const json = document.querySelector('#json');
 const viewer = document.querySelector('json-viewer');
 const toggle = document.querySelector('#toggle-panel');
 const container = document.querySelector('#container');
+const lnkLoader = document.querySelector('#link-loader');
 
 const debounce = (fn, timeout = 500) => {
     let timeoutId;
@@ -28,8 +29,10 @@ const handleEditorChange = () => {
     const jsonString = editor.getValue();
     loadJson(jsonString);
 
+    lnkLoader.hidden = false;
     JSONCrush.crush(jsonString).then(value => {
         location.hash = value;
+        lnkLoader.hidden = true;
     });
 };
 
