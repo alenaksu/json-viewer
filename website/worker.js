@@ -176,7 +176,12 @@ function swap(string, forward = 1) {
     return string;
 }
 
+function parse(jsonString) {
+    return JSON.parse(jsonString);
+}
+
 Comlink.expose({
     crush,
-    uncrush
+    uncrush,
+    parse
 });

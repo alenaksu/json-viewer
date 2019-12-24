@@ -1,13 +1,13 @@
 import '../src';
 import * as Comlink from 'comlink';
 
-const JSONCrush = Comlink.wrap(new Worker('JSONCrush.js'));
+const worker = Comlink.wrap(new Worker('worker.js'));
 
 const json = document.querySelector('#json');
 const viewer = document.querySelector('json-viewer');
 const toggle = document.querySelector('#toggle-panel');
 const container = document.querySelector('#container');
-const lnkLoader = document.querySelector('#link-loader');
+const loader = document.querySelector('#loader');
 
 const debounce = (fn, timeout = 500) => {
     let timeoutId;
@@ -17,22 +17,27 @@ const debounce = (fn, timeout = 500) => {
     };
 };
 
-const loadJson = data => {
-    try {
-        viewer.data = JSON.parse(data);
-    } catch (ex) {
-        viewer.data = ex.message;
-    }
-};
+const loadJson = data =>
+    worker
+        .parse(data)
+        .then(data => {
+            viewer.data = data;
+        })
+        .catch(ex => {
+            viewer.data = ex.message;
+        });
 
 const handleEditorChange = () => {
     const jsonString = editor.getValue();
-    loadJson(jsonString);
 
-    lnkLoader.hidden = false;
-    JSONCrush.crush(jsonString).then(value => {
-        location.hash = value;
-        lnkLoader.hidden = true;
+    loader.hidden = false;
+    Promise.all([
+        worker.crush(jsonString).then(value => {
+            location.hash = value;
+        }),
+        loadJson(jsonString)
+    ]).then(() => {
+        loader.hidden = true;
     });
 };
 
@@ -58,7 +63,7 @@ toggle.addEventListener('click', () => {
 
 editor.on('change', debounce(handleEditorChange));
 
-JSONCrush.uncrush(location.hash.slice(1)).then(value => {
+worker.uncrush(location.hash.slice(1)).then(value => {
     if (value) {
         editor.setValue(value);
         container.classList.add('collapsed');
