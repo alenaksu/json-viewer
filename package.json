@@ -21,7 +21,7 @@
     "scripts": {
         "start": "parcel ./website/index.html",
         "build": "rm -rf dist && rollup -c rollup.config.js",
-        "demo": "rm -rf docs/ && parcel build index.html --public-url /json-viewer/ -d docs/"
+        "website": "rm -rf docs/ && parcel build website/index.html --public-url /json-viewer/ -d docs/"
     },
     "dependencies": {
         "@tiny-lit/element": "^2.0.0-alpha.1"

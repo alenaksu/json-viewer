@@ -59,7 +59,7 @@ parcelRequire = (function(e, r, t, n) {
     return f;
 })(
     {
-        EUVP: [
+        bIPL: [
             function(require, module, exports) {
                 'use strict';
                 function t(t) {
@@ -100,7 +100,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             {}
         ],
-        MrFm: [
+        KHHI: [
             function(require, module, exports) {
                 'use strict';
                 function e(e = '') {
@@ -193,7 +193,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             {}
         ],
-        Q0P1: [
+        lNj3: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -239,7 +239,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             {}
         ],
-        Pqg1: [
+        Al7m: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -324,9 +324,9 @@ parcelRequire = (function(e, r, t, n) {
                 }
                 exports.NodeExpression = r;
             },
-            { './utils': 'MrFm', './scheduler': 'Q0P1' }
+            { './utils': 'KHHI', './scheduler': 'lNj3' }
         ],
-        OUbi: [
+        gQwV: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -380,9 +380,9 @@ parcelRequire = (function(e, r, t, n) {
                 }
                 r.acceptNode = r;
             },
-            { './expressions': 'Pqg1', './utils': 'MrFm' }
+            { './expressions': 'Al7m', './utils': 'KHHI' }
         ],
-        zbKw: [
+        sawg: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.parseTemplate = o);
@@ -423,9 +423,9 @@ parcelRequire = (function(e, r, t, n) {
                     return { fragment: i, expressions: (0, e.resolve)(i, c.expressions) };
                 }
             },
-            { './linker': 'OUbi', './utils': 'MrFm' }
+            { './linker': 'gQwV', './utils': 'KHHI' }
         ],
-        Wi2R: [
+        RVMe: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.Template = void 0);
@@ -460,9 +460,9 @@ parcelRequire = (function(e, r, t, n) {
                 }
                 (exports.Template = i), (e = s.TemplateSymbol);
             },
-            { './parser': 'zbKw', './utils': 'MrFm' }
+            { './parser': 'sawg', './utils': 'KHHI' }
         ],
-        gjkP: [
+        wdhh: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -497,9 +497,9 @@ parcelRequire = (function(e, r, t, n) {
                 }
                 n.instances = new WeakMap();
             },
-            { './template': 'Wi2R', './scheduler': 'Q0P1', './utils': 'MrFm' }
+            { './template': 'RVMe', './scheduler': 'lNj3', './utils': 'KHHI' }
         ],
-        Letq: [
+        a6MD: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.withElement = e);
@@ -537,9 +537,9 @@ parcelRequire = (function(e, r, t, n) {
                     };
                 }
             },
-            { '@tiny-lit/core': 'gjkP' }
+            { '@tiny-lit/core': 'wdhh' }
         ],
-        rI01: [
+        RBWd: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.Element = void 0);
@@ -548,9 +548,9 @@ parcelRequire = (function(e, r, t, n) {
                 const r = (0, e.withProps)((0, t.withElement)(HTMLElement));
                 exports.Element = r;
             },
-            { './withProps': 'EUVP', './withElement': 'Letq' }
+            { './withProps': 'bIPL', './withElement': 'a6MD' }
         ],
-        aqGt: [
+        uZkB: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -576,9 +576,9 @@ parcelRequire = (function(e, r, t, n) {
                     t = require('./withProps'),
                     r = require('./withElement');
             },
-            { './Element': 'rI01', './withProps': 'EUVP', './withElement': 'Letq' }
+            { './Element': 'RBWd', './withProps': 'bIPL', './withElement': 'a6MD' }
         ],
-        K0yk: [
+        O3AG: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }),
@@ -677,9 +677,9 @@ parcelRequire = (function(e, r, t, n) {
                     );
                 }
             },
-            { '@tiny-lit/core/dist/esm/utils': 'MrFm' }
+            { '@tiny-lit/core/dist/esm/utils': 'KHHI' }
         ],
-        H99C: [
+        uBxZ: [
             function(require, module, exports) {
                 'use strict';
                 var e = require('@tiny-lit/element'),
@@ -949,11 +949,281 @@ parcelRequire = (function(e, r, t, n) {
                 }
                 customElements.define(h.is, h), customElements.define(m.is, m), customElements.define(f.is, f);
             },
-            { '@tiny-lit/element': 'aqGt', '@tiny-lit/core': 'gjkP', './utils': 'K0yk' }
+            { '@tiny-lit/element': 'uZkB', '@tiny-lit/core': 'wdhh', './utils': 'O3AG' }
+        ],
+        JZPE: [
+            function(require, module, exports) {
+                'use strict';
+                Object.defineProperty(exports, '__esModule', { value: !0 }),
+                    (exports.expose = a),
+                    (exports.proxy = g),
+                    (exports.transfer = m),
+                    (exports.windowEndpoint = h),
+                    (exports.wrap = c),
+                    (exports.transferHandlers = exports.releaseProxy = exports.proxyMarker = exports.createEndpoint = void 0);
+                const e = Symbol('Comlink.proxy');
+                exports.proxyMarker = e;
+                const t = Symbol('Comlink.endpoint');
+                exports.createEndpoint = t;
+                const n = Symbol('Comlink.releaseProxy');
+                exports.releaseProxy = n;
+                const r = new WeakSet(),
+                    s = new Map([
+                        [
+                            'proxy',
+                            {
+                                canHandle: t => t && t[e],
+                                serialize(e) {
+                                    const { port1: t, port2: n } = new MessageChannel();
+                                    return a(e, t), [n, [n]];
+                                },
+                                deserialize: e => (e.start(), c(e))
+                            }
+                        ],
+                        [
+                            'throw',
+                            {
+                                canHandle: e => r.has(e),
+                                serialize(e) {
+                                    const t = e instanceof Error;
+                                    let n = e;
+                                    return t && (n = { isError: t, message: e.message, stack: e.stack }), [n, []];
+                                },
+                                deserialize(e) {
+                                    if (e.isError) throw Object.assign(new Error(), e);
+                                    throw e;
+                                }
+                            }
+                        ]
+                    ]);
+                function a(e, t = self) {
+                    t.addEventListener('message', function n(s) {
+                        if (!s || !s.data) return;
+                        const { id: o, type: c, path: p } = Object.assign({ path: [] }, s.data),
+                            u = (s.data.argumentList || []).map(x);
+                        let d;
+                        try {
+                            const t = p.slice(0, -1).reduce((e, t) => e[t], e),
+                                n = p.reduce((e, t) => e[t], e);
+                            switch (c) {
+                                case 0:
+                                    d = n;
+                                    break;
+                                case 1:
+                                    (t[p.slice(-1)[0]] = x(s.data.value)), (d = !0);
+                                    break;
+                                case 2:
+                                    d = n.apply(t, u);
+                                    break;
+                                case 3:
+                                    d = g(new n(...u));
+                                    break;
+                                case 4:
+                                    {
+                                        const { port1: t, port2: n } = new MessageChannel();
+                                        a(e, n), (d = m(t, [t]));
+                                    }
+                                    break;
+                                case 5:
+                                    d = void 0;
+                            }
+                        } catch (l) {
+                            (d = l), r.add(l);
+                        }
+                        Promise.resolve(d)
+                            .catch(e => (r.add(e), e))
+                            .then(e => {
+                                const [r, s] = y(e);
+                                t.postMessage(Object.assign(Object.assign({}, r), { id: o }), s),
+                                    5 === c && (t.removeEventListener('message', n), i(t));
+                            });
+                    }),
+                        t.start && t.start();
+                }
+                function o(e) {
+                    return 'MessagePort' === e.constructor.name;
+                }
+                function i(e) {
+                    o(e) && e.close();
+                }
+                function c(e, t) {
+                    return u(e, [], t);
+                }
+                function p(e) {
+                    if (e) throw new Error('Proxy has been released and is not useable');
+                }
+                function u(e, r = [], s = function() {}) {
+                    let a = !1;
+                    const o = new Proxy(s, {
+                        get(t, s) {
+                            if ((p(a), s === n))
+                                return () =>
+                                    b(e, { type: 5, path: r.map(e => e.toString()) }).then(() => {
+                                        i(e), (a = !0);
+                                    });
+                            if ('then' === s) {
+                                if (0 === r.length) return { then: () => o };
+                                const t = b(e, { type: 0, path: r.map(e => e.toString()) }).then(x);
+                                return t.then.bind(t);
+                            }
+                            return u(e, [...r, s]);
+                        },
+                        set(t, n, s) {
+                            p(a);
+                            const [o, i] = y(s);
+                            return b(e, { type: 1, path: [...r, n].map(e => e.toString()), value: o }, i).then(x);
+                        },
+                        apply(n, s, o) {
+                            p(a);
+                            const i = r[r.length - 1];
+                            if (i === t) return b(e, { type: 4 }).then(x);
+                            if ('bind' === i) return u(e, r.slice(0, -1));
+                            const [c, d] = l(o);
+                            return b(e, { type: 2, path: r.map(e => e.toString()), argumentList: c }, d).then(x);
+                        },
+                        construct(t, n) {
+                            p(a);
+                            const [s, o] = l(n);
+                            return b(e, { type: 3, path: r.map(e => e.toString()), argumentList: s }, o).then(x);
+                        }
+                    });
+                    return o;
+                }
+                function d(e) {
+                    return Array.prototype.concat.apply([], e);
+                }
+                function l(e) {
+                    const t = e.map(y);
+                    return [t.map(e => e[0]), d(t.map(e => e[1]))];
+                }
+                exports.transferHandlers = s;
+                const f = new WeakMap();
+                function m(e, t) {
+                    return f.set(e, t), e;
+                }
+                function g(t) {
+                    return Object.assign(t, { [e]: !0 });
+                }
+                function h(e, t = self, n = '*') {
+                    return {
+                        postMessage: (t, r) => e.postMessage(t, n, r),
+                        addEventListener: t.addEventListener.bind(t),
+                        removeEventListener: t.removeEventListener.bind(t)
+                    };
+                }
+                function y(e) {
+                    for (const [t, n] of s)
+                        if (n.canHandle(e)) {
+                            const [r, s] = n.serialize(e);
+                            return [{ type: 3, name: t, value: r }, s];
+                        }
+                    return [{ type: 0, value: e }, f.get(e) || []];
+                }
+                function x(e) {
+                    switch (e.type) {
+                        case 3:
+                            return s.get(e.name).deserialize(e.value);
+                        case 0:
+                            return e.value;
+                    }
+                }
+                function b(e, t, n) {
+                    return new Promise(r => {
+                        const s = v();
+                        e.addEventListener('message', function t(n) {
+                            n.data && n.data.id && n.data.id === s && (e.removeEventListener('message', t), r(n.data));
+                        }),
+                            e.start && e.start(),
+                            e.postMessage(Object.assign({ id: s }, t), n);
+                    });
+                }
+                function v() {
+                    return new Array(4)
+                        .fill(0)
+                        .map(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16))
+                        .join('-');
+                }
+            },
+            {}
+        ],
+        Focm: [
+            function(require, module, exports) {
+                'use strict';
+                require('../src');
+                var e = r(require('comlink'));
+                function t() {
+                    if ('function' != typeof WeakMap) return null;
+                    var e = new WeakMap();
+                    return (
+                        (t = function() {
+                            return e;
+                        }),
+                        e
+                    );
+                }
+                function r(e) {
+                    if (e && e.__esModule) return e;
+                    if (null === e || ('object' != typeof e && 'function' != typeof e)) return { default: e };
+                    var r = t();
+                    if (r && r.has(e)) return r.get(e);
+                    var n = {},
+                        o = Object.defineProperty && Object.getOwnPropertyDescriptor;
+                    for (var c in e)
+                        if (Object.prototype.hasOwnProperty.call(e, c)) {
+                            var a = o ? Object.getOwnPropertyDescriptor(e, c) : null;
+                            a && (a.get || a.set) ? Object.defineProperty(n, c, a) : (n[c] = e[c]);
+                        }
+                    return (n.default = e), r && r.set(e, n), n;
+                }
+                const n = e.wrap(new Worker('/json-viewer/JSONCrush.bad90d4a.js')),
+                    o = document.querySelector('#json'),
+                    c = document.querySelector('json-viewer'),
+                    a = document.querySelector('#toggle-panel'),
+                    s = document.querySelector('#container'),
+                    i = (e, t = 500) => {
+                        let r;
+                        return (...n) => {
+                            clearTimeout(r), (r = setTimeout(() => e(...n), t));
+                        };
+                    },
+                    u = e => {
+                        try {
+                            c.data = JSON.parse(e);
+                        } catch (t) {
+                            c.data = t.message;
+                        }
+                    },
+                    l = () => {
+                        const e = d.getValue();
+                        u(e),
+                            n.crush(e).then(e => {
+                                location.hash = e;
+                            });
+                    },
+                    d = CodeMirror.fromTextArea(o, {
+                        mode: { name: 'javascript', json: !0 },
+                        lineNumbers: !0,
+                        theme: 'jsv',
+                        styleActiveLine: !0,
+                        lint: { esversion: 6 }
+                    });
+                a.addEventListener('click', () => {
+                    s.classList.toggle('collapsed');
+                }),
+                    d.on('change', i(l)),
+                    n.uncrush(location.hash.slice(1)).then(e => {
+                        e ? (d.setValue(e), s.classList.add('collapsed')) : l();
+                    });
+            },
+            {
+                '../src': 'uBxZ',
+                comlink: 'JZPE',
+                './JSONCrush.js': [['JSONCrush.bad90d4a.js', 'FTAk'], 'JSONCrush.bad90d4a.js.map', 'FTAk']
+            }
         ]
     },
     {},
-    ['H99C'],
+    ['Focm'],
     null
 );
-//# sourceMappingURL=/json-viewer/src.0e945c22.js.map
+//# sourceMappingURL=/json-viewer/website.980b2ba6.js.map
