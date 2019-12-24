@@ -1168,59 +1168,65 @@ parcelRequire = (function(e, r, t, n) {
                     if (r && r.has(e)) return r.get(e);
                     var n = {},
                         o = Object.defineProperty && Object.getOwnPropertyDescriptor;
-                    for (var c in e)
-                        if (Object.prototype.hasOwnProperty.call(e, c)) {
-                            var a = o ? Object.getOwnPropertyDescriptor(e, c) : null;
-                            a && (a.get || a.set) ? Object.defineProperty(n, c, a) : (n[c] = e[c]);
+                    for (var a in e)
+                        if (Object.prototype.hasOwnProperty.call(e, a)) {
+                            var c = o ? Object.getOwnPropertyDescriptor(e, a) : null;
+                            c && (c.get || c.set) ? Object.defineProperty(n, a, c) : (n[a] = e[a]);
                         }
                     return (n.default = e), r && r.set(e, n), n;
                 }
-                const n = e.wrap(new Worker('/json-viewer/JSONCrush.bad90d4a.js')),
+                const n = e.wrap(new Worker('/json-viewer/worker.0101514c.js')),
                     o = document.querySelector('#json'),
-                    c = document.querySelector('json-viewer'),
-                    a = document.querySelector('#toggle-panel'),
+                    a = document.querySelector('json-viewer'),
+                    c = document.querySelector('#toggle-panel'),
                     s = document.querySelector('#container'),
-                    i = document.querySelector('#link-loader'),
-                    u = (e, t = 500) => {
+                    i = document.querySelector('#loader'),
+                    l = (e, t = 500) => {
                         let r;
                         return (...n) => {
                             clearTimeout(r), (r = setTimeout(() => e(...n), t));
                         };
                     },
-                    l = e => {
-                        try {
-                            c.data = JSON.parse(e);
-                        } catch (t) {
-                            c.data = t.message;
-                        }
-                    },
+                    u = e =>
+                        n
+                            .parse(e)
+                            .then(e => {
+                                a.data = e;
+                            })
+                            .catch(e => {
+                                a.data = e.message;
+                            }),
                     d = () => {
-                        const e = p.getValue();
-                        l(e),
-                            (i.hidden = !1),
-                            n.crush(e).then(e => {
-                                (location.hash = e), (i.hidden = !0);
+                        const e = f.getValue();
+                        (i.hidden = !1),
+                            Promise.all([
+                                n.crush(e).then(e => {
+                                    location.hash = e;
+                                }),
+                                u(e)
+                            ]).then(() => {
+                                i.hidden = !0;
                             });
                     },
-                    p = CodeMirror.fromTextArea(o, {
+                    f = CodeMirror.fromTextArea(o, {
                         mode: { name: 'javascript', json: !0 },
                         lineNumbers: !0,
                         theme: 'jsv',
                         styleActiveLine: !0,
                         lint: { esversion: 6 }
                     });
-                a.addEventListener('click', () => {
+                c.addEventListener('click', () => {
                     s.classList.toggle('collapsed');
                 }),
-                    p.on('change', u(d)),
+                    f.on('change', l(d)),
                     n.uncrush(location.hash.slice(1)).then(e => {
-                        e ? (p.setValue(e), s.classList.add('collapsed')) : d();
+                        e ? (f.setValue(e), s.classList.add('collapsed')) : d();
                     });
             },
             {
                 '../src': 'uBxZ',
                 comlink: 'JZPE',
-                './JSONCrush.js': [['JSONCrush.bad90d4a.js', 'FTAk'], 'JSONCrush.bad90d4a.js.map', 'FTAk']
+                './worker.js': [['worker.0101514c.js', 'iltZ'], 'worker.0101514c.js.map', 'iltZ']
             }
         ]
     },
@@ -1228,4 +1234,4 @@ parcelRequire = (function(e, r, t, n) {
     ['Focm'],
     null
 );
-//# sourceMappingURL=/json-viewer/website.ecd40827.js.map
+//# sourceMappingURL=/json-viewer/website.f3fc9507.js.map

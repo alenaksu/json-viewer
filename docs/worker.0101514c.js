@@ -254,7 +254,7 @@ parcelRequire = (function(e, r, t, n) {
             },
             {}
         ],
-        FTAk: [
+        iltZ: [
             function(require, module, exports) {
                 'use strict';
                 Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.crush = n), (exports.uncrush = o);
@@ -371,13 +371,16 @@ parcelRequire = (function(e, r, t, n) {
                     else for (let o = r.length; o--; ) e = n(e, r[o]);
                     return e;
                 }
-                e.expose({ crush: n, uncrush: o });
+                function i(e) {
+                    return JSON.parse(e);
+                }
+                e.expose({ crush: n, uncrush: o, parse: i });
             },
             { comlink: 'JZPE' }
         ]
     },
     {},
-    ['FTAk'],
+    ['iltZ'],
     null
 );
-//# sourceMappingURL=/json-viewer/JSONCrush.bad90d4a.js.map
+//# sourceMappingURL=/json-viewer/worker.0101514c.js.map
