@@ -1,7 +1,14 @@
-import { isTemplate } from '@tiny-lit/core/dist/esm/utils';
+const TYPE_NULL = 'null';
+const TYPE_ARRAY = 'array';
+const TYPE_OBJECT = 'object';
+const TYPE_STRING = 'string';
+
+export function isRegex(obj) {
+    return obj instanceof RegExp;
+}
 
 export function getType(obj) {
-    return obj === null ? 'null' : Array.isArray(obj) ? 'array' : typeof obj;
+    return obj === null ? TYPE_NULL : Array.isArray(obj) ? TYPE_ARRAY : typeof obj;
 }
 
 export function isPrimitive(obj) {
@@ -9,12 +16,16 @@ export function isPrimitive(obj) {
 }
 
 export function isNode(obj) {
-    return !!obj && (!!obj.nodeType || isTemplate(obj));
+    return !!obj && !!obj.nodeType;
+}
+
+export function isPrimitiveOrNode(obj) {
+    return isPrimitive(obj) || isNode(obj);
 }
 
 export function JsonObject(obj) {
     try {
-        if (typeof obj === 'string') return JSON.parse(obj);
+        if (typeof obj === TYPE_STRING) return JSON.parse(obj);
     } catch (ex) {
         console.error(ex);
     }
@@ -36,31 +47,79 @@ export function generateNodePreview(node, options) {
     const keys = objectNodes.slice(0, nodeCount);
     const preview = [isArray ? '[ ' : '{ '];
 
-    preview.push(
-        keys
-            .reduce((allNodesPreview, key) => {
-                const nodePreview = [];
-                const nodeValue = node[key];
-                const nodeType = getType(nodeValue);
+    const childPreviews = [];
+    for (const key of keys) {
+        const nodePreview = [];
+        const nodeValue = node[key];
+        const nodeType = getType(nodeValue);
 
-                if (!isArray) nodePreview.push(`${key}: `);
+        if (!isArray) nodePreview.push(`${key}: `);
 
-                if (nodeType === 'object') nodePreview.push('{ ... }');
-                else if (nodeType === 'array') nodePreview.push('[ ... ]');
-                else if (nodeType === 'string')
-                    nodePreview.push(
-                        `"${nodeValue.substring(0, maxLength)}${nodeValue.length > maxLength ? '...' : ''}"`
-                    );
-                else nodePreview.push(String(nodeValue));
+        if (nodeType === TYPE_OBJECT) nodePreview.push('{ ... }');
+        else if (nodeType === TYPE_ARRAY) nodePreview.push('[ ... ]');
+        else if (nodeType === TYPE_STRING)
+            nodePreview.push(`"${nodeValue.substring(0, maxLength)}${nodeValue.length > maxLength ? '...' : ''}"`);
+        else nodePreview.push(String(nodeValue));
 
-                return allNodesPreview.concat(nodePreview.join(''));
-            }, [])
-            .join(', ')
-    );
+        childPreviews.push(nodePreview.join(''));
+    }
+    if (objectNodes.length > nodeCount) childPreviews.push('...');
 
-    if (objectNodes.length > nodeCount) preview.push(', ...');
-
+    preview.push(childPreviews.join(', '));
     preview.push(isArray ? ' ]' : ' }');
 
     return preview.join('');
+}
+
+/**
+ *
+ * @param {any} obj
+ * @param {any} previousValue
+ */
+export function* deepTraverse(obj) {
+    const stack = [['', obj, []]];
+    while (stack.length) {
+        const [path, node, parents] = stack.shift();
+
+        if (path) {
+            yield [node, path, parents];
+        }
+
+        if (!isPrimitive(node)) {
+            for (const [key, value] of Object.entries(node)) {
+                stack.push([`${path}${path ? '.' : ''}${key}`, value, [...parents, path]]);
+            }
+        }
+    }
+}
+
+/**
+ *
+ * @param {string} str
+ * @param {string} glob
+ */
+export function checkGlob(str, glob) {
+    str = str.split('.');
+    glob = glob.split('.');
+
+    const isStar = (s) => s === '*';
+    const isGlobStar = (s) => s === '**';
+
+    let strIndex = 0;
+    let globIndex = 0;
+
+    while (strIndex < str.length) {
+        const globPart = glob[globIndex];
+        const strPart = str[strIndex];
+
+        if (globPart === strPart || isStar(globPart)) {
+            globIndex++;
+            strIndex++;
+        } else if (isGlobStar(globPart)) {
+            globIndex++;
+            strIndex = str.length - (glob.length - globIndex);
+        } else return false;
+    }
+
+    return globIndex === glob.length;
 }

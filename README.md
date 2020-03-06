@@ -37,6 +37,19 @@ import '@alenaksu/json-viewer';
 
 -   `data` - get/set the JSON object
 
+**Methods**
+
+-   `filter (regexOrPath: RegExp|string) => void` | Mantains only the nodes that match the given criteria
+-   `resetFilter () => void` | Clear the filter
+
+-   `expand (regexOrPath: RegExp|string) => void` | Expand all the nodes that match the given criteria
+-   `expandAll () => void` | Alias for `expand('**')`
+
+-   `collapse (regexOrPath: RegExp|string) => void` | Collapse all the nodes that match the given criteria
+-   `collapseAll () => void` | Alias for `collapse('**')`
+
+-   `search (regexOrPath: RegExp|string) => Iterator` | Return and iterator with which is possible to go through all the matched nodes. It scrolls the page to the node and highlights it.
+
 ### Basic Usage
 
 Put the JSON inside the element
@@ -60,6 +73,22 @@ Put the JSON inside the element
 </script>
 ```
 
+### Basic interactions
+
+```js
+const viewer = document.querySelector('#json');
+
+// Expand/collapse/filter
+viewer.expand('**.name');
+viewer.collapse(/name/);
+viewer.filter('test.*.name');
+
+// Search
+const searchIterator = viewer.search('value');
+// Scrolls to the node and highlight the value
+searchIterator.next();
+```
+
 ### Theming
 
 The appereance of the component can be modified by changing the CSS variables
@@ -80,6 +109,9 @@ json-viewver {
 
     /* Collapsed node preview */
     --preview-color: rgba(222, 175, 143, 0.9);
+
+    /* Search highlight color */
+    --highlight-color: #6fb3d2;
 }
 ```
 

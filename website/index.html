@@ -9,13 +9,9 @@
     <body>
         <div class="container" id="container">
             <div class="header">
-                <h1>
-                    @alenaksu/json-viewer
-                </h1>
+                <h1>@alenaksu/json-viewer</h1>
                 <div class="menu">
-                    <small>
-                        Copy the generated link to share this view
-                    </small>
+                    <small> Copy the generated link to share this view </small>
                     <div id="loader" class="loader"></div>
                 </div>
                 <a
@@ -33,7 +29,7 @@ Z"
 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3
 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
                             fill="currentColor"
-                            style="transform-origin: 130px 106px;"
+                            style="transform-origin: 130px 106px"
                             class="octo-arm"
                         ></path>
                         <path
@@ -47,14 +43,21 @@ C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
                             fill="currentColor"
                             class="octo-body"
-                        ></path></svg
-                ></a>
+                        ></path>
+                    </svg>
+                </a>
             </div>
             <div class="panel panel-left">
                 <div title="Toggle panel" id="toggle-panel"></div>
                 <textarea id="json">{ "sample": "json" }</textarea>
             </div>
             <div class="panel panel-right">
+                <div id="actions-toolbar">
+                    <button id="expand">Expand All</button>
+                    <button id="collapse">Collapse All</button>
+                    <input id="filter" placeholder="filter" />
+                    <input id="search" placeholder="search" />
+                </div>
                 <json-viewer></json-viewer>
             </div>
         </div>
