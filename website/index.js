@@ -8,6 +8,35 @@ const viewer = document.querySelector('json-viewer');
 const toggle = document.querySelector('#toggle-panel');
 const container = document.querySelector('#container');
 const loader = document.querySelector('#loader');
+const expand = document.querySelector('#expand');
+const collapse = document.querySelector('#collapse');
+const filter = document.querySelector('#filter');
+const search = document.querySelector('#search');
+let currentSearch;
+
+expand.addEventListener('click', (e) => {
+    e.preventDefault();
+    viewer.expandAll();
+});
+
+collapse.addEventListener('click', (e) => {
+    e.preventDefault();
+    viewer.collapseAll();
+});
+
+filter.addEventListener('change', () => {
+    if (!filter.value) viewer.resetFilter();
+    else viewer.filter(filter.value);
+});
+
+search.addEventListener('input', () => {
+    currentSearch = viewer.search(search.value);
+});
+search.addEventListener('keyup', (e) => {
+    if (currentSearch && e.keyCode === 13) {
+        currentSearch.next();
+    }
+});
 
 const debounce = (fn, timeout = 500) => {
     let timeoutId;
@@ -17,13 +46,13 @@ const debounce = (fn, timeout = 500) => {
     };
 };
 
-const loadJson = data =>
+const loadJson = (data) =>
     worker
         .parse(data)
-        .then(data => {
+        .then((data) => {
             viewer.data = data;
         })
-        .catch(ex => {
+        .catch((ex) => {
             viewer.data = ex.message;
         });
 
@@ -32,7 +61,7 @@ const handleEditorChange = () => {
 
     loader.hidden = false;
     Promise.all([
-        worker.crush(jsonString).then(value => {
+        worker.crush(jsonString).then((value) => {
             location.hash = value;
         }),
         loadJson(jsonString)
@@ -63,7 +92,7 @@ toggle.addEventListener('click', () => {
 
 editor.on('change', debounce(handleEditorChange));
 
-worker.uncrush(location.hash.slice(1)).then(value => {
+worker.uncrush(location.hash.slice(1)).then((value) => {
     if (value) {
         editor.setValue(value);
         container.classList.add('collapsed');
