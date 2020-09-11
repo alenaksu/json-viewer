@@ -72,7 +72,7 @@ html {
     overflow: hidden;
 }
 #toggle-panel {
-    background: transparent url(/json-viewer/eye-solid.f19bdd9c.svg) no-repeat 50%;
+    background: transparent url(eye-solid.bb5cffc9.svg) no-repeat 50%;
     position: absolute;
     z-index: 101;
     right: 30px;
@@ -84,7 +84,7 @@ html {
     cursor: pointer;
 }
 .container.collapsed #toggle-panel {
-    background: transparent url(/json-viewer/eye-slash-solid.9d6eb359.svg) no-repeat 50%;
+    background: transparent url(eye-slash-solid.91af226d.svg) no-repeat 50%;
 }
 #toggle-panel:hover {
     opacity: 1;
@@ -180,4 +180,4 @@ html {
         width: 1344px;
     }
 }
-/*# sourceMappingURL=/json-viewer/styles.62617f1e.css.map */
+/*# sourceMappingURL=index.64da206d.css.map */

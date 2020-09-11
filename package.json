@@ -20,7 +20,7 @@
     "scripts": {
         "start": "parcel ./website/index.html",
         "build": "rm -rf dist && rollup -c rollup.config.js",
-        "website": "rm -rf docs/ && parcel build website/index.html --public-url /json-viewer/ -d docs/"
+        "website": "rm -rf docs/ && parcel build website/index.html --public-url /json-viewer/ --dist-dir docs/ --no-cache"
     },
     "dependencies": {
         "@tiny-lit/element": "^2.0.0-alpha.8",
@@ -49,15 +49,8 @@
             "pre-commit": "pretty-quick --staged"
         }
     },
-    "@pika/pack": {
-        "pipeline": [
-            [
-                "@pika/plugin-standard-pkg"
-            ],
-            [
-                "@pika/plugin-build-web"
-            ]
-        ]
+    "targets": {
+        "website": {}
     },
     "browserslist": [
         "chrome > 50"
