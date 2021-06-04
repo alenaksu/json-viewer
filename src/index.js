@@ -63,13 +63,15 @@ class JsonViewer extends TinyElement {
             if (isPrimitiveOrNode(node) && String(node).includes(criteria)) {
                 this.expand(path, () => {
                     const node = this.renderRoot.querySelector(`[data-path="${path}"]`);
-                    node.scrollIntoView({
-                        behavior: 'smooth',
-                        inline: 'center',
-                        block: 'center'
-                    });
+                    if (node) {
+                        node.scrollIntoView({
+                            behavior: 'smooth',
+                            inline: 'center',
+                            block: 'center'
+                        });
 
-                    node.focus();
+                        node.focus();
+                    }
                 });
 
                 this.setState(highlight(path));
