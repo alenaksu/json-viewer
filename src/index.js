@@ -36,6 +36,14 @@ class JsonViewer extends LitElement {
         this.updateComplete.then(callback);
     }
 
+    connectedCallback() {
+        if (!this.hasAttribute('data')) {
+            this.setAttribute('data', this.innerText);
+        }
+
+        super.connectedCallback();
+    }
+
     handlePropertyClick = (path) => (e) => {
         e.preventDefault();
 
