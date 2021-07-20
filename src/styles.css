@@ -77,7 +77,6 @@ li {
 
 li ul > li {
     position: relative;
-    padding-top: 0.25rem;
     margin-left: 1.5rem;
     padding-left: 0px;
 }

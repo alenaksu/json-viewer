@@ -1,25 +1,39 @@
-import { html, Element as TinyElement } from '@tiny-lit/element';
+import { html, LitElement } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
 import { getType, isPrimitiveOrNode, JsonObject, generateNodePreview, isNode, classNames, deepTraverse } from './utils';
 import { toggleNode, expand, filter, highlight } from './stateChange';
 
-import styles from 'bundle-text:./styles.css';
+import styles from './styles.css';
 
-class JsonViewer extends TinyElement {
+@customElement('json-viewer')
+class JsonViewer extends LitElement {
+    @property({ converter: JsonObject, type: Object })
     data = null;
+
+    @property({ state: true })
     state = {
         expanded: {},
         filtered: {},
         highlight: null
     };
 
+    static get styles() {
+        return [styles];
+    }
+
     static get is() {
         return 'json-viewer';
     }
 
-    static get properties() {
-        return {
-            data: { type: JsonObject, onChange: true }
+    /**
+     * @deprecate
+     */
+    async setState(fn, callback) {
+        this.state = {
+            ...this.state,
+            ...(typeof fn === 'function' ? fn(this.state, this) : fn)
         };
+        this.updateComplete.then(callback);
     }
 
     handlePropertyClick = (path) => (e) => {
@@ -27,20 +41,6 @@ class JsonViewer extends TinyElement {
 
         this.setState(toggleNode(path));
     };
-
-    connectedCallback() {
-        // TODO
-        let json;
-        if (!this.hasAttribute('data')) {
-            json = this.innerText.trim();
-        }
-
-        this.attachShadow({ mode: 'open' });
-
-        super.connectedCallback();
-
-        if (json) this.data = JSON.parse(json);
-    }
 
     expand(glob, callback) {
         this.setState(expand(glob, true), callback);
@@ -102,7 +102,7 @@ class JsonViewer extends TinyElement {
                     const expanded = this.state.expanded[nodePath] || isPrimitive;
 
                     return html`
-                        <li data-path=${nodePath} hidden=${this.state.filtered[nodePath]}>
+                        <li data-path=${nodePath} .hidden=${this.state.filtered[nodePath]}>
                             ${this.renderPropertyKey({
                                 isCollapsable: !isPrimitive,
                                 collapsed: !this.state.expanded[nodePath],
@@ -111,7 +111,7 @@ class JsonViewer extends TinyElement {
                             })}
                             ${expanded ? this.renderNode(nodeData, nodePath) : this.renderNodePreview(nodeData)}
                         </li>
-                    `.withKey(key);
+                    `;
                 })}
             </ul>
         `;
@@ -129,7 +129,7 @@ class JsonViewer extends TinyElement {
         return html`
             <span
                 class=${classNames(key && 'key', isCollapsable && 'collapsable', collapsed && 'collapsableCollapsed')}
-                onClick=${isCollapsable ? onClick : null}
+                @click=${isCollapsable ? onClick : null}
             >
                 ${key}:
             </span>
@@ -146,13 +146,6 @@ class JsonViewer extends TinyElement {
     }
 
     render() {
-        return html`
-            <style>
-                ${styles}
-            </style>
-
-            ${this.renderNode(this.data)}
-        `;
+        return html` ${this.renderNode(this.data)} `;
     }
 }
-customElements.define(JsonViewer.is, JsonViewer);
