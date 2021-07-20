@@ -1,0 +1,26 @@
+name: Pages Build
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore: [ 'docs/**' ]
+    
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm run website
+      - run: |
+          git config --global user.name 'Alessandro'
+          git config --global user.email 'alenaksu@users.noreply.github.com'
+          git add -A
+          git commit -m "chore: build pages"
+          git push
