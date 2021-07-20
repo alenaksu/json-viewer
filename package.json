@@ -1,6 +1,6 @@
 {
     "name": "@alenaksu/json-viewer",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "main": "build/index.js",
     "source": "src/index.js",
     "license": "MIT",
