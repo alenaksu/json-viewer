@@ -1,7 +1,7 @@
 import '../src';
 import * as Comlink from 'comlink';
 
-const worker = Comlink.wrap(new Worker('worker.js'));
+const worker = Comlink.wrap(new Worker(new URL('worker.js', import.meta.url)));
 
 const json = document.querySelector('#json');
 const viewer = document.querySelector('json-viewer');
@@ -46,25 +46,24 @@ const debounce = (fn, timeout = 500) => {
     };
 };
 
-const loadJson = (data) =>
-    worker
-        .parse(data)
-        .then((data) => {
-            viewer.data = data;
-        })
-        .catch((ex) => {
-            viewer.data = ex.message;
-        });
+const loadJson = (data) => {
+    try {
+        viewer.data = JSON.parse(data);
+    } catch (ex) {
+        viewer.data = ex.message;
+    }
+};
 
 const handleEditorChange = () => {
     const jsonString = editor.getValue();
 
     loader.hidden = false;
+
     Promise.all([
+        loadJson(jsonString),
         worker.crush(jsonString).then((value) => {
             location.hash = value;
-        }),
-        loadJson(jsonString)
+        })
     ]).then(() => {
         loader.hidden = true;
     });

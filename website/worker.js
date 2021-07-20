@@ -4,10 +4,7 @@
 
 import * as Comlink from 'comlink';
 
-export function crush(string) {
-    // string = encodeURIComponent(string);
-
-    const maxSubstringLength = 50; // speed it up by limiting max length
+const JSONCrush = (string, maxSubstringLength = 50) => {
     const delimiter = '\u0001'; // used to split parts of crushed string
 
     const JSCrush = (string, replaceCharacters) => {
@@ -15,8 +12,8 @@ export function crush(string) {
         let replaceCharacterPos = replaceCharacters.length;
         let splitString = '';
 
-        const ByteLength = string => encodeURI(encodeURIComponent(string)).replace(/%../g, 'i').length;
-        const HasUnmatchedSurrogate = string => {
+        const ByteLength = (string) => encodeURI(encodeURIComponent(string)).replace(/%../g, 'i').length;
+        const HasUnmatchedSurrogate = (string) => {
             // check ends of string for unmatched surrogate pairs
             let c1 = string.charCodeAt(0);
             let c2 = string.charCodeAt(string.length - 1);
@@ -59,7 +56,7 @@ export function crush(string) {
                 // calculate change in length of string if it substring was replaced
                 let count = substringCount[substring];
                 let lengthDelta = (count - 1) * ByteLength(substring) - (count + 1) * replaceByteLength;
-                if (!splitString.length) lengthDelta -= ByteLength(delimiter); // include the delimeter length
+                if (!splitString.length) lengthDelta -= ByteLength(delimiter); // include the delimiter length
                 if (lengthDelta <= 0) delete substringCount[substring];
                 else if (lengthDelta > bestLengthDelta) {
                     bestSubstring = substring;
@@ -117,7 +114,7 @@ export function crush(string) {
     string = string.replace(new RegExp(delimiter, 'g'), '');
 
     // swap out common json characters
-    string = swap(string);
+    string = JSONCrushSwap(string);
 
     // crush with JS crush
     const crushed = JSCrush(string, characters);
@@ -126,13 +123,18 @@ export function crush(string) {
     let crushedString = crushed.a;
     if (crushed.b.length) crushedString += delimiter + crushed.b;
 
+    // fix issues with some links not being recognized properly
+    crushedString += '_';
+
     // encode URI
     return encodeURIComponent(crushedString);
-}
+};
 
-export function uncrush(string) {
+const JSONUncrush = (string) => {
     // string must be a decoded URI component, searchParams.get() does this automatically
-    string = decodeURIComponent(string);
+
+    // remove last character
+    string = string.substring(0, string.length - 1);
 
     // unsplit the string using the delimiter
     const stringParts = string.split('\u0001');
@@ -151,10 +153,10 @@ export function uncrush(string) {
     }
 
     // unswap the json characters in reverse direction
-    return swap(uncrushedString, 0);
-}
+    return JSONCrushSwap(uncrushedString, 0);
+};
 
-function swap(string, forward = 1) {
+const JSONCrushSwap = (string, forward = 1) => {
     // swap out characters for lesser used ones that wont get escaped
     const swapGroups = [
         ['"', "'"],
@@ -166,7 +168,7 @@ function swap(string, forward = 1) {
 
     const Swap = (string, g) => {
         let regex = new RegExp(`${(g[2] ? g[2] : '') + g[0]}|${(g[3] ? g[3] : '') + g[1]}`, 'g');
-        return string.replace(regex, $1 => ($1 === g[0] ? g[1] : g[0]));
+        return string.replace(regex, ($1) => ($1 === g[0] ? g[1] : g[0]));
     };
 
     // need to be able to swap characters in reverse direction for uncrush
@@ -174,14 +176,9 @@ function swap(string, forward = 1) {
     else for (let i = swapGroups.length; i--; ) string = Swap(string, swapGroups[i]);
 
     return string;
-}
-
-function parse(jsonString) {
-    return JSON.parse(jsonString);
-}
+};
 
 Comlink.expose({
-    crush,
-    uncrush,
-    parse
+    crush: JSONCrush,
+    uncrush: JSONUncrush
 });
