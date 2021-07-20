@@ -1,0 +1,211 @@
+:root {
+    --background: rgb(42, 47, 58);
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--background);
+
+    font-size: 16px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'header header' 'panel-left panel-right';
+    grid-gap: 15px 15px;
+
+    height: 100%;
+    width: 100%;
+}
+
+.container.collapsed {
+    grid-template-columns: 200px 1fr;
+}
+
+.header {
+    grid-area: header;
+
+    display: flex;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    border-bottom: 1px solid rgb(255, 255, 255, 0.5);
+}
+
+.header > h1 {
+    font-size: 1.3rem;
+    padding: 0 20px;
+}
+
+.menu {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.panel {
+    max-height: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.panel:not(:last-child) {
+    border-right: 1px solid #666;
+}
+
+.panel-left {
+    grid-area: panel-left;
+    resize: horizontal;
+}
+
+.panel-right {
+    grid-area: panel-right;
+}
+
+.container.collapsed .panel-left::after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, var(--background), transparent);
+    z-index: 100;
+    overflow: hidden;
+}
+
+#toggle-panel {
+    background: transparent url(./eye-solid.svg) no-repeat center center;
+    position: absolute;
+    z-index: 101;
+    right: 30px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    opacity: 0.6;
+    will-change: opacity;
+    cursor: pointer;
+}
+
+.container.collapsed #toggle-panel {
+    background: transparent url(./eye-slash-solid.svg) no-repeat center center;
+}
+
+#toggle-panel:hover {
+    opacity: 1;
+}
+
+.github-corner {
+    height: 100%;
+}
+
+.github-corner > svg {
+    fill: #fff;
+    color: var(--background);
+    height: 100%;
+}
+
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+.loader,
+.loader:after {
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+}
+.loader {
+    margin: 0px 10px;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 0.1rem solid rgba(255, 255, 255, 0.2);
+    border-right: 0.1rem solid rgba(255, 255, 255, 0.2);
+    border-bottom: 0.1rem solid rgba(255, 255, 255, 0.2);
+    border-left: 0.1rem solid #ffffff;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes octocat-wave {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    20%,
+    60% {
+        transform: rotate(-25deg);
+    }
+    40%,
+    80% {
+        transform: rotate(10deg);
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none;
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40rem) {
+    .section {
+        margin: 0 auto;
+        max-width: 960px;
+        width: 960px;
+    }
+}
+
+/* Larger than tablet screen */
+@media (min-width: 80rem) {
+    .section {
+        max-width: 1152px;
+        width: 1152px;
+    }
+}
+
+/* Larger than desktop screen */
+@media (min-width: 120rem) {
+    .section {
+        max-width: 1344px;
+        width: 1344px;
+    }
+}
