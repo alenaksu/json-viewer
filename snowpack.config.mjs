@@ -1,4 +1,8 @@
 export default {
+    optimize: {
+        bundle: true,
+        minify: false
+    },
     mount: {
         src: '/static',
         website: { url: '/', static: true }
@@ -11,5 +15,13 @@ export default {
         clean: true,
         out: './docs'
     },
-    plugins: ['./tools/cssImportPlugin', ['@snowpack/plugin-babel']]
+    plugins: [
+        './tools/cssImportPlugin',
+        [
+            '@snowpack/plugin-babel',
+            {
+                transformOptions: {}
+            }
+        ]
+    ]
 };

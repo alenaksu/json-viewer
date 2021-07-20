@@ -60,8 +60,5 @@
     },
     "targets": {
         "website": {}
-    },
-    "browserslist": [
-        "chrome > 50"
-    ]
+    }
 }
