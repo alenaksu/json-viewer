@@ -1,5 +1,5 @@
-import '../src';
-import * as Comlink from 'comlink';
+import '../src/index.js';
+import 'https://unpkg.com/comlink/dist/umd/comlink.js'
 
 const worker = Comlink.wrap(new Worker(new URL('worker.js', import.meta.url)));
 
