@@ -1263,6 +1263,37 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr))
     return arr;
 }
+function _get(target, property, receiver) {
+  if (typeof Reflect !== "undefined" && Reflect.get) {
+    _get = Reflect.get;
+  } else {
+    _get = function _get2(target2, property2, receiver2) {
+      var base = _superPropBase(target2, property2);
+      if (!base)
+        return;
+      var desc = Object.getOwnPropertyDescriptor(base, property2);
+      if (desc.get) {
+        return desc.get.call(receiver2);
+      }
+      return desc.value;
+    };
+  }
+  return _get(target, property, receiver || target);
+}
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = _getPrototypeOf(object);
+    if (object === null)
+      break;
+  }
+  return object;
+}
+function _getPrototypeOf(o2) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
+  };
+  return _getPrototypeOf(o2);
+}
 var JsonViewer = _decorate([n2("json-viewer")], function(_initialize, _LitElement) {
   class JsonViewer2 extends _LitElement {
     constructor(...args) {
@@ -1318,6 +1349,15 @@ var JsonViewer = _decorate([n2("json-viewer")], function(_initialize, _LitElemen
           ...typeof fn === "function" ? fn(this.state, this) : fn
         };
         this.updateComplete.then(callback);
+      }
+    }, {
+      kind: "method",
+      key: "connectedCallback",
+      value: function connectedCallback() {
+        if (!this.hasAttribute("data")) {
+          this.setAttribute("data", this.innerText);
+        }
+        _get(_getPrototypeOf(JsonViewer2.prototype), "connectedCallback", this).call(this);
       }
     }, {
       kind: "field",
