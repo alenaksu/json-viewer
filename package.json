@@ -17,6 +17,9 @@
     "bugs": {
         "url": "https://github.com/alenaksu/json-viewer/issues"
     },
+    "files": [
+        "dist/*"
+    ],
     "scripts": {
         "start": "snowpack dev",
         "build": "rm -rf dist && rollup -c rollup.config.js",
