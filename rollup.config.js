@@ -36,7 +36,10 @@ export default {
             exclude: 'node_modules/**'
         }),
         bundleText(),
-        postcss({ minimize: true }),
+        postcss({
+            minimize: true,
+            inject: false
+        }),
         nodeResolve({
             // use "jsnext:main" if possible
             // see https://github.com/rollup/rollup/wiki/jsnext:main
