@@ -18,7 +18,8 @@
         "url": "https://github.com/alenaksu/json-viewer/issues"
     },
     "files": [
-        "dist/*"
+        "dist/*",
+        "src/*"
     ],
     "scripts": {
         "start": "snowpack dev",
