@@ -94,7 +94,7 @@ searchIterator.next();
 The appereance of the component can be modified by changing the CSS variables
 
 ```css
-json-viewver {
+json-viewer {
     /* Background, font and color */
     --background-color: #2a2f3a;
     --color: #f8f8f2;
