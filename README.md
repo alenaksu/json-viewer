@@ -63,7 +63,7 @@ Put the JSON inside the element
 </json-viewer>
 ```
 
-### Load the JSON dinamically
+### Load the JSON dynamically
 
 ```html
 <json-viewer id="json"></json-viewer>
