@@ -1,6 +1,6 @@
 {
     "name": "@alenaksu/json-viewer",
-    "version": "0.3.4",
+    "version": "1.0.0-alpha.0",
     "main": "dist/json-viewer.js",
     "module": "dist/json-viewer.js",
     "source": "src/index.js",
