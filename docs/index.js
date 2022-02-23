@@ -748,9 +748,9 @@ function generateNodePreview(node, options) {
     if (!isArray)
       nodePreview.push(`${key}: `);
     if (nodeType === TYPE_OBJECT)
-      nodePreview.push("{ ... }");
+      nodePreview.push(Object.keys(nodeValue).length === 0 ? "{ }" : "{ ... }");
     else if (nodeType === TYPE_ARRAY)
-      nodePreview.push("[ ... ]");
+      nodePreview.push(nodeValue.length === 0 ? "[ ]" : "[ ... ]");
     else if (nodeType === TYPE_STRING)
       nodePreview.push(`"${nodeValue.substring(0, maxLength)}${nodeValue.length > maxLength ? "..." : ""}"`);
     else
