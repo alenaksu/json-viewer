@@ -105,8 +105,8 @@ json-viewer {
     --indentguide-style: solid;
     --indentguide-color: #333;
     --indentguide-color-active: #666;
-    --indentguide: var(--indentguide-size) solid var(--indentguide-color);
-    --indentguide-active: var(--indentguide-size) solid var(--indentguide-color-active);
+    --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
+    --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
 
     /* Types colors */
     --string-color: #a3eea0;
