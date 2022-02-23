@@ -25,17 +25,21 @@ function bundleText() {
 export default {
     // If using any exports from a symlinked project, uncomment the following:
     // preserveSymlinks: true,
-    input: ['src/index.js'],
+    input: {
+        'json-viewer': 'src/index.js',
+        JsonViewer: 'src/JsonViewer.js'
+    },
     output: {
-        file: 'dist/index.js',
-        format: 'es',
-        sourcemap: true
+        entryFileNames: '[name].js',
+        dir: 'dist',
+        format: 'esm'
     },
     plugins: [
         minifyHTML(),
         babel({
             exclude: 'node_modules/**',
-            babelHelpers: false
+            babelHelpers: false,
+            configFile: './.babelrc'
         }),
         bundleText(),
         litcss({
@@ -44,7 +48,8 @@ export default {
         nodeResolve({
             // use "jsnext:main" if possible
             // see https://github.com/rollup/rollup/wiki/jsnext:main
-            jsnext: true
+            jsnext: true,
+            browser: true
         }),
         terser(),
         analyze({ summaryOnly: true })

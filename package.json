@@ -1,7 +1,8 @@
 {
     "name": "@alenaksu/json-viewer",
     "version": "0.3.4",
-    "main": "dist/index.js",
+    "main": "dist/json-viewer.js",
+    "module": "dist/json-viewer.js",
     "source": "src/index.js",
     "license": "MIT",
     "repository": {
@@ -60,7 +61,7 @@
         }
     },
     "targets": {
-        "website": {}
+        "esmodules": true
     },
     "customElements": "custom-elements.json"
 }
