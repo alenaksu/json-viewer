@@ -55,8 +55,8 @@ export function generateNodePreview(node, options) {
 
         if (!isArray) nodePreview.push(`${key}: `);
 
-        if (nodeType === TYPE_OBJECT) nodePreview.push('{ ... }');
-        else if (nodeType === TYPE_ARRAY) nodePreview.push('[ ... ]');
+        if (nodeType === TYPE_OBJECT) nodePreview.push(Object.keys(nodeValue).length === 0 ? '{ }' : '{ ... }');
+        else if (nodeType === TYPE_ARRAY) nodePreview.push(nodeValue.length === 0 ? '[ ]' : '[ ... ]');
         else if (nodeType === TYPE_STRING)
             nodePreview.push(`"${nodeValue.substring(0, maxLength)}${nodeValue.length > maxLength ? '...' : ''}"`);
         else nodePreview.push(String(nodeValue));
