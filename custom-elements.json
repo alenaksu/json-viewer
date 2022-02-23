@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/index.js",
+      "path": "src/JsonViewer.js",
       "declarations": [
         {
           "kind": "class",
@@ -176,11 +176,26 @@
       ],
       "exports": [
         {
+          "kind": "js",
+          "name": "JsonViewer",
+          "declaration": {
+            "name": "JsonViewer",
+            "module": "src/JsonViewer.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/index.js",
+      "declarations": [],
+      "exports": [
+        {
           "kind": "custom-element-definition",
           "name": "json-viewer",
           "declaration": {
             "name": "JsonViewer",
-            "module": "src/index.js"
+            "module": "/src/JsonViewer"
           }
         }
       ]
