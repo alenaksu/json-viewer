@@ -24,7 +24,30 @@ Github">
             </div>
             <div class="panel panel-left">
                 <div title="Toggle panel" id="toggle-panel"></div>
-                <textarea id="json">{ "sample": "json" }</textarea>
+                <textarea id="json">
+                    {
+                        "glossary": {
+                            "title": "example glossary",
+                            "GlossDiv": {
+                                "title": "S",
+                                "GlossList": {
+                                    "GlossEntry": {
+                                        "ID": "SGML",
+                                        "SortAs": "SGML",
+                                        "GlossTerm": "Standard Generalized Markup Language",
+                                        "Acronym": "SGML",
+                                        "Abbrev": "ISO 8879:1986",
+                                        "GlossDef": {
+                                            "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                            "GlossSeeAlso": ["GML", "XML"]
+                                        },
+                                        "GlossSee": "markup"
+                                    }
+                                }
+                            }
+                        }
+                    }                    
+                </textarea>
             </div>
             <div class="panel panel-right">
                 <div id="actions-toolbar">
