@@ -95,10 +95,18 @@ The appereance of the component can be modified by changing the CSS variables
 
 ```css
 json-viewer {
-    /* Background, font and color */
+    /* Background, font and indentation */
     --background-color: #2a2f3a;
     --color: #f8f8f2;
     --font-family: monaco, Consolas, 'Lucida Console', monospace;
+    --font-size: 1rem;
+    --indent-size: 1.5em;
+    --indentguide-size: 1px;
+    --indentguide-style: solid;
+    --indentguide-color: #333;
+    --indentguide-color-active: #666;
+    --indentguide: var(--indentguide-size) solid var(--indentguide-color);
+    --indentguide-active: var(--indentguide-size) solid var(--indentguide-color-active);
 
     /* Types colors */
     --string-color: #a3eea0;

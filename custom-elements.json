@@ -1,0 +1,470 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/index.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "JsonViewer",
+          "members": [
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "null"
+              },
+              "default": "null",
+              "attribute": "data"
+            },
+            {
+              "kind": "field",
+              "name": "state",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\n        expanded: {},\n        filtered: {},\n        highlight: null\n    }"
+            },
+            {
+              "kind": "field",
+              "name": "is",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "setState",
+              "parameters": [
+                {
+                  "name": "fn"
+                },
+                {
+                  "name": "callback"
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "handlePropertyClick"
+            },
+            {
+              "kind": "method",
+              "name": "expand",
+              "parameters": [
+                {
+                  "name": "glob"
+                },
+                {
+                  "name": "callback"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "expandAll"
+            },
+            {
+              "kind": "method",
+              "name": "collapseAll"
+            },
+            {
+              "kind": "method",
+              "name": "collapse",
+              "parameters": [
+                {
+                  "name": "glob"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "search",
+              "parameters": [
+                {
+                  "name": "criteria"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "filter",
+              "parameters": [
+                {
+                  "name": "filterString"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "resetFilter"
+            },
+            {
+              "kind": "method",
+              "name": "renderObject",
+              "parameters": [
+                {
+                  "name": "node"
+                },
+                {
+                  "name": "path"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderNode",
+              "parameters": [
+                {
+                  "name": "node"
+                },
+                {
+                  "name": "path",
+                  "default": "''"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderNodePreview",
+              "parameters": [
+                {
+                  "name": "node"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderPropertyKey",
+              "parameters": [
+                {
+                  "name": "{ isCollapsable, collapsed, onClick, key }"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderValue",
+              "parameters": [
+                {
+                  "name": "node"
+                },
+                {
+                  "name": "path"
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "data",
+              "type": {
+                "text": "null"
+              },
+              "default": "null",
+              "fieldName": "data"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "json-viewer",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "json-viewer",
+          "declaration": {
+            "name": "JsonViewer",
+            "module": "src/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/stateChange.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toggleNode",
+          "parameters": [
+            {
+              "name": "path"
+            },
+            {
+              "name": "expanded"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "expand",
+          "parameters": [
+            {
+              "name": "regexOrGlob"
+            },
+            {
+              "name": "isExpanded"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "filter",
+          "parameters": [
+            {
+              "name": "regexOrGlob"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "highlight",
+          "parameters": [
+            {
+              "name": "path"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toggleNode",
+          "declaration": {
+            "name": "toggleNode",
+            "module": "src/stateChange.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "expand",
+          "declaration": {
+            "name": "expand",
+            "module": "src/stateChange.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "filter",
+          "declaration": {
+            "name": "filter",
+            "module": "src/stateChange.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "highlight",
+          "declaration": {
+            "name": "highlight",
+            "module": "src/stateChange.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/utils.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "isRegex",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "getType",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "isPrimitive",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "isNode",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "isPrimitiveOrNode",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "JsonObject",
+          "parameters": [
+            {
+              "name": "obj"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "classNames",
+          "parameters": [
+            {
+              "name": "classes"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "generateNodePreview",
+          "parameters": [
+            {
+              "name": "node"
+            },
+            {
+              "name": "options"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "deepTraverse",
+          "parameters": [
+            {
+              "name": "obj",
+              "type": {
+                "text": "any"
+              }
+            },
+            {
+              "name": "previousValue",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "checkGlob",
+          "parameters": [
+            {
+              "name": "str",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "glob",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "isRegex",
+          "declaration": {
+            "name": "isRegex",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "getType",
+          "declaration": {
+            "name": "getType",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isPrimitive",
+          "declaration": {
+            "name": "isPrimitive",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isNode",
+          "declaration": {
+            "name": "isNode",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isPrimitiveOrNode",
+          "declaration": {
+            "name": "isPrimitiveOrNode",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "JsonObject",
+          "declaration": {
+            "name": "JsonObject",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "classNames",
+          "declaration": {
+            "name": "classNames",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "generateNodePreview",
+          "declaration": {
+            "name": "generateNodePreview",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "deepTraverse",
+          "declaration": {
+            "name": "deepTraverse",
+            "module": "src/utils.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "checkGlob",
+          "declaration": {
+            "name": "checkGlob",
+            "module": "src/utils.js"
+          }
+        }
+      ]
+    }
+  ]
+}

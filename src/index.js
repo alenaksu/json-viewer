@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { property, customElement, state } from 'lit/decorators.js';
 import { getType, isPrimitiveOrNode, JsonObject, generateNodePreview, isNode, classNames, deepTraverse } from './utils';
 import { toggleNode, expand, filter, highlight } from './stateChange';
 
@@ -10,7 +10,7 @@ class JsonViewer extends LitElement {
     @property({ converter: JsonObject, type: Object })
     data = null;
 
-    @property({ state: true })
+    @state()
     state = {
         expanded: {},
         filtered: {},
