@@ -1,4 +1,5 @@
 const fs = require('fs/promises');
+const path = require('path');
 
 const cssResultModule = (cssText) => `\
 import {css} from "lit";
@@ -16,6 +17,8 @@ const minifyCSS = (content) => {
     return content;
 };
 
+const srcPath = path.resolve('src');
+
 module.exports = function (snowpackConfig, options = {}) {
     return {
         name: 'css-import-plugin',
@@ -24,7 +27,7 @@ module.exports = function (snowpackConfig, options = {}) {
             output: ['.js']
         },
         async load({ filePath }) {
-            if (filePath.indexOf('src/') !== -1) {
+            if (filePath.indexOf(srcPath) !== -1) {
                 const contents = await fs.readFile(filePath, 'utf-8');
                 return cssResultModule(minifyCSS(contents));
             }
