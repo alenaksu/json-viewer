@@ -25,7 +25,7 @@ export function isPrimitiveOrNode(obj) {
 
 export function JsonObject(obj) {
     try {
-        if (typeof obj === TYPE_STRING) return JSON.parse(obj);
+        if (typeof obj === TYPE_STRING) return JSON.parse(obj || '{}');
     } catch (ex) {
         console.error(ex);
     }
