@@ -32,14 +32,16 @@ export default {
     output: {
         entryFileNames: '[name].js',
         dir: 'dist',
-        format: 'esm'
+        format: 'es',
+        sourcemap: true
     },
     plugins: [
         minifyHTML(),
         babel({
             exclude: 'node_modules/**',
-            babelHelpers: false,
-            configFile: './.babelrc'
+            babelHelpers: 'bundled',
+            configFile: './.babelrc',
+            compact: true
         }),
         bundleText(),
         litcss({

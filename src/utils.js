@@ -23,15 +23,6 @@ export function isPrimitiveOrNode(obj) {
     return isPrimitive(obj) || isNode(obj);
 }
 
-export function JsonObject(obj) {
-    try {
-        if (typeof obj === TYPE_STRING) return JSON.parse(obj);
-    } catch (ex) {
-        console.error(ex);
-    }
-    return obj;
-}
-
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
@@ -123,3 +114,14 @@ export function checkGlob(str, glob) {
 
     return globIndex === glob.length;
 }
+
+export const JSONConverter = {
+    fromAttribute: (value) => {
+        return value.trim() ? JSON.parse(value) : undefined;
+    },
+    toAttribute: (value) => {
+        return JSON.stringify(value);
+    }
+};
+
+export const isDefined = (value) => value !== void 0;

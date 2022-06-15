@@ -3,15 +3,26 @@
         [
             "@babel/preset-env",
             {
-                "bugfixes": true,
-                "targets": {
-                    "esmodules": true
-                }
+                "targets": [
+                    "last 3 Chrome major versions",
+                    "last 3 ChromeAndroid major versions",
+                    "last 3 Firefox major versions",
+                    "last 3 Edge major versions",
+                    "last 3 Safari major versions",
+                    "last 3 iOS major versions"
+                ],
+                "useBuiltIns": false,
+                "shippedProposals": true,
+                "modules": false,
+                "bugfixes": true
             }
         ]
     ],
     "plugins": [
         ["@babel/plugin-proposal-class-properties"],
         ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }]
-    ]
+    ],
+    "assumptions": {
+        "setPublicClassFields": true
+    }
 }
