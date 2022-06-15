@@ -160,6 +160,6 @@ export class JsonViewer extends LitElement {
     render() {
         const data = this.data;
 
-        return html` ${when(isDefined(data), () => this.renderNode(this.data))} `;
+        return html` ${when(isDefined(data), () => this.renderNode(data))} `;
     }
 }
