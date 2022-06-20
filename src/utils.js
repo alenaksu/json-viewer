@@ -117,7 +117,7 @@ export function checkGlob(str, glob) {
 
 export const JSONConverter = {
     fromAttribute: (value) => {
-        return value.trim() ? JSON.parse(value) : undefined;
+        return value && value.trim() ? JSON.parse(value) : undefined;
     },
     toAttribute: (value) => {
         return JSON.stringify(value);

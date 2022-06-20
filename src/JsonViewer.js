@@ -16,8 +16,8 @@ import { toggleNode, expand, filter, highlight } from './stateChange';
 import styles from './styles.css';
 
 export class JsonViewer extends LitElement {
-    @property({ reflect: false, converter: JSONConverter, type: Object })
-    data = undefined;
+    @property({ converter: JSONConverter, type: Object })
+    data;
 
     @state() state = {
         expanded: {},
