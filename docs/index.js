@@ -25,8 +25,8 @@ var t = window.ShadowRoot && (window.ShadyCSS === void 0 || window.ShadyCSS.nati
 var e = Symbol();
 var n = new Map();
 var s = class {
-  constructor(t3, n3) {
-    if (this._$cssResult$ = true, n3 !== e)
+  constructor(t3, n4) {
+    if (this._$cssResult$ = true, n4 !== e)
       throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = t3;
   }
@@ -39,26 +39,26 @@ var s = class {
   }
 };
 var o = (t3) => new s(typeof t3 == "string" ? t3 : t3 + "", e);
-var r = (t3, ...n3) => {
-  const o2 = t3.length === 1 ? t3[0] : n3.reduce((e3, n4, s2) => e3 + ((t4) => {
+var r = (t3, ...n4) => {
+  const o2 = t3.length === 1 ? t3[0] : n4.reduce((e3, n5, s2) => e3 + ((t4) => {
     if (t4._$cssResult$ === true)
       return t4.cssText;
     if (typeof t4 == "number")
       return t4;
     throw Error("Value passed to 'css' function must be a 'css' function result: " + t4 + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
-  })(n4) + t3[s2 + 1], t3[0]);
+  })(n5) + t3[s2 + 1], t3[0]);
   return new s(o2, e);
 };
-var i = (e3, n3) => {
-  t ? e3.adoptedStyleSheets = n3.map((t3) => t3 instanceof CSSStyleSheet ? t3 : t3.styleSheet) : n3.forEach((t3) => {
-    const n4 = document.createElement("style"), s2 = window.litNonce;
-    s2 !== void 0 && n4.setAttribute("nonce", s2), n4.textContent = t3.cssText, e3.appendChild(n4);
+var i = (e3, n4) => {
+  t ? e3.adoptedStyleSheets = n4.map((t3) => t3 instanceof CSSStyleSheet ? t3 : t3.styleSheet) : n4.forEach((t3) => {
+    const n5 = document.createElement("style"), s2 = window.litNonce;
+    s2 !== void 0 && n5.setAttribute("nonce", s2), n5.textContent = t3.cssText, e3.appendChild(n5);
   });
 };
 var S = t ? (t3) => t3 : (t3) => t3 instanceof CSSStyleSheet ? ((t4) => {
   let e3 = "";
-  for (const n3 of t4.cssRules)
-    e3 += n3.cssText;
+  for (const n4 of t4.cssRules)
+    e3 += n4.cssText;
   return o(e3);
 })(t3) : t3;
 /**
@@ -219,16 +219,16 @@ var a = class extends HTMLElement {
     var e3, r2;
     const h2 = this.constructor._$Eh(t3, s2);
     if (h2 !== void 0 && s2.reflect === true) {
-      const n3 = ((r2 = (e3 = s2.converter) === null || e3 === void 0 ? void 0 : e3.toAttribute) !== null && r2 !== void 0 ? r2 : o$1.toAttribute)(i3, s2.type);
-      this._$Ei = t3, n3 == null ? this.removeAttribute(h2) : this.setAttribute(h2, n3), this._$Ei = null;
+      const n4 = ((r2 = (e3 = s2.converter) === null || e3 === void 0 ? void 0 : e3.toAttribute) !== null && r2 !== void 0 ? r2 : o$1.toAttribute)(i3, s2.type);
+      this._$Ei = t3, n4 == null ? this.removeAttribute(h2) : this.setAttribute(h2, n4), this._$Ei = null;
     }
   }
   _$AK(t3, i3) {
     var s2, e3, r2;
-    const h2 = this.constructor, n3 = h2._$Eu.get(t3);
-    if (n3 !== void 0 && this._$Ei !== n3) {
-      const t4 = h2.getPropertyOptions(n3), l2 = t4.converter, a2 = (r2 = (e3 = (s2 = l2) === null || s2 === void 0 ? void 0 : s2.fromAttribute) !== null && e3 !== void 0 ? e3 : typeof l2 == "function" ? l2 : null) !== null && r2 !== void 0 ? r2 : o$1.fromAttribute;
-      this._$Ei = n3, this[n3] = a2(i3, t4.type), this._$Ei = null;
+    const h2 = this.constructor, n4 = h2._$Eu.get(t3);
+    if (n4 !== void 0 && this._$Ei !== n4) {
+      const t4 = h2.getPropertyOptions(n4), l2 = t4.converter, a2 = (r2 = (e3 = (s2 = l2) === null || s2 === void 0 ? void 0 : s2.fromAttribute) !== null && e3 !== void 0 ? e3 : typeof l2 == "function" ? l2 : null) !== null && r2 !== void 0 ? r2 : o$1.fromAttribute;
+      this._$Ei = n4, this[n4] = a2(i3, t4.type), this._$Ei = null;
     }
   }
   requestUpdate(t3, i3, s2) {
@@ -298,7 +298,7 @@ a.finalized = true, a.elementProperties = new Map(), a.elementStyles = [], a.sha
   mode: "open"
 }, h == null || h({
   ReactiveElement: a
-}), ((s$1 = globalThis.reactiveElementVersions) !== null && s$1 !== void 0 ? s$1 : globalThis.reactiveElementVersions = []).push("1.3.0");
+}), ((s$1 = globalThis.reactiveElementVersions) !== null && s$1 !== void 0 ? s$1 : globalThis.reactiveElementVersions = []).push("1.3.2");
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -338,11 +338,11 @@ var w = Symbol.for("lit-nothing");
 var T = new WeakMap();
 var x = (t3, i3, s2) => {
   var e3, o2;
-  const n3 = (e3 = s2 == null ? void 0 : s2.renderBefore) !== null && e3 !== void 0 ? e3 : i3;
-  let l2 = n3._$litPart$;
+  const n4 = (e3 = s2 == null ? void 0 : s2.renderBefore) !== null && e3 !== void 0 ? e3 : i3;
+  let l2 = n4._$litPart$;
   if (l2 === void 0) {
     const t4 = (o2 = s2 == null ? void 0 : s2.renderBefore) !== null && o2 !== void 0 ? o2 : null;
-    n3._$litPart$ = l2 = new N(i3.insertBefore(h$1(), t4), t4, void 0, s2 != null ? s2 : {});
+    n4._$litPart$ = l2 = new N(i3.insertBefore(h$1(), t4), t4, void 0, s2 != null ? s2 : {});
   }
   return l2._$AI(t3), l2;
 };
@@ -367,12 +367,12 @@ var E = class {
   constructor({
     strings: t3,
     _$litType$: s2
-  }, n3) {
+  }, n4) {
     let l2;
     this.parts = [];
     let r2 = 0, d2 = 0;
     const u2 = t3.length - 1, c2 = this.parts, [v2, a2] = C(t3, s2);
-    if (this.el = E.createElement(v2, n3), A.currentNode = this.el.content, s2 === 2) {
+    if (this.el = E.createElement(v2, n4), A.currentNode = this.el.content, s2 === 2) {
       const t4 = this.el.content, i3 = t4.firstChild;
       i3.remove(), t4.append(...i3.childNodes);
     }
@@ -436,12 +436,12 @@ var E = class {
   }
 };
 function P(t3, i3, s2 = t3, e3) {
-  var o2, n3, l2, h2;
+  var o2, n4, l2, h2;
   if (i3 === b)
     return i3;
   let d2 = e3 !== void 0 ? (o2 = s2._$Cl) === null || o2 === void 0 ? void 0 : o2[e3] : s2._$Cu;
   const u2 = r$2(i3) ? void 0 : i3._$litDirective$;
-  return (d2 == null ? void 0 : d2.constructor) !== u2 && ((n3 = d2 == null ? void 0 : d2._$AO) === null || n3 === void 0 || n3.call(d2, false), u2 === void 0 ? d2 = void 0 : (d2 = new u2(t3), d2._$AT(t3, s2, e3)), e3 !== void 0 ? ((l2 = (h2 = s2)._$Cl) !== null && l2 !== void 0 ? l2 : h2._$Cl = [])[e3] = d2 : s2._$Cu = d2), d2 !== void 0 && (i3 = P(t3, d2._$AS(t3, i3.values), d2, e3)), i3;
+  return (d2 == null ? void 0 : d2.constructor) !== u2 && ((n4 = d2 == null ? void 0 : d2._$AO) === null || n4 === void 0 || n4.call(d2, false), u2 === void 0 ? d2 = void 0 : (d2 = new u2(t3), d2._$AT(t3, s2, e3)), e3 !== void 0 ? ((l2 = (h2 = s2)._$Cl) !== null && l2 !== void 0 ? l2 : h2._$Cl = [])[e3] = d2 : s2._$Cu = d2), d2 !== void 0 && (i3 = P(t3, d2._$AS(t3, i3.values), d2, e3)), i3;
 }
 var V = class {
   constructor(t3, i3) {
@@ -462,13 +462,13 @@ var V = class {
       parts: e3
     } = this._$AD, o2 = ((i3 = t3 == null ? void 0 : t3.creationScope) !== null && i3 !== void 0 ? i3 : l$1).importNode(s2, true);
     A.currentNode = o2;
-    let n3 = A.nextNode(), h2 = 0, r2 = 0, d2 = e3[0];
+    let n4 = A.nextNode(), h2 = 0, r2 = 0, d2 = e3[0];
     for (; d2 !== void 0; ) {
       if (h2 === d2.index) {
         let i4;
-        d2.type === 2 ? i4 = new N(n3, n3.nextSibling, this, t3) : d2.type === 1 ? i4 = new d2.ctor(n3, d2.name, d2.strings, this, t3) : d2.type === 6 && (i4 = new L(n3, this, t3)), this.v.push(i4), d2 = e3[++r2];
+        d2.type === 2 ? i4 = new N(n4, n4.nextSibling, this, t3) : d2.type === 1 ? i4 = new d2.ctor(n4, d2.name, d2.strings, this, t3) : d2.type === 6 && (i4 = new L(n4, this, t3)), this.v.push(i4), d2 = e3[++r2];
       }
-      h2 !== (d2 == null ? void 0 : d2.index) && (n3 = A.nextNode(), h2++);
+      h2 !== (d2 == null ? void 0 : d2.index) && (n4 = A.nextNode(), h2++);
     }
     return o2;
   }
@@ -501,11 +501,11 @@ var N = class {
   _$AI(t3, i3 = this) {
     t3 = P(this, t3, i3), r$2(t3) ? t3 === w || t3 == null || t3 === "" ? (this._$AH !== w && this._$AR(), this._$AH = w) : t3 !== this._$AH && t3 !== b && this.$(t3) : t3._$litType$ !== void 0 ? this.T(t3) : t3.nodeType !== void 0 ? this.k(t3) : u(t3) ? this.S(t3) : this.$(t3);
   }
-  A(t3, i3 = this._$AB) {
+  M(t3, i3 = this._$AB) {
     return this._$AA.parentNode.insertBefore(t3, i3);
   }
   k(t3) {
-    this._$AH !== t3 && (this._$AR(), this._$AH = this.A(t3));
+    this._$AH !== t3 && (this._$AR(), this._$AH = this.M(t3));
   }
   $(t3) {
     this._$AH !== w && r$2(this._$AH) ? this._$AA.nextSibling.data = t3 : this.k(l$1.createTextNode(t3)), this._$AH = t3;
@@ -532,7 +532,7 @@ var N = class {
     const i3 = this._$AH;
     let s2, e3 = 0;
     for (const o2 of t3)
-      e3 === i3.length ? i3.push(s2 = new N(this.A(h$1()), this.A(h$1()), this, this.options)) : s2 = i3[e3], s2._$AI(o2), e3++;
+      e3 === i3.length ? i3.push(s2 = new N(this.M(h$1()), this.M(h$1()), this, this.options)) : s2 = i3[e3], s2._$AI(o2), e3++;
     e3 < i3.length && (this._$AR(s2 && s2._$AB.nextSibling, e3), i3.length = e3);
   }
   _$AR(t3 = this._$AA.nextSibling, i3) {
@@ -559,16 +559,16 @@ var S$1 = class {
   }
   _$AI(t3, i3 = this, s2, e3) {
     const o2 = this.strings;
-    let n3 = false;
+    let n4 = false;
     if (o2 === void 0)
-      t3 = P(this, t3, i3, 0), n3 = !r$2(t3) || t3 !== this._$AH && t3 !== b, n3 && (this._$AH = t3);
+      t3 = P(this, t3, i3, 0), n4 = !r$2(t3) || t3 !== this._$AH && t3 !== b, n4 && (this._$AH = t3);
     else {
       const e4 = t3;
       let l2, h2;
       for (t3 = o2[0], l2 = 0; l2 < o2.length - 1; l2++)
-        h2 = P(this, e4[s2 + l2], i3, l2), h2 === b && (h2 = this._$AH[l2]), n3 || (n3 = !r$2(h2) || h2 !== this._$AH[l2]), h2 === w ? t3 = w : t3 !== w && (t3 += (h2 != null ? h2 : "") + o2[l2 + 1]), this._$AH[l2] = h2;
+        h2 = P(this, e4[s2 + l2], i3, l2), h2 === b && (h2 = this._$AH[l2]), n4 || (n4 = !r$2(h2) || h2 !== this._$AH[l2]), h2 === w ? t3 = w : t3 !== w && (t3 += (h2 != null ? h2 : "") + o2[l2 + 1]), this._$AH[l2] = h2;
     }
-    n3 && !e3 && this.C(t3);
+    n4 && !e3 && this.C(t3);
   }
   C(t3) {
     t3 === w ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t3 != null ? t3 : "");
@@ -599,8 +599,8 @@ var I = class extends S$1 {
     var s2;
     if ((t3 = (s2 = P(this, t3, i3, 0)) !== null && s2 !== void 0 ? s2 : w) === b)
       return;
-    const e3 = this._$AH, o2 = t3 === w && e3 !== w || t3.capture !== e3.capture || t3.once !== e3.once || t3.passive !== e3.passive, n3 = t3 !== w && (e3 === w || o2);
-    o2 && this.element.removeEventListener(this.name, this, e3), n3 && this.element.addEventListener(this.name, this, t3), this._$AH = t3;
+    const e3 = this._$AH, o2 = t3 === w && e3 !== w || t3.capture !== e3.capture || t3.once !== e3.once || t3.passive !== e3.passive, n4 = t3 !== w && (e3 === w || o2);
+    o2 && this.element.removeEventListener(this.name, this, e3), n4 && this.element.addEventListener(this.name, this, t3), this._$AH = t3;
   }
   handleEvent(t3) {
     var i3, s2;
@@ -619,7 +619,7 @@ var L = class {
   }
 };
 var z = window.litHtmlPolyfillSupport;
-z == null || z(E, N), ((t$1 = globalThis.litHtmlVersions) !== null && t$1 !== void 0 ? t$1 : globalThis.litHtmlVersions = []).push("2.2.0");
+z == null || z(E, N), ((t$1 = globalThis.litHtmlVersions) !== null && t$1 !== void 0 ? t$1 : globalThis.litHtmlVersions = []).push("2.2.6");
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -671,8 +671,8 @@ n$3 == null || n$3({
  */
 var i2 = (i3, e3) => e3.kind === "method" && e3.descriptor && !("value" in e3.descriptor) ? {
   ...e3,
-  finisher(n3) {
-    n3.createProperty(e3.key, i3);
+  finisher(n4) {
+    n4.createProperty(e3.key, i3);
   }
 } : {
   kind: "field",
@@ -683,14 +683,14 @@ var i2 = (i3, e3) => e3.kind === "method" && e3.descriptor && !("value" in e3.de
   initializer() {
     typeof e3.initializer == "function" && (this[e3.key] = e3.initializer.call(this));
   },
-  finisher(n3) {
-    n3.createProperty(e3.key, i3);
+  finisher(n4) {
+    n4.createProperty(e3.key, i3);
   }
 };
 function e2(e3) {
-  return (n3, t3) => t3 !== void 0 ? ((i3, e4, n4) => {
-    e4.constructor.createProperty(n4, i3);
-  })(e3, n3, t3) : i2(e3, n3);
+  return (n4, t3) => t3 !== void 0 ? ((i3, e4, n5) => {
+    e4.constructor.createProperty(n5, i3);
+  })(e3, n4, t3) : i2(e3, n4);
 }
 /**
  * @license
@@ -709,38 +709,19 @@ function t2(t3) {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 var n2;
-var e$12 = ((n2 = window.HTMLSlotElement) === null || n2 === void 0 ? void 0 : n2.prototype.assignedElements) != null ? (o2, n3) => o2.assignedElements(n3) : (o2, n3) => o2.assignedNodes(n3).filter((o3) => o3.nodeType === Node.ELEMENT_NODE);
+var e$12 = ((n2 = window.HTMLSlotElement) === null || n2 === void 0 ? void 0 : n2.prototype.assignedElements) != null ? (o2, n4) => o2.assignedElements(n4) : (o2, n4) => o2.assignedNodes(n4).filter((o3) => o3.nodeType === Node.ELEMENT_NODE);
+
+// docs/_snowpack/pkg/lit/directives/when.js
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+function n3(n4, o2, r2) {
+  return n4 ? o2() : r2 == null ? void 0 : r2();
+}
 
 // docs/static/utils.js
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function(sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-  return keys;
-}
-function _objectSpread(target) {
-  for (var i3 = 1; i3 < arguments.length; i3++) {
-    var source = arguments[i3] != null ? arguments[i3] : {};
-    i3 % 2 ? ownKeys(Object(source), true).forEach(function(key) {
-      _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-    });
-  }
-  return target;
-}
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {value, enumerable: true, configurable: true, writable: true});
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
 var TYPE_NULL = "null";
 var TYPE_ARRAY = "array";
 var TYPE_OBJECT = "object";
@@ -760,15 +741,6 @@ function isNode(obj) {
 function isPrimitiveOrNode(obj) {
   return isPrimitive(obj) || isNode(obj);
 }
-function JsonObject(obj) {
-  try {
-    if (typeof obj === TYPE_STRING)
-      return JSON.parse(obj);
-  } catch (ex) {
-    console.error(ex);
-  }
-  return obj;
-}
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -776,10 +748,11 @@ function generateNodePreview(node, options) {
   const {
     nodeCount,
     maxLength
-  } = _objectSpread({
+  } = {
     nodeCount: 3,
-    maxLength: 15
-  }, options);
+    maxLength: 15,
+    ...options
+  };
   const isArray = Array.isArray(node);
   const objectNodes = Object.keys(node);
   const keys = objectNodes.slice(0, nodeCount);
@@ -842,42 +815,23 @@ function checkGlob(str, glob) {
   }
   return globIndex === glob.length;
 }
+var JSONConverter = {
+  fromAttribute: (value) => {
+    return value && value.trim() ? JSON.parse(value) : void 0;
+  },
+  toAttribute: (value) => {
+    return JSON.stringify(value);
+  }
+};
+var isDefined = (value) => value !== void 0;
 
 // docs/static/stateChange.js
-function ownKeys2(object, enumerableOnly) {
-  var keys = Object.keys(object);
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function(sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-  return keys;
-}
-function _objectSpread2(target) {
-  for (var i3 = 1; i3 < arguments.length; i3++) {
-    var source = arguments[i3] != null ? arguments[i3] : {};
-    i3 % 2 ? ownKeys2(Object(source), true).forEach(function(key) {
-      _defineProperty2(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys2(Object(source)).forEach(function(key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-    });
-  }
-  return target;
-}
-function _defineProperty2(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {value, enumerable: true, configurable: true, writable: true});
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
 var isMatching = (path, criteria) => isRegex(criteria) ? !!path.match(criteria) : checkGlob(path, criteria);
 var toggleNode = (path, expanded) => (state) => ({
-  expanded: _objectSpread2(_objectSpread2({}, state.expanded), {}, {
+  expanded: {
+    ...state.expanded,
     [path]: expanded === void 0 ? !state.expanded[path] : !!expanded
-  })
+  }
 });
 var expand = (regexOrGlob, isExpanded) => (state, el) => {
   const expanded = {};
@@ -918,43 +872,6 @@ var styles_default = r`
 :host{--background-color:#2a2f3a;--color:#f8f8f2;--string-color:#a3eea0;--number-color:#d19a66;--boolean-color:#4ba7ef;--null-color:#df9cf3;--property-color:#6fb3d2;--preview-color:rgba(222,175,143,0.9);--highlight-color:#7b0000;--font-family:monaco,Consolas,'Lucida Console',monospace;--font-size:1rem;--indent-size:1.5em;--indentguide-size:1px;--indentguide-style:solid;--indentguide-color:#333;--indentguide-color-active:#666;--indentguide:var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);--indentguide-active:var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);display:block;background-color:var(--background-color);color:var(--color);font-family:var(--font-family);font-size:var(--font-size);}.preview{color:var(--preview-color);}.null{color:var(--null-color);}.key{color:var(--property-color);display:inline-block;}.collapsable:before{display:inline-block;color:var(--color);font-size:0.8em;content:'▶';line-height:1em;width:1em;height:1em;text-align:center;transition:transform 195ms ease-out;transform:rotate(90deg);color:var(--property-color);}.collapsable.collapsableCollapsed:before{transform:rotate(0);}.collapsable{cursor:pointer;user-select:none;}.string{color:var(--string-color);}.number{color:var(--number-color);}.boolean{color:var(--boolean-color);}ul{padding:0;clear:both;}ul,li{list-style:none;position:relative;}li ul > li{position:relative;margin-left:var(--indent-size);padding-left:0px;}ul ul:before{content:'';border-left:var(--indentguide);position:absolute;left:calc(0.5em - var(--indentguide-size));top:0.3em;bottom:0.3em;}ul ul:hover:before{border-left:var(--indentguide-active);}mark{background-color:var(--highlight-color);}`;
 
 // docs/static/JsonViewer.js
-var _2 = (t3) => t3;
-var _t;
-var _t2;
-var _t3;
-var _t4;
-var _t5;
-var _t6;
-var _t7;
-function ownKeys3(object, enumerableOnly) {
-  var keys = Object.keys(object);
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function(sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-  return keys;
-}
-function _objectSpread3(target) {
-  for (var i3 = 1; i3 < arguments.length; i3++) {
-    var source = arguments[i3] != null ? arguments[i3] : {};
-    i3 % 2 ? ownKeys3(Object(source), true).forEach(function(key) {
-      _defineProperty3(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys3(Object(source)).forEach(function(key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-    });
-  }
-  return target;
-}
-function _defineProperty3(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {value, enumerable: true, configurable: true, writable: true});
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
 function _decorate(decorators, factory, superClass, mixins) {
   var api = _getDecoratorsApi();
   if (mixins) {
@@ -1176,7 +1093,7 @@ function _coalesceGetterSetter(element, other) {
 }
 function _coalesceClassElements(elements) {
   var newElements = [];
-  var isSameElement = function isSameElement2(other2) {
+  var isSameElement = function(other2) {
     return other2.kind === "method" && other2.key === element.key && other2.placement === element.placement;
   };
   for (var i3 = 0; i3 < elements.length; i3++) {
@@ -1243,12 +1160,12 @@ function _unsupportedIterableToArray(o2, minLen) {
     return;
   if (typeof o2 === "string")
     return _arrayLikeToArray(o2, minLen);
-  var n3 = Object.prototype.toString.call(o2).slice(8, -1);
-  if (n3 === "Object" && o2.constructor)
-    n3 = o2.constructor.name;
-  if (n3 === "Map" || n3 === "Set")
+  var n4 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n4 === "Object" && o2.constructor)
+    n4 = o2.constructor.name;
+  if (n4 === "Map" || n4 === "Set")
     return Array.from(o2);
-  if (n3 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n3))
+  if (n4 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n4))
     return _arrayLikeToArray(o2, minLen);
 }
 function _arrayLikeToArray(arr, len) {
@@ -1268,7 +1185,7 @@ function _arrayWithHoles(arr) {
 }
 function _get() {
   if (typeof Reflect !== "undefined" && Reflect.get) {
-    _get = Reflect.get;
+    _get = Reflect.get.bind();
   } else {
     _get = function _get2(target, property, receiver) {
       var base = _superPropBase(target, property);
@@ -1292,7 +1209,7 @@ function _superPropBase(object, property) {
   return object;
 }
 function _getPrototypeOf(o2) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o3) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
     return o3.__proto__ || Object.getPrototypeOf(o3);
   };
   return _getPrototypeOf(o2);
@@ -1309,13 +1226,11 @@ var JsonViewer = _decorate(null, function(_initialize, _LitElement) {
     d: [{
       kind: "field",
       decorators: [e2({
-        converter: JsonObject,
+        converter: JSONConverter,
         type: Object
       })],
       key: "data",
-      value() {
-        return null;
-      }
+      value: void 0
     }, {
       kind: "field",
       decorators: [t2()],
@@ -1328,31 +1243,34 @@ var JsonViewer = _decorate(null, function(_initialize, _LitElement) {
         };
       }
     }, {
-      kind: "get",
+      kind: "field",
       static: true,
       key: "styles",
-      value: function styles() {
+      value() {
         return [styles_default];
       }
     }, {
-      kind: "get",
+      kind: "field",
       static: true,
       key: "is",
-      value: function is() {
+      value() {
         return "json-viewer";
       }
     }, {
       kind: "method",
       key: "setState",
       value: async function setState(fn, callback) {
-        this.state = _objectSpread3(_objectSpread3({}, this.state), typeof fn === "function" ? fn(this.state, this) : fn);
+        this.state = {
+          ...this.state,
+          ...typeof fn === "function" ? fn(this.state, this) : fn
+        };
         this.updateComplete.then(callback);
       }
     }, {
       kind: "method",
       key: "connectedCallback",
       value: function connectedCallback() {
-        if (!this.hasAttribute("data")) {
+        if (!this.hasAttribute("data") && !isDefined(this.data)) {
           this.setAttribute("data", this.innerText);
         }
         _get(_getPrototypeOf(JsonViewer2.prototype), "connectedCallback", this).call(this);
@@ -1432,27 +1350,27 @@ var JsonViewer = _decorate(null, function(_initialize, _LitElement) {
       kind: "method",
       key: "renderObject",
       value: function renderObject(node, path) {
-        return $(_t || (_t = _2`
+        return $`
             <ul>
-                ${0}
-            </ul>
-        `), Object.keys(node).map((key) => {
+                ${Object.keys(node).map((key) => {
           const nodeData = node[key];
           const nodePath = path ? `${path}.${key}` : key;
           const isPrimitive2 = isPrimitiveOrNode(nodeData);
           const expanded = this.state.expanded[nodePath] || isPrimitive2;
-          return $(_t2 || (_t2 = _2`
-                        <li data-path=${0} .hidden=${0}>
-                            ${0}
-                            ${0}
-                        </li>
-                    `), nodePath, this.state.filtered[nodePath], this.renderPropertyKey({
+          return $`
+                        <li data-path=${nodePath} .hidden=${this.state.filtered[nodePath]}>
+                            ${this.renderPropertyKey({
             isCollapsable: !isPrimitive2,
             collapsed: !this.state.expanded[nodePath],
             key,
             onClick: this.handlePropertyClick(nodePath)
-          }), expanded ? this.renderNode(nodeData, nodePath) : this.renderNodePreview(nodeData));
-        }));
+          })}
+                            ${expanded ? this.renderNode(nodeData, nodePath) : this.renderNodePreview(nodeData)}
+                        </li>
+                    `;
+        })}
+            </ul>
+        `;
       }
     }, {
       kind: "method",
@@ -1464,7 +1382,7 @@ var JsonViewer = _decorate(null, function(_initialize, _LitElement) {
       kind: "method",
       key: "renderNodePreview",
       value: function renderNodePreview(node) {
-        return $(_t3 || (_t3 = _2` <span class="preview"> ${0} </span> `), generateNodePreview(node));
+        return $` <span class="preview"> ${generateNodePreview(node)} </span> `;
       }
     }, {
       kind: "method",
@@ -1475,28 +1393,29 @@ var JsonViewer = _decorate(null, function(_initialize, _LitElement) {
         onClick,
         key
       }) {
-        return $(_t4 || (_t4 = _2`
+        return $`
             <span
-                class=${0}
-                @click=${0}
+                class=${classNames(key && "key", isCollapsable && "collapsable", collapsed && "collapsableCollapsed")}
+                @click=${isCollapsable ? onClick : null}
             >
-                ${0}:
+                ${key}:
             </span>
-        `), classNames(key && "key", isCollapsable && "collapsable", collapsed && "collapsableCollapsed"), isCollapsable ? onClick : null, key);
+        `;
       }
     }, {
       kind: "method",
       key: "renderValue",
       value: function renderValue(node, path) {
         const highlight2 = this.state.highlight;
-        const value = isNode(node) ? node : $(_t5 || (_t5 = _2` <span tabindex="0" class=${0}>${0}</span> `), getType(node), JSON.stringify(node));
-        return highlight2 !== null && path === highlight2 ? $(_t6 || (_t6 = _2`<mark>${0}</mark>`), value) : value;
+        const value = isNode(node) ? node : $` <span tabindex="0" class=${getType(node)}>${JSON.stringify(node)}</span> `;
+        return highlight2 !== null && path === highlight2 ? $`<mark>${value}</mark>` : value;
       }
     }, {
       kind: "method",
       key: "render",
       value: function render() {
-        return $(_t7 || (_t7 = _2` ${0} `), this.renderNode(this.data));
+        const data = this.data;
+        return $` ${n3(isDefined(data), () => this.renderNode(data))} `;
       }
     }]
   };
