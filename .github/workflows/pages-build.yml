@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths-ignore: [ 'docs/**' ]
-    
+
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run website
