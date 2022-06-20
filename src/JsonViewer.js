@@ -1,28 +1,33 @@
 import { html, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { getType, isPrimitiveOrNode, JsonObject, generateNodePreview, isNode, classNames, deepTraverse } from './utils';
+import { when } from 'lit/directives/when.js';
+import {
+    getType,
+    isPrimitiveOrNode,
+    generateNodePreview,
+    isNode,
+    classNames,
+    deepTraverse,
+    JSONConverter,
+    isDefined
+} from './utils';
 import { toggleNode, expand, filter, highlight } from './stateChange';
 
 import styles from './styles.css';
 
 export class JsonViewer extends LitElement {
-    @property({ converter: JsonObject, type: Object })
-    data = null;
+    @property({ converter: JSONConverter, type: Object })
+    data;
 
-    @state()
-    state = {
+    @state() state = {
         expanded: {},
         filtered: {},
         highlight: null
     };
 
-    static get styles() {
-        return [styles];
-    }
+    static styles = [styles];
 
-    static get is() {
-        return 'json-viewer';
-    }
+    static is = 'json-viewer';
 
     /**
      * @deprecate
@@ -36,7 +41,7 @@ export class JsonViewer extends LitElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('data')) {
+        if (!this.hasAttribute('data') && !isDefined(this.data)) {
             this.setAttribute('data', this.innerText);
         }
 
@@ -153,6 +158,8 @@ export class JsonViewer extends LitElement {
     }
 
     render() {
-        return html` ${this.renderNode(this.data)} `;
+        const data = this.data;
+
+        return html` ${when(isDefined(data), () => this.renderNode(data))} `;
     }
 }

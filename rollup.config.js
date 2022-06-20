@@ -4,7 +4,7 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
 import path from 'path';
 import litcss from 'rollup-plugin-lit-css';
-import analyze from 'rollup-plugin-analyzer';
+import summary from 'rollup-plugin-summary';
 
 function bundleText() {
     return {
@@ -22,9 +22,13 @@ function bundleText() {
     };
 }
 
+/**
+ * @type {import('rollup').RollupOptions}
+ */
 export default {
     // If using any exports from a symlinked project, uncomment the following:
     // preserveSymlinks: true,
+    treeshake: true,
     input: {
         'json-viewer': 'src/index.js',
         JsonViewer: 'src/JsonViewer.js'
@@ -32,26 +36,32 @@ export default {
     output: {
         entryFileNames: '[name].js',
         dir: 'dist',
-        format: 'esm'
+        format: 'esm',
+        sourcemap: true
     },
     plugins: [
         minifyHTML(),
         babel({
             exclude: 'node_modules/**',
-            babelHelpers: false,
-            configFile: './.babelrc'
+            babelHelpers: 'bundled',
+            configFile: './.babelrc',
+            compact: true
         }),
         bundleText(),
         litcss({
             uglify: true
         }),
-        nodeResolve({
-            // use "jsnext:main" if possible
-            // see https://github.com/rollup/rollup/wiki/jsnext:main
-            jsnext: true,
-            browser: true
+        nodeResolve(),
+        terser({
+            ecma: 2017,
+            module: true,
+            warnings: true,
+            mangle: {
+                properties: {
+                    regex: /^__/
+                }
+            }
         }),
-        terser(),
-        analyze({ summaryOnly: true })
+        summary()
     ]
 };
