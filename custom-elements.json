@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/JsonViewer.js",
+      "path": "src/JsonViewer.ts",
       "declarations": [
         {
           "kind": "class",
@@ -15,33 +15,29 @@
               "kind": "field",
               "name": "data",
               "type": {
-                "text": "null"
+                "text": "any | undefined"
               },
-              "default": "null",
               "attribute": "data"
             },
             {
               "kind": "field",
               "name": "state",
               "type": {
-                "text": "object"
+                "text": "JsonViewerState"
               },
+              "privacy": "private",
               "default": "{\n        expanded: {},\n        filtered: {},\n        highlight: null\n    }"
-            },
-            {
-              "kind": "field",
-              "name": "is",
-              "static": true
             },
             {
               "kind": "method",
               "name": "setState",
+              "privacy": "private",
               "parameters": [
                 {
-                  "name": "fn"
-                },
-                {
-                  "name": "callback"
+                  "name": "stateFn",
+                  "type": {
+                    "text": "(state: JsonViewerState, el: JsonViewer) => Partial<JsonViewerState>"
+                  }
                 }
               ]
             },
@@ -54,10 +50,10 @@
               "name": "expand",
               "parameters": [
                 {
-                  "name": "glob"
-                },
-                {
-                  "name": "callback"
+                  "name": "glob",
+                  "type": {
+                    "text": "string | RegExp"
+                  }
                 }
               ]
             },
@@ -74,7 +70,10 @@
               "name": "collapse",
               "parameters": [
                 {
-                  "name": "glob"
+                  "name": "glob",
+                  "type": {
+                    "text": "string | RegExp"
+                  }
                 }
               ]
             },
@@ -83,7 +82,10 @@
               "name": "search",
               "parameters": [
                 {
-                  "name": "criteria"
+                  "name": "criteria",
+                  "type": {
+                    "text": "string"
+                  }
                 }
               ]
             },
@@ -92,7 +94,10 @@
               "name": "filter",
               "parameters": [
                 {
-                  "name": "filterString"
+                  "name": "criteria",
+                  "type": {
+                    "text": "string | RegExp"
+                  }
                 }
               ]
             },
@@ -103,12 +108,23 @@
             {
               "kind": "method",
               "name": "renderObject",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
               "parameters": [
                 {
-                  "name": "node"
+                  "name": "node",
+                  "type": {
+                    "text": "Record<string, unknown>"
+                  }
                 },
                 {
-                  "name": "path"
+                  "name": "path",
+                  "type": {
+                    "text": "string"
+                  }
                 }
               ]
             },
@@ -117,7 +133,10 @@
               "name": "renderNode",
               "parameters": [
                 {
-                  "name": "node"
+                  "name": "node",
+                  "type": {
+                    "text": "any"
+                  }
                 },
                 {
                   "name": "path",
@@ -130,16 +149,10 @@
               "name": "renderNodePreview",
               "parameters": [
                 {
-                  "name": "node"
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderPropertyKey",
-              "parameters": [
-                {
-                  "name": "{ isCollapsable, collapsed, onClick, key }"
+                  "name": "node",
+                  "type": {
+                    "text": "any"
+                  }
                 }
               ]
             },
@@ -148,10 +161,16 @@
               "name": "renderValue",
               "parameters": [
                 {
-                  "name": "node"
+                  "name": "node",
+                  "type": {
+                    "text": "Primitive | null"
+                  }
                 },
                 {
-                  "name": "path"
+                  "name": "path",
+                  "type": {
+                    "text": "string"
+                  }
                 }
               ]
             }
@@ -160,9 +179,8 @@
             {
               "name": "data",
               "type": {
-                "text": "null"
+                "text": "any | undefined"
               },
-              "default": "null",
               "fieldName": "data"
             }
           ],
@@ -180,14 +198,14 @@
           "name": "JsonViewer",
           "declaration": {
             "name": "JsonViewer",
-            "module": "src/JsonViewer.js"
+            "module": "src/JsonViewer.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/index.js",
+      "path": "src/index.ts",
       "declarations": [],
       "exports": [
         {
@@ -202,17 +220,24 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/stateChange.js",
+      "path": "src/stateChange.ts",
       "declarations": [
         {
           "kind": "function",
           "name": "toggleNode",
           "parameters": [
             {
-              "name": "path"
+              "name": "path",
+              "type": {
+                "text": "string"
+              }
             },
             {
-              "name": "expanded"
+              "name": "expanded",
+              "optional": true,
+              "type": {
+                "text": "boolean"
+              }
             }
           ]
         },
@@ -221,10 +246,16 @@
           "name": "expand",
           "parameters": [
             {
-              "name": "regexOrGlob"
+              "name": "regexOrGlob",
+              "type": {
+                "text": "string | RegExp"
+              }
             },
             {
-              "name": "isExpanded"
+              "name": "isExpanded",
+              "type": {
+                "text": "boolean"
+              }
             }
           ]
         },
@@ -233,16 +264,26 @@
           "name": "filter",
           "parameters": [
             {
-              "name": "regexOrGlob"
+              "name": "regexOrGlob",
+              "type": {
+                "text": "string | RegExp"
+              }
             }
           ]
+        },
+        {
+          "kind": "function",
+          "name": "resetFilter"
         },
         {
           "kind": "function",
           "name": "highlight",
           "parameters": [
             {
-              "name": "path"
+              "name": "path",
+              "type": {
+                "text": "string | null"
+              }
             }
           ]
         }
@@ -253,7 +294,7 @@
           "name": "toggleNode",
           "declaration": {
             "name": "toggleNode",
-            "module": "src/stateChange.js"
+            "module": "src/stateChange.ts"
           }
         },
         {
@@ -261,7 +302,7 @@
           "name": "expand",
           "declaration": {
             "name": "expand",
-            "module": "src/stateChange.js"
+            "module": "src/stateChange.ts"
           }
         },
         {
@@ -269,7 +310,15 @@
           "name": "filter",
           "declaration": {
             "name": "filter",
-            "module": "src/stateChange.js"
+            "module": "src/stateChange.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "resetFilter",
+          "declaration": {
+            "name": "resetFilter",
+            "module": "src/stateChange.ts"
           }
         },
         {
@@ -277,30 +326,52 @@
           "name": "highlight",
           "declaration": {
             "name": "highlight",
-            "module": "src/stateChange.js"
+            "module": "src/stateChange.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/utils.js",
+      "path": "src/types.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/utils.ts",
       "declarations": [
         {
           "kind": "function",
           "name": "isRegex",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
-              "name": "obj"
+              "name": "obj",
+              "type": {
+                "text": "RegExp | unknown"
+              }
             }
           ]
         },
         {
           "kind": "function",
           "name": "getType",
+          "return": {
+            "type": {
+              "text": "SupportedTypes"
+            }
+          },
           "parameters": [
             {
-              "name": "obj"
+              "name": "obj",
+              "type": {
+                "text": "any"
+              }
             }
           ]
         },
@@ -309,7 +380,10 @@
           "name": "isPrimitive",
           "parameters": [
             {
-              "name": "obj"
+              "name": "obj",
+              "type": {
+                "text": "any"
+              }
             }
           ]
         },
@@ -318,7 +392,10 @@
           "name": "isNode",
           "parameters": [
             {
-              "name": "obj"
+              "name": "obj",
+              "type": {
+                "text": "any"
+              }
             }
           ]
         },
@@ -327,25 +404,10 @@
           "name": "isPrimitiveOrNode",
           "parameters": [
             {
-              "name": "obj"
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "JsonObject",
-          "parameters": [
-            {
-              "name": "obj"
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "classNames",
-          "parameters": [
-            {
-              "name": "classes"
+              "name": "obj",
+              "type": {
+                "text": "any"
+              }
             }
           ]
         },
@@ -354,10 +416,17 @@
           "name": "generateNodePreview",
           "parameters": [
             {
-              "name": "node"
+              "name": "node",
+              "type": {
+                "text": "any"
+              }
             },
             {
-              "name": "options"
+              "name": "{ nodeCount = 3, maxLength = 15 }",
+              "default": "{}",
+              "type": {
+                "text": "{ nodeCount?: number; maxLength?: number }"
+              }
             }
           ]
         },
@@ -367,12 +436,6 @@
           "parameters": [
             {
               "name": "obj",
-              "type": {
-                "text": "any"
-              }
-            },
-            {
-              "name": "previousValue",
               "type": {
                 "text": "any"
               }
@@ -395,6 +458,27 @@
                 "text": "string"
               }
             }
+          ],
+          "description": "Matches a string using a glob-like syntax)"
+        },
+        {
+          "kind": "variable",
+          "name": "JSONConverter",
+          "type": {
+            "text": "ComplexAttributeConverter"
+          },
+          "default": "{\n    fromAttribute: (value) => {\n        return value && value.trim() ? JSON.parse(value) : undefined;\n    },\n    toAttribute: (value) => {\n        return JSON.stringify(value);\n    }\n}"
+        },
+        {
+          "kind": "function",
+          "name": "isDefined",
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "text": "any"
+              }
+            }
           ]
         }
       ],
@@ -404,7 +488,7 @@
           "name": "isRegex",
           "declaration": {
             "name": "isRegex",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -412,7 +496,7 @@
           "name": "getType",
           "declaration": {
             "name": "getType",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -420,7 +504,7 @@
           "name": "isPrimitive",
           "declaration": {
             "name": "isPrimitive",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -428,7 +512,7 @@
           "name": "isNode",
           "declaration": {
             "name": "isNode",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -436,23 +520,7 @@
           "name": "isPrimitiveOrNode",
           "declaration": {
             "name": "isPrimitiveOrNode",
-            "module": "src/utils.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "JsonObject",
-          "declaration": {
-            "name": "JsonObject",
-            "module": "src/utils.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "classNames",
-          "declaration": {
-            "name": "classNames",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -460,7 +528,7 @@
           "name": "generateNodePreview",
           "declaration": {
             "name": "generateNodePreview",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -468,7 +536,7 @@
           "name": "deepTraverse",
           "declaration": {
             "name": "deepTraverse",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
           }
         },
         {
@@ -476,7 +544,23 @@
           "name": "checkGlob",
           "declaration": {
             "name": "checkGlob",
-            "module": "src/utils.js"
+            "module": "src/utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "JSONConverter",
+          "declaration": {
+            "name": "JSONConverter",
+            "module": "src/utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isDefined",
+          "declaration": {
+            "name": "isDefined",
+            "module": "src/utils.ts"
           }
         }
       ]

@@ -209,3 +209,8 @@ body {
         width: 1344px;
     }
 }
+
+#actions-toolbar {
+    display: flex;
+    gap: 1rem;
+}

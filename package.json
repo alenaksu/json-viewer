@@ -23,11 +23,13 @@
         "src/*"
     ],
     "scripts": {
-        "start": "snowpack dev",
-        "build": "rm -rf dist && rollup -c rollup.config.js",
-        "website": "snowpack build && touch docs/.nojekyll",
-        "analyze": "custom-elements-manifest analyze --dev --litelement --config \"./custom-elements-manifest.config.js\"",
-        "analyze:watch": "npm run analyze -- --watch"
+        "start": "vite",
+        "clean": "rimraf dist",
+        "build": "npm run clean && npm run analyze && rollup -c rollup.config.js",
+        "docs": "vite build && touch docs/.nojekyll",
+        "analyze": "cem analyze --litelement --globs \"src/**/*.ts\"",
+        "analyze:watch": "npm run analyze -- --watch",
+        "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.gitignore --write"
     },
     "dependencies": {
         "lit": "^2.2.6"
@@ -39,29 +41,35 @@
         "@babel/preset-env": "^7.18.2",
         "@babel/preset-modules": "^0.1.5",
         "@custom-elements-manifest/analyzer": "^0.6.3",
-        "@rollup/plugin-babel": "^5.3.1",
         "@rollup/plugin-node-resolve": "^13.3.0",
-        "@snowpack/plugin-babel": "^2.1.7",
-        "comlink": "^4.3.1",
+        "@rollup/plugin-typescript": "^8.3.3",
+        "@rollup/pluginutils": "^4.2.1",
         "husky": "^8.0.1",
         "postcss-modules": "^4.3.1",
         "prettier": "^2.7.0",
         "pretty-quick": "^3.1.3",
+        "rimraf": "^3.0.2",
         "rollup": "^2.75.6",
         "rollup-plugin-lit-css": "^4.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-summary": "^1.4.3",
         "rollup-plugin-terser": "^7.0.2",
-        "snowpack": "^3.8.8"
+        "typescript": "^4.7.4",
+        "vite": "^2.9.12"
     },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged"
         }
     },
-    "targets": {
-        "esmodules": true
+    "customElements": "custom-elements.json",
+    "exports": {
+        ".": "./dist/json-viewer.js",
+        "./src/*": "./src/*.js",
+        "./package.json": "./package.json",
+        "./json-viewer.js": "./json-viewer.js",
+        "./JsonViewer.js": "./JsonViewer.js"
     },
-    "customElements": "custom-elements.json"
+    "types": "./dist/index.d.ts"
 }
