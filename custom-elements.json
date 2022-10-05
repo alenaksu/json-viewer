@@ -353,7 +353,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "RegExp | unknown"
+                "text": "RegExp | any"
               }
             }
           ]
@@ -370,7 +370,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "unknown"
+                "text": "any"
               }
             }
           ]
@@ -387,7 +387,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "unknown"
+                "text": "any"
               }
             }
           ]
@@ -404,7 +404,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "unknown"
+                "text": "any"
               }
             }
           ]
@@ -421,7 +421,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "unknown"
+                "text": "any"
               }
             }
           ]
@@ -429,6 +429,11 @@
         {
           "kind": "function",
           "name": "generateNodePreview",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
           "parameters": [
             {
               "name": "node",
@@ -465,6 +470,11 @@
         {
           "kind": "function",
           "name": "checkGlob",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
               "name": "str",
@@ -487,16 +497,39 @@
           "type": {
             "text": "ComplexAttributeConverter"
           },
-          "default": "{\n    fromAttribute: (value) => {\n        return value && value.trim() ? JSON.parse(value) : undefined;\n    },\n    toAttribute: (value) => {\n        return JSON.stringify(value);\n    }\n}"
+          "default": "{\n    fromAttribute: (value: string): any => {\n        return value && value.trim() ? JSON.parse(value) : undefined;\n    },\n    toAttribute: (value: any): string => {\n        return JSON.stringify(value);\n    }\n}"
         },
         {
           "kind": "function",
           "name": "isDefined",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
               "name": "value",
               "type": {
                 "text": "any"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "isMatchingPath",
+          "parameters": [
+            {
+              "name": "path",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "criteria",
+              "type": {
+                "text": "string | RegExp"
               }
             }
           ]
@@ -580,6 +613,14 @@
           "name": "isDefined",
           "declaration": {
             "name": "isDefined",
+            "module": "src/utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isMatchingPath",
+          "declaration": {
+            "name": "isMatchingPath",
             "module": "src/utils.ts"
           }
         }

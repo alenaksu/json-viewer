@@ -129,3 +129,6 @@ export const JSONConverter: ComplexAttributeConverter = {
 };
 
 export const isDefined = (value: any): boolean => value !== void 0;
+
+export const isMatchingPath = (path: string, criteria: string | RegExp) =>
+    isRegex(criteria) ? !!path.match(criteria as RegExp) : checkGlob(path, criteria as string);
