@@ -370,7 +370,7 @@
             {
               "name": "obj",
               "type": {
-                "text": "any"
+                "text": "unknown"
               }
             }
           ]
@@ -378,11 +378,16 @@
         {
           "kind": "function",
           "name": "isPrimitive",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
               "name": "obj",
               "type": {
-                "text": "any"
+                "text": "unknown"
               }
             }
           ]
@@ -390,11 +395,16 @@
         {
           "kind": "function",
           "name": "isNode",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
               "name": "obj",
               "type": {
-                "text": "any"
+                "text": "unknown"
               }
             }
           ]
@@ -402,11 +412,16 @@
         {
           "kind": "function",
           "name": "isPrimitiveOrNode",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
           "parameters": [
             {
               "name": "obj",
               "type": {
-                "text": "any"
+                "text": "unknown"
               }
             }
           ]
@@ -433,6 +448,11 @@
         {
           "kind": "function",
           "name": "deepTraverse",
+          "return": {
+            "type": {
+              "text": "Generator<[any, string, string[]]>"
+            }
+          },
           "parameters": [
             {
               "name": "obj",

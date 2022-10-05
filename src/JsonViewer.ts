@@ -135,7 +135,7 @@ export class JsonViewer extends LitElement {
         const isExpanded = !path || this.state.expanded[path] || isPrimitive;
 
         if (isExpanded) {
-            return isPrimitiveOrNode(node) ? this.renderValue(node, path) : this.renderObject(node, path);
+            return isPrimitive ? this.renderValue(node, path) : this.renderObject(node, path);
         } else {
             return this.renderNodePreview(node);
         }

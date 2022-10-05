@@ -19,8 +19,10 @@
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
+        "useDefineForClassFields": false,
         "forceConsistentCasingInFileNames": true,
         "noImplicitOverride": false,
+        "importHelpers": false
     },
     "include": ["src/**/*.ts"],
     "exclude": []

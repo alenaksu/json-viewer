@@ -36,6 +36,7 @@ export default {
         'json-viewer': 'src/index.ts',
         JsonViewer: 'src/JsonViewer.ts'
     },
+    external: [/lit/],
     output: {
         entryFileNames: '[name].js',
         dir: 'dist',
@@ -44,7 +45,9 @@ export default {
     },
     plugins: [
         minifyHTML(),
-        typescript(),
+        typescript({
+            project: 'tsconfig.json'
+        }),
         bundleText(),
         litcss({
             uglify: true

@@ -1,7 +1,7 @@
 import { ComplexAttributeConverter } from 'lit';
 import { SupportedTypes } from './types';
 
-export function isRegex(obj: RegExp | unknown): boolean {
+export function isRegex(obj: RegExp | any): boolean {
     return obj instanceof RegExp;
 }
 
@@ -10,31 +10,31 @@ export function getType(obj: any): SupportedTypes {
         ? SupportedTypes.Null
         : Array.isArray(obj)
         ? SupportedTypes.Array
-        : obj.constructor.name.toLowerCase();
+        : (obj!.constructor.name.toLowerCase() as SupportedTypes);
 }
 
-export function isPrimitive(obj: any) {
+export function isPrimitive(obj: any): boolean {
     return obj !== Object(obj);
 }
 
-export function isNode(obj: any) {
-    return !!obj && !!obj.nodeType;
+export function isNode(obj: any): boolean {
+    return !!obj && !!(obj as Node).nodeType;
 }
 
-export function isPrimitiveOrNode(obj: any) {
+export function isPrimitiveOrNode(obj: any): boolean {
     return isPrimitive(obj) || isNode(obj);
 }
 
 export function generateNodePreview(
     node: any,
     { nodeCount = 3, maxLength = 15 }: { nodeCount?: number; maxLength?: number } = {}
-) {
+): string {
     const isArray = Array.isArray(node);
     const objectNodes = Object.keys(node);
     const keys = objectNodes.slice(0, nodeCount);
-    const preview = [isArray ? '[ ' : '{ '];
+    const preview = [];
 
-    const getNodeProview = (nodeValue: any) => {
+    const getNodePreview = (nodeValue: any) => {
         const nodeType = getType(nodeValue);
 
         switch (nodeType) {
@@ -56,21 +56,25 @@ export function generateNodePreview(
 
         if (!isArray) nodePreview.push(`${key}: `);
 
-        nodePreview.push(getNodeProview(nodeValue));
+        nodePreview.push(getNodePreview(nodeValue));
         childPreviews.push(nodePreview.join(''));
     }
-    if (objectNodes.length > nodeCount) childPreviews.push('...');
 
+    if (objectNodes.length > nodeCount) {
+        childPreviews.push('...');
+    }
     preview.push(childPreviews.join(', '));
-    preview.push(isArray ? ' ]' : ' }');
 
-    return preview.join('');
+    const previewText = preview.join('');
+
+    return isArray ? `[ ${previewText} ]` : `{ ${previewText} }`;
 }
 
-export function* deepTraverse(obj: any) {
-    const stack: Array<[string, any, any[]]> = [['', obj, []]];
+export function* deepTraverse(obj: any): Generator<[any, string, string[]]> {
+    const stack: Array<[any, string, string[]]> = [[obj, '', []]];
+
     while (stack.length) {
-        const [path, node, parents] = stack.shift()!;
+        const [node, path, parents] = stack.shift()!;
 
         if (path) {
             yield [node, path, parents];
@@ -78,7 +82,7 @@ export function* deepTraverse(obj: any) {
 
         if (!isPrimitive(node)) {
             for (const [key, value] of Object.entries(node)) {
-                stack.push([`${path}${path ? '.' : ''}${key}`, value, [...parents, path]]);
+                stack.push([value, `${path}${path ? '.' : ''}${key}`, [...parents, path]]);
             }
         }
     }
@@ -87,7 +91,7 @@ export function* deepTraverse(obj: any) {
 /**
  * Matches a string using a glob-like syntax)
  */
-export function checkGlob(str: string, glob: string) {
+export function checkGlob(str: string, glob: string): boolean {
     const strParts = str.split('.');
     const globaParts = glob.split('.');
 
@@ -116,12 +120,12 @@ export function checkGlob(str: string, glob: string) {
 }
 
 export const JSONConverter: ComplexAttributeConverter = {
-    fromAttribute: (value) => {
+    fromAttribute: (value: string): any => {
         return value && value.trim() ? JSON.parse(value) : undefined;
     },
-    toAttribute: (value) => {
+    toAttribute: (value: any): string => {
         return JSON.stringify(value);
     }
 };
 
-export const isDefined = (value: any) => value !== void 0;
+export const isDefined = (value: any): boolean => value !== void 0;
