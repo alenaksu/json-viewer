@@ -9,19 +9,19 @@ A Web Component to visualize JSON data in a tree view
 
 ---
 
-- [Installation](#installation)
-  * [From CDN](#from-cdn)
-  * [From NPM](#from-npm)
-- [Usage](#usage)
-  * [Attributes](#attributes)
-  * [Properties](#properties)
-  * [Methods](#methods)
-  * [CSS Parts](#css-parts)
-  * [CSS custom properties](#css-custom-properties)
-  * [Basic Usage](#basic-usage)
-  * [Load the JSON dynamically](#load-the-json-dynamically)
-  * [Basic interactions](#basic-interactions)
-- [Demo](#demo)
+-   [Installation](#installation)
+    -   [From CDN](#from-cdn)
+    -   [From NPM](#from-npm)
+-   [Usage](#usage)
+    -   [Attributes](#attributes)
+    -   [Properties](#properties)
+    -   [Methods](#methods)
+    -   [CSS Parts](#css-parts)
+    -   [CSS custom properties](#css-custom-properties)
+    -   [Basic Usage](#basic-usage)
+    -   [Load the JSON dynamically](#load-the-json-dynamically)
+    -   [Basic interactions](#basic-interactions)
+-   [Demo](#demo)
 
 ## Installation
 
@@ -79,21 +79,22 @@ customElements.define('my-json-viewer', MyJsonViewer);
 
 -   `filter (regexOrPath: RegExp|string) => void` | Maintains only the nodes that match the given criteria
 -   `resetFilter () => void` | Clear the filter
-
 -   `expand (regexOrPath: RegExp|string) => void` | Expand all the nodes that match the given criteria
 -   `expandAll () => void` | Alias for `expand('**')`
-
 -   `collapse (regexOrPath: RegExp|string) => void` | Collapse all the nodes that match the given criteria
 -   `collapseAll () => void` | Alias for `collapse('**')`
-
 -   `search (regexOrPath: RegExp|string) => Iterator` | Return and iterator with which is possible to go through all the matched nodes. It scrolls the page to the node and highlights it.
 
-
 ### CSS Parts
+
 -   `object` - The object wrapper element.
 -   `property` - The wrapper element of a property.
 -   `key` - The key element of a property.
 -   `primitive` - The primitive value.
+-   `primitive--string` - Applied when the primitive is a string.
+-   `primitive--number` - Applied when the primitive is a number.
+-   `primitive--boolean` - Applied when the primitive is a boolean.
+-   `primitive--null` - Applied when the primitive is a null.
 -   `preview` - The value preview of a property.
 -   `highlight` - The highlighted value.
 

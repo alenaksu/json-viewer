@@ -23,6 +23,10 @@ import { JsonViewerState, Primitive } from './types';
  * @csspart property - The wrapper element of a property.
  * @csspart key - The key element of a property.
  * @csspart primitive - The primitive value.
+ * @csspart primitive--string - Applied when the primitive is a string.
+ * @csspart primitive--number - Applied when the primitive is a number.
+ * @csspart primitive--boolean - Applied when the primitive is a boolean.
+ * @csspart primitive--null - Applied when the primitive is a null.
  * @csspart preview - The value preview of a property.
  * @csspart highlight - The highlighted value.
  *
@@ -41,7 +45,7 @@ import { JsonViewerState, Primitive } from './types';
  * @cssproperty [--number-color] - The color of a number type value
  * @cssproperty [--boolean-color] - The color of a boolean type value
  * @cssproperty [--null-color] - The color of a null type value
- * @cssproperty [--property-active] - The color of the property key.
+ * @cssproperty [--property-color] - The color of the property key.
  * @cssproperty [--preview-color] - The color of the collapsed property preview.
  * @cssproperty [--highlight-color] - The color of the highlighted value.
  */
@@ -177,9 +181,10 @@ export class JsonViewer extends LitElement {
 
     renderPrimitive(node: Primitive | null, path: string) {
         const highlight = this.state.highlight;
+        const nodeType = getType(node);
         const value = isNode(node)
             ? node
-            : html` <span part="primitive" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+            : html` <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
 
         return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
     }
