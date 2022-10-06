@@ -1,3 +1,4 @@
 module.exports = {
-    globs: ['src/**/*.js']
-};
+    globs: ['src/**/*.ts'],
+    outdir: 'dist'
+}

@@ -22,27 +22,13 @@ function bundleText() {
     };
 }
 
-/**
- * @type {import('rollup').RollupOptions}
- */
-export default {
+const baseConfig = {
     onwarn(warning) {
         if (warning.code !== 'THIS_IS_UNDEFINED') {
             console.error(`(!) ${warning.message}`);
         }
     },
     treeshake: true,
-    input: {
-        'json-viewer': 'src/index.ts',
-        JsonViewer: 'src/JsonViewer.ts'
-    },
-    external: [/lit/],
-    output: {
-        entryFileNames: '[name].js',
-        dir: 'dist',
-        format: 'esm',
-        sourcemap: true
-    },
     plugins: [
         minifyHTML(),
         typescript({
@@ -70,3 +56,35 @@ export default {
         })
     ]
 };
+
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+export default [
+    {
+        ...baseConfig,
+        input: {
+            'json-viewer': 'src/index.ts',
+            JsonViewer: 'src/JsonViewer.ts'
+        },
+        external: [/lit/],
+        output: {
+            entryFileNames: '[name].js',
+            dir: 'dist',
+            format: 'esm',
+            sourcemap: true
+        }
+    },
+    {
+        ...baseConfig,
+        input: {
+            'json-viewer': 'src/index.ts'
+        },
+        output: {
+            entryFileNames: '[name].bundle.js',
+            dir: 'dist',
+            format: 'iife',
+            sourcemap: true
+        }
+    }
+];

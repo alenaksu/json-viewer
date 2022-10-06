@@ -1,6 +1,6 @@
 export interface JsonViewerState {
-    expanded: Record<string, boolean>;
-    filtered: Record<string, boolean>;
+    expanded: { [path: string]: boolean };
+    filtered: { [path: string]: boolean };
     highlight: string | null;
 }
 

@@ -3,7 +3,8 @@
     "version": "1.0.1",
     "main": "dist/json-viewer.js",
     "module": "dist/json-viewer.js",
-    "source": "src/index.js",
+    "customElements": "dist/custom-elements.json",
+    "source": "src/index.ts",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -27,7 +28,7 @@
         "clean": "rimraf dist",
         "build": "npm run clean && npm run analyze && rollup -c rollup.config.js",
         "docs": "vite build && touch docs/.nojekyll",
-        "analyze": "cem analyze --litelement --globs \"src/**/*.ts\"",
+        "analyze": "cem analyze --litelement",
         "analyze:watch": "npm run analyze -- --watch",
         "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.gitignore --write"
     },
