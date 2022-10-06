@@ -1,9 +1,9 @@
 {
     "name": "@alenaksu/json-viewer",
-    "version": "1.0.1",
+    "version": "2.0.0-0",
     "main": "dist/json-viewer.js",
     "module": "dist/json-viewer.js",
-    "customElements": "dist/custom-elements.json",
+    "customElements": "custom-elements.json",
     "source": "src/index.ts",
     "license": "MIT",
     "repository": {
@@ -65,7 +65,6 @@
             "pre-commit": "pretty-quick --staged"
         }
     },
-    "customElements": "custom-elements.json",
     "exports": {
         ".": "./dist/json-viewer.js",
         "./src/*": "./src/*.js",
