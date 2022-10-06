@@ -1,5 +1,5 @@
-import '../src/index.js';
-import 'https://unpkg.com/comlink/dist/umd/comlink.js'
+import '../src/index.ts';
+import 'https://unpkg.com/comlink/dist/umd/comlink.js';
 
 const worker = Comlink.wrap(new Worker(new URL('worker.js', import.meta.url)));
 
@@ -24,12 +24,12 @@ collapse.addEventListener('click', (e) => {
     viewer.collapseAll();
 });
 
-filter.addEventListener('change', () => {
+filter.addEventListener('sl-change', () => {
     if (!filter.value) viewer.resetFilter();
     else viewer.filter(filter.value);
 });
 
-search.addEventListener('input', () => {
+search.addEventListener('sl-input', () => {
     currentSearch = viewer.search(search.value);
 });
 search.addEventListener('keyup', (e) => {

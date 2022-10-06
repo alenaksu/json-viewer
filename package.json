@@ -1,9 +1,10 @@
 {
     "name": "@alenaksu/json-viewer",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "main": "dist/json-viewer.js",
     "module": "dist/json-viewer.js",
-    "source": "src/index.js",
+    "customElements": "custom-elements.json",
+    "source": "src/index.ts",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -23,45 +24,53 @@
         "src/*"
     ],
     "scripts": {
-        "start": "snowpack dev",
-        "build": "rm -rf dist && rollup -c rollup.config.js",
-        "website": "snowpack build && touch docs/.nojekyll",
-        "analyze": "custom-elements-manifest analyze --dev --litelement --config \"./custom-elements-manifest.config.js\"",
-        "analyze:watch": "npm run analyze -- --watch"
+        "start": "vite",
+        "clean": "rimraf dist",
+        "build": "npm run clean && npm run analyze && rollup -c rollup.config.js",
+        "docs": "vite build && touch docs/.nojekyll",
+        "analyze": "cem analyze --litelement",
+        "analyze:watch": "npm run analyze -- --watch",
+        "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.gitignore --write"
     },
     "dependencies": {
-        "lit": "^2.2.6"
+        "lit": "^2.3.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.18.5",
-        "@babel/plugin-proposal-class-properties": "^7.17.12",
-        "@babel/plugin-proposal-decorators": "^7.18.2",
-        "@babel/preset-env": "^7.18.2",
+        "@babel/core": "^7.19.3",
+        "@babel/plugin-proposal-class-properties": "^7.18.6",
+        "@babel/plugin-proposal-decorators": "^7.19.3",
+        "@babel/preset-env": "^7.19.3",
         "@babel/preset-modules": "^0.1.5",
-        "@custom-elements-manifest/analyzer": "^0.6.3",
-        "@rollup/plugin-babel": "^5.3.1",
-        "@rollup/plugin-node-resolve": "^13.3.0",
-        "@snowpack/plugin-babel": "^2.1.7",
-        "comlink": "^4.3.1",
+        "@custom-elements-manifest/analyzer": "^0.6.4",
+        "@rollup/plugin-node-resolve": "^14.1.0",
+        "@rollup/plugin-typescript": "^8.5.0",
+        "@rollup/pluginutils": "^4.2.1",
         "husky": "^8.0.1",
-        "postcss-modules": "^4.3.1",
-        "prettier": "^2.7.0",
+        "postcss-modules": "^5.0.0",
+        "prettier": "^2.7.1",
         "pretty-quick": "^3.1.3",
-        "rollup": "^2.75.6",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.79.1",
         "rollup-plugin-lit-css": "^4.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-summary": "^1.4.3",
         "rollup-plugin-terser": "^7.0.2",
-        "snowpack": "^3.8.8"
+        "tslib": "^2.4.0",
+        "typescript": "^4.8.4",
+        "vite": "^3.1.4"
     },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged"
         }
     },
-    "targets": {
-        "esmodules": true
+    "exports": {
+        ".": "./dist/json-viewer.js",
+        "./src/*": "./src/*.js",
+        "./package.json": "./package.json",
+        "./json-viewer.js": "./json-viewer.js",
+        "./JsonViewer.js": "./JsonViewer.js"
     },
-    "customElements": "custom-elements.json"
+    "types": "./dist/index.d.ts"
 }

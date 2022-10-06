@@ -9,16 +9,54 @@ A Web Component to visualize JSON data in a tree view
 
 ---
 
+-   [Installation](#installation)
+    -   [From CDN](#from-cdn)
+    -   [From NPM](#from-npm)
+-   [Usage](#usage)
+    -   [Attributes](#attributes)
+    -   [Properties](#properties)
+    -   [Methods](#methods)
+    -   [CSS Parts](#css-parts)
+    -   [CSS custom properties](#css-custom-properties)
+    -   [Basic Usage](#basic-usage)
+    -   [Load the JSON dynamically](#load-the-json-dynamically)
+    -   [Basic interactions](#basic-interactions)
+-   [Demo](#demo)
+
 ## Installation
+
+### From CDN
+
+The package contains a bundled version of the components which includes also the Lit library. It can be useful in case you want to import the package using a CDN.
+
+```html
+<script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script>
+```
+
+### From NPM
+
+Install the component through NPM:
 
 ```sh
 npm i @alenaksu/json-viewer
 ```
 
-Then import the package to your project.
+Import the package to your project, doing so it will automatically define the component in the custom elements registry with its default tag name `json-viewer`.
 
 ```js
 import '@alenaksu/json-viewer';
+```
+
+If you want to extend the component or if you just need to use it in scoped registries with a different tag name, then you can import the component class from the package:
+
+```js
+import { JsonViewer } '@alenaksu/json-viewer/dist/JsonViewer.js';
+
+class MyJsonViewer extends JsonViewer {
+    ...
+}
+
+customElements.define('my-json-viewer', MyJsonViewer);
 ```
 
 ---
@@ -29,26 +67,70 @@ import '@alenaksu/json-viewer';
 <json-viewer></json-viewer>
 ```
 
-**Attributes**
+### Attributes
 
 -   `data` - the string representation of JSON object to load
 
-**Properties**
+### Properties
 
 -   `data` - get/set the JSON object
 
-**Methods**
+### Methods
 
--   `filter (regexOrPath: RegExp|string) => void` | Mantains only the nodes that match the given criteria
+-   `filter (regexOrPath: RegExp|string) => void` | Maintains only the nodes that match the given criteria
 -   `resetFilter () => void` | Clear the filter
-
 -   `expand (regexOrPath: RegExp|string) => void` | Expand all the nodes that match the given criteria
 -   `expandAll () => void` | Alias for `expand('**')`
-
 -   `collapse (regexOrPath: RegExp|string) => void` | Collapse all the nodes that match the given criteria
 -   `collapseAll () => void` | Alias for `collapse('**')`
-
 -   `search (regexOrPath: RegExp|string) => Iterator` | Return and iterator with which is possible to go through all the matched nodes. It scrolls the page to the node and highlights it.
+
+### CSS Parts
+
+-   `object` - The object wrapper element.
+-   `property` - The wrapper element of a property.
+-   `key` - The key element of a property.
+-   `primitive` - The primitive value.
+-   `primitive--string` - Applied when the primitive is a string.
+-   `primitive--number` - Applied when the primitive is a number.
+-   `primitive--boolean` - Applied when the primitive is a boolean.
+-   `primitive--null` - Applied when the primitive is a null.
+-   `preview` - The value preview of a property.
+-   `highlight` - The highlighted value.
+
+### CSS custom properties
+
+The appearance of the component can be modified by changing the CSS custom properties
+
+```css
+json-viewer {
+    /* Background, font and indentation */
+    --background-color: #2a2f3a;
+    --color: #f8f8f2;
+    --font-family: monaco, Consolas, 'Lucida Console', monospace;
+    --font-size: 1rem;
+    --indent-size: 1.5em;
+    --indentguide-size: 1px;
+    --indentguide-style: solid;
+    --indentguide-color: #333;
+    --indentguide-color-active: #666;
+    --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
+    --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
+
+    /* Types colors */
+    --string-color: #a3eea0;
+    --number-color: #d19a66;
+    --boolean-color: #4ba7ef;
+    --null-color: #df9cf3;
+    --property-color: #6fb3d2;
+
+    /* Collapsed node preview */
+    --preview-color: rgba(222, 175, 143, 0.9);
+
+    /* Search highlight color */
+    --highlight-color: #6fb3d2;
+}
+```
 
 ### Basic Usage
 
@@ -87,40 +169,6 @@ viewer.filter('test.*.name');
 const searchIterator = viewer.search('value');
 // Scrolls to the node and highlight the value
 searchIterator.next();
-```
-
-### Theming
-
-The appereance of the component can be modified by changing the CSS variables
-
-```css
-json-viewer {
-    /* Background, font and indentation */
-    --background-color: #2a2f3a;
-    --color: #f8f8f2;
-    --font-family: monaco, Consolas, 'Lucida Console', monospace;
-    --font-size: 1rem;
-    --indent-size: 1.5em;
-    --indentguide-size: 1px;
-    --indentguide-style: solid;
-    --indentguide-color: #333;
-    --indentguide-color-active: #666;
-    --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
-    --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
-
-    /* Types colors */
-    --string-color: #a3eea0;
-    --number-color: #d19a66;
-    --boolean-color: #4ba7ef;
-    --null-color: #df9cf3;
-    --property-color: #6fb3d2;
-
-    /* Collapsed node preview */
-    --preview-color: rgba(222, 175, 143, 0.9);
-
-    /* Search highlight color */
-    --highlight-color: #6fb3d2;
-}
 ```
 
 ## Demo

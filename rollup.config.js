@@ -1,5 +1,5 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
 import path from 'path';
@@ -22,30 +22,17 @@ function bundleText() {
     };
 }
 
-/**
- * @type {import('rollup').RollupOptions}
- */
-export default {
-    // If using any exports from a symlinked project, uncomment the following:
-    // preserveSymlinks: true,
+const baseConfig = {
+    onwarn(warning) {
+        if (warning.code !== 'THIS_IS_UNDEFINED') {
+            console.error(`(!) ${warning.message}`);
+        }
+    },
     treeshake: true,
-    input: {
-        'json-viewer': 'src/index.js',
-        JsonViewer: 'src/JsonViewer.js'
-    },
-    output: {
-        entryFileNames: '[name].js',
-        dir: 'dist',
-        format: 'esm',
-        sourcemap: true
-    },
     plugins: [
         minifyHTML(),
-        babel({
-            exclude: 'node_modules/**',
-            babelHelpers: 'bundled',
-            configFile: './.babelrc',
-            compact: true
+        typescript({
+            project: 'tsconfig.json'
         }),
         bundleText(),
         litcss({
@@ -62,6 +49,42 @@ export default {
                 }
             }
         }),
-        summary()
+        summary({
+            showGzippedSize: true,
+            showBrotliSize: true,
+            showMinifiedSize: true
+        })
     ]
 };
+
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+export default [
+    {
+        ...baseConfig,
+        input: {
+            'json-viewer': 'src/index.ts',
+            JsonViewer: 'src/JsonViewer.ts'
+        },
+        external: [/lit/],
+        output: {
+            entryFileNames: '[name].js',
+            dir: 'dist',
+            format: 'esm',
+            sourcemap: true
+        }
+    },
+    {
+        ...baseConfig,
+        input: {
+            'json-viewer': 'src/index.ts'
+        },
+        output: {
+            entryFileNames: '[name].bundle.js',
+            dir: 'dist',
+            format: 'iife',
+            sourcemap: true
+        }
+    }
+];
