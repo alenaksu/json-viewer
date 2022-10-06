@@ -7,7 +7,7 @@ export default defineConfig({
     publicDir: './website',
     base: '/json-viewer/',
     build: {
-        outDir: '../dist',
+        outDir: '../docs',
         rollupOptions: {
             external: /^lit/
         }

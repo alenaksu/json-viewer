@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html class="sl-theme-dark">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="stylesheet" href="./styles.css" />
+        
         <link rel="stylesheet" href="https://unpkg.com/codemirror@5.50.0/lib/codemirror.css" />
-        <link rel="stylesheet" href="./codemirror-custom.css" />
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.76/dist/themes/light.css" />
+      <script type="module" crossorigin src="/json-viewer/assets/index.5f8ab1d6.js"></script>
+      <link rel="stylesheet" href="/json-viewer/assets/index.d16606c6.css">
     </head>
 
     <body>
@@ -22,18 +25,18 @@
 Github"
                 >
                     <svg viewBox="0 0 250 250">
-                        <path d="M0 0l115 115h15l12 27 108 108V0z"></path>
+                        <path d="M0 0l115 115h15l12 27 108 108V0z" />
                         <path
                             d="M128 109c-14-9-9-19-9-19 3-7 2-11 2-11-2-7 2-3 2-3 4 5 3 11 3 11-3 11 5 15 8 16"
                             fill="currentColor"
                             style="transform-origin: 130px 106px"
                             class="octo-arm"
-                        ></path>
+                        />
                         <path
                             d="M115 115s4 2 5 0l14-13c3-3 6-4 8-3-8-11-14-25 2-41 5-5 10-7 16-7 0-2 3-7 11-11 0 0 5 3 8 16a59 59 0 0121 22c14 2 16 7 16 7-3 8-9 11-11 12 0 5-2 11-7 16-16 16-30 10-40 1 0 3-1 7-5 11l-12 12c-1 1 1 5 1 5z"
                             fill="currentColor"
                             class="octo-body"
-                        ></path>
+                        />
                     </svg>
                 </a>
             </div>
@@ -72,10 +75,10 @@ Github"
             </div>
             <div class="panel panel-right">
                 <div id="actions-toolbar">
-                    <button id="expand">Expand All</button>
-                    <button id="collapse">Collapse All</button>
-                    <input id="filter" placeholder="filter" />
-                    <input id="search" placeholder="search" />
+                    <sl-button id="expand">Expand All</sl-button>
+                    <sl-button id="collapse">Collapse All</sl-button>
+                    <sl-input id="filter" placeholder="filter"></sl-input>
+                    <sl-input id="search" placeholder="search"></sl-input>
                 </div>
                 <json-viewer></json-viewer>
             </div>
@@ -83,7 +86,8 @@ Github"
         <script src="https://unpkg.com/codemirror@5.50.0/lib/codemirror.js"></script>
         <script src="https://unpkg.com/codemirror@5.50.0/mode/javascript/javascript.js"></script>
         <!-- Place this tag in your head or just before your close body tag. -->
-        <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
-        <script type="module" src="./index.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.76/dist/shoelace.js"></script>
+        
     </body>
 </html>
