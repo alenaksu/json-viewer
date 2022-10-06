@@ -8,9 +8,6 @@ export default defineConfig({
     base: '/json-viewer/',
     build: {
         outDir: '../docs',
-        rollupOptions: {
-            external: /^lit/
-        }
     },
     plugins: [cssImportPlugin()]
 });
