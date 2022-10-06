@@ -16,6 +16,35 @@ import { toggleNode, expand, filter, highlight, resetFilter } from './stateChang
 import styles from './styles.css';
 import { JsonViewerState, Primitive } from './types';
 
+/**
+ * @since 1.0
+ *
+ * @csspart object - The object wrapper element.
+ * @csspart property - The wrapper element of a property.
+ * @csspart key - The key element of a property.
+ * @csspart primitive - The primitive value.
+ * @csspart preview - The value preview of a property.
+ * @csspart highlight - The highlighted value.
+ *
+ * @cssproperty [--background-color] - The component background color.
+ * @cssproperty [--color] - The text color.
+ * @cssproperty [--font-family] - The font family.
+ * @cssproperty [--font-size] - The font size.
+ * @cssproperty [--indent-size] - The size of the indentation of nested properties.
+ * @cssproperty [--indentguide-size] - The width of the indentation line.
+ * @cssproperty [--indentguide-style] - The style of the indentation line.
+ * @cssproperty [--indentguide-color] - The color of the indentation line.
+ * @cssproperty [--indentguide-color-active] - The color of the indentation line when is active.
+ * @cssproperty [--indentguide]
+ * @cssproperty [--indentguide-active]
+ * @cssproperty [--string-color] - The color of a string type value
+ * @cssproperty [--number-color] - The color of a number type value
+ * @cssproperty [--boolean-color] - The color of a boolean type value
+ * @cssproperty [--null-color] - The color of a null type value
+ * @cssproperty [--property-active] - The color of the property key.
+ * @cssproperty [--preview-color] - The color of the collapsed property preview.
+ * @cssproperty [--highlight-color] - The color of the highlighted value.
+ */
 export class JsonViewer extends LitElement {
     static styles = [styles];
 
@@ -104,15 +133,16 @@ export class JsonViewer extends LitElement {
 
     renderObject(node: Record<string, unknown>, path: string): TemplateResult {
         return html`
-            <ul>
+            <ul part="object">
                 ${Object.keys(node).map((key) => {
                     const nodeData = node[key];
                     const nodePath = path ? `${path}.${key}` : key;
                     const isPrimitive = isPrimitiveOrNode(nodeData);
 
                     return html`
-                        <li data-path="${nodePath}" .hidden="${this.state.filtered[nodePath]}">
+                        <li part="property" data-path="${nodePath}" .hidden="${this.state.filtered[nodePath]}">
                             <span
+                                part="key"
                                 class="${classMap({
                                     key: key,
                                     collapsable: !isPrimitive,
@@ -135,23 +165,23 @@ export class JsonViewer extends LitElement {
         const isExpanded = !path || this.state.expanded[path] || isPrimitive;
 
         if (isExpanded) {
-            return isPrimitive ? this.renderValue(node, path) : this.renderObject(node, path);
+            return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path);
         } else {
             return this.renderNodePreview(node);
         }
     }
 
     renderNodePreview(node: any) {
-        return html` <span class="preview"> ${generateNodePreview(node)} </span> `;
+        return html` <span part="preview" class="preview"> ${generateNodePreview(node)} </span> `;
     }
 
-    renderValue(node: Primitive | null, path: string) {
+    renderPrimitive(node: Primitive | null, path: string) {
         const highlight = this.state.highlight;
         const value = isNode(node)
             ? node
-            : html` <span tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+            : html` <span part="primitive" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
 
-        return path === highlight ? html`<mark>${value}</mark>` : value;
+        return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
     }
 
     render() {
