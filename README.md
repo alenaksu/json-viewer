@@ -27,7 +27,7 @@ A Web Component to visualize JSON data in a tree view
 
 ### From CDN
 
-The package contains a bundled version of the components which includes also the Lit library. It can be useful in case you want to import the package using a CDN.
+The package contains a bundled version of the component which includes also the Lit library. It can be useful in case you want to import the package using a CDN.
 
 ```html
 <script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script>
