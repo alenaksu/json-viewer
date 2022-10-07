@@ -41,7 +41,8 @@ Install the component through NPM:
 npm i @alenaksu/json-viewer
 ```
 
-Import the package to your project, doing so it will automatically define the component in the custom elements registry with its default tag name `json-viewer`.
+
+Import the package to your project, this way the component will be automatically defined in the custom elements registry with its default tag name `json-viewer`.
 
 ```js
 import '@alenaksu/json-viewer';
