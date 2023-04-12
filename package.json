@@ -69,8 +69,8 @@
         ".": "./dist/json-viewer.js",
         "./src/*": "./src/*.js",
         "./package.json": "./package.json",
-        "./json-viewer.js": "./json-viewer.js",
-        "./JsonViewer.js": "./JsonViewer.js"
+        "./json-viewer.js": "./dist/json-viewer.js",
+        "./JsonViewer.js": "./dist/JsonViewer.js"
     },
     "types": "./dist/index.d.ts"
 }
