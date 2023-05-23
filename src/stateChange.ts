@@ -27,6 +27,24 @@ export const expand =
         return { expanded };
     };
 
+export const collapseSingleNode =
+    (path: string) =>
+    (state: JsonViewerState): Partial<JsonViewerState> => ({
+        expanded: {
+            ...state.expanded,
+            [path]: false
+        }
+    });
+
+export const expandSingleNode =
+    (path: string) =>
+    (state: JsonViewerState): Partial<JsonViewerState> => ({
+        expanded: {
+            ...state.expanded,
+            [path]: true
+        }
+    });
+
 export const filter =
     (regexOrGlob: string | RegExp) =>
     (_state: JsonViewerState, el: any): Partial<JsonViewerState> => {

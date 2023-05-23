@@ -1,5 +1,5 @@
 import { ComplexAttributeConverter } from 'lit';
-import { SupportedTypes } from './types';
+import { JsonViewerState, SupportedTypes } from './types';
 
 export function isRegex(obj: RegExp | any): boolean {
     return obj instanceof RegExp;
@@ -132,3 +132,50 @@ export const isDefined = (value: any): boolean => value !== void 0;
 
 export const isMatchingPath = (path: string, criteria: string | RegExp) =>
     isRegex(criteria) ? !!path.match(criteria as RegExp) : checkGlob(path, criteria as string);
+
+export const isExpanded = (path: string, state: JsonViewerState): boolean => state.expanded[path];
+
+export const isCollapsed = (path: string, state: JsonViewerState): boolean => !state.expanded[path];
+
+export const isDeepestVisible = (node: Element): boolean => {
+    const elementToCheck = node.querySelector('[part=object]');
+    if (!elementToCheck) return true;
+    return ![...node.children].includes(elementToCheck);
+};
+
+export const isAncestor = (currentElement: Element, compareElement: Element): boolean => {
+    const currentPath = currentElement.getAttribute('data-path') || '';
+    const comparePath = compareElement.getAttribute('data-path') || '';
+    return currentPath.startsWith(comparePath) && currentElement.parentElement !== compareElement.parentElement;
+};
+
+export const isExpandedAndNonPrimitive = (path: string, shadowRoot: ShadowRoot): boolean => {
+    const currentFocus = shadowRoot.querySelector(`[data-path="${path}"]`);
+    const nextObject = currentFocus?.querySelector('[part=object]');
+    if (!currentFocus || !nextObject) return false;
+    return [...currentFocus.children].includes(nextObject);
+};
+
+export const isEmptyObject = (currentFocus: Element) => {
+    const nestedIterable = currentFocus.querySelector('[part=object]');
+    return !nestedIterable?.children || nestedIterable.children.length === 0;
+};
+
+export const isTopLevelElement = (path: string, shadowRoot: ShadowRoot): boolean => {
+    const key = shadowRoot.querySelector(`[data-path="${path}"]`)?.querySelector('[part=key]');
+    if (!(key instanceof HTMLElement)) return false;
+    if (key.innerText.includes('.')) {
+        const textPeriodCount = key.innerText.split('').filter((char) => char === '.').length;
+        const pathPeriodCount = path.split('').filter((char) => char === '.').length;
+        return textPeriodCount === pathPeriodCount;
+    } else {
+        return !path.includes('.');
+    }
+};
+
+export const canNavigateDown = (path: string, shadowRoot: ShadowRoot): boolean => {
+    const currentFocus = shadowRoot.querySelector(`[data-path="${path}"]`);
+    const nextObject = currentFocus?.querySelector('[part=object]');
+    if (!currentFocus || !nextObject) return false;
+    return [...currentFocus.children].includes(nextObject) && !isEmptyObject(currentFocus);
+};

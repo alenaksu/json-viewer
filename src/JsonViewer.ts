@@ -9,9 +9,22 @@ import {
     isNode,
     deepTraverse,
     JSONConverter,
-    isDefined
+    isDefined,
+    isCollapsed,
+    isExpandedAndNonPrimitive,
+    isTopLevelElement,
+    canNavigateDown
 } from './utils';
-import { toggleNode, expand, filter, highlight, resetFilter } from './stateChange';
+import {
+    toggleNode,
+    expand,
+    filter,
+    highlight,
+    resetFilter,
+    collapseSingleNode,
+    expandSingleNode
+} from './stateChange';
+import { navigateDown, navigateUp, navigateToParent } from './keyboardNavigation';
 
 import styles from './styles.css';
 import { JsonViewerState, Primitive } from './types';
@@ -75,6 +88,8 @@ export class JsonViewer extends LitElement {
             this.setAttribute('data', this.innerText);
         }
 
+        this.addEventListener('keydown', this.handleKeyDown);
+
         super.connectedCallback();
     }
 
@@ -82,6 +97,36 @@ export class JsonViewer extends LitElement {
         e.preventDefault();
 
         this.setState(toggleNode(path));
+    };
+
+    handleKeyDown = (event: KeyboardEvent) => {
+        if (!this.shadowRoot) return;
+        const path = this.shadowRoot.activeElement?.parentElement?.getAttribute('data-path');
+        if (!path) return;
+        switch (event.code) {
+            case 'ArrowUp':
+                event.preventDefault();
+                navigateUp(path, this.shadowRoot);
+                break;
+            case 'ArrowDown':
+                event.preventDefault();
+                navigateDown(path, this.shadowRoot);
+                break;
+            case 'ArrowLeft':
+                event.preventDefault();
+                if (isExpandedAndNonPrimitive(path, this.shadowRoot)) this.setState(collapseSingleNode(path));
+                else if (!isTopLevelElement(path, this.shadowRoot)) navigateToParent(path, this.shadowRoot);
+                break;
+            case 'ArrowRight':
+                event.preventDefault();
+                if (isCollapsed(path, this.state)) this.setState(expandSingleNode(path));
+                else if (canNavigateDown(path, this.shadowRoot)) {
+                    navigateDown(path, this.shadowRoot);
+                }
+                break;
+            default:
+                break;
+        }
     };
 
     expand(glob: string | RegExp) {
@@ -135,10 +180,10 @@ export class JsonViewer extends LitElement {
         this.setState(resetFilter());
     }
 
-    renderObject(node: Record<string, unknown>, path: string): TemplateResult {
+    renderObject(node: Record<string, unknown>, path: string, isRoot: boolean): TemplateResult {
         return html`
             <ul part="object">
-                ${Object.keys(node).map((key) => {
+                ${Object.keys(node).map((key, i) => {
                     const nodeData = node[key];
                     const nodePath = path ? `${path}.${key}` : key;
                     const isPrimitive = isPrimitiveOrNode(nodeData);
@@ -147,6 +192,7 @@ export class JsonViewer extends LitElement {
                         <li part="property" data-path="${nodePath}" .hidden="${this.state.filtered[nodePath]}">
                             <span
                                 part="key"
+                                tabindex=${isRoot && i === 0 ? '0' : '-1'}
                                 class="${classMap({
                                     key: key,
                                     collapsable: !isPrimitive,
@@ -156,7 +202,7 @@ export class JsonViewer extends LitElement {
                             >
                                 ${key}:
                             </span>
-                            ${this.renderNode(nodeData, nodePath)}
+                            ${this.renderNode(nodeData, false, nodePath)}
                         </li>
                     `;
                 })}
@@ -164,12 +210,12 @@ export class JsonViewer extends LitElement {
         `;
     }
 
-    renderNode(node: any, path = '') {
+    renderNode(node: any, isRoot = false, path = '') {
         const isPrimitive = isPrimitiveOrNode(node);
         const isExpanded = !path || this.state.expanded[path] || isPrimitive;
 
         if (isExpanded) {
-            return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path);
+            return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path, isRoot);
         } else {
             return this.renderNodePreview(node);
         }
@@ -184,7 +230,9 @@ export class JsonViewer extends LitElement {
         const nodeType = getType(node);
         const value = isNode(node)
             ? node
-            : html` <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+            : html`
+                  <span part="primitive primitive-${nodeType}" class="${getType(node)}">${JSON.stringify(node)}</span>
+              `;
 
         return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
     }
@@ -192,6 +240,6 @@ export class JsonViewer extends LitElement {
     render() {
         const data = this.data;
 
-        return isDefined(data) ? this.renderNode(data) : null;
+        return isDefined(data) ? this.renderNode(data, true) : null;
     }
 }
