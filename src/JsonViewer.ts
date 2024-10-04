@@ -171,12 +171,16 @@ export class JsonViewer extends LitElement {
         if (isExpanded) {
             return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path);
         } else {
-            return this.renderNodePreview(node);
+            return this.renderNodePreview(node, path);
         }
     }
 
-    renderNodePreview(node: any) {
-        return html` <span part="preview" class="preview"> ${generateNodePreview(node)} </span> `;
+    renderNodePreview(node: any, path: string) {
+        return html`
+            <span part="preview" class="preview" @click="${this.handlePropertyClick(path)}">
+                ${generateNodePreview(node)}
+            </span>
+        `;
     }
 
     renderPrimitive(node: Primitive | null, path: string) {
@@ -184,7 +188,11 @@ export class JsonViewer extends LitElement {
         const nodeType = getType(node);
         const value = isNode(node)
             ? node
-            : html` <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+            : html`
+                  <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}"
+                      >${JSON.stringify(node)}</span
+                  >
+              `;
 
         return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
     }

@@ -29,6 +29,7 @@
 
 .preview {
     color: var(--preview-color);
+    cursor: pointer;
 }
 
 .null {
