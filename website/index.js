@@ -1,5 +1,35 @@
-import '../src/index.ts';
+import { css, html } from 'lit';
+import { JsonViewer } from '../src/JsonViewer.ts';
 import 'https://unpkg.com/comlink/dist/umd/comlink.js';
+
+customElements.define(
+    'json-viewer',
+    class extends JsonViewer {
+        static styles = [
+            JsonViewer.styles,
+            css`
+                a {
+                    color: white;
+                    text-decoration: underline;
+                }
+            `
+        ];
+
+        static customRenderer(value) {
+            if (typeof value === 'string') {
+                if (URL.canParse(value)) {
+                    return html`<a href="${value}" target="_blank">${value}</a>`;
+                } else if (Date.parse(value)) {
+                    return new Date(value).toLocaleString();
+                }
+            } else if (typeof value === 'number') {
+                return value.toFixed(2);
+            }
+
+            return super.customRenderer(value);
+        }
+    }
+);
 
 const worker = Comlink.wrap(new Worker(new URL('worker.js', import.meta.url)));
 
