@@ -1,0 +1,25 @@
+:host,
+.json-viewer-theme-default {
+    --background-color: #2a2f3a;
+    --color: #f8f8f2;
+    --string-color: #a3eea0;
+    --number-color: #d19a66;
+    --boolean-color: #4ba7ef;
+    --null-color: #df9cf3;
+    --property-color: #6fb3d2;
+    --preview-color: rgba(222, 175, 143, 0.9);
+    --highlight-color: #7b0000;
+    --outline-color: #7b0000;
+
+    --font-family: Nimbus Mono PS, Courier New, monospace;
+    --font-size: 1rem;
+    --line-height: 1.2rem;
+
+    --indent-size: 1.5em;
+    --indentguide-size: 1px;
+    --indentguide-style: solid;
+    --indentguide-color: #333;
+    --indentguide-color-active: #666;
+    --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
+    --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
+}

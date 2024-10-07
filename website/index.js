@@ -2,6 +2,9 @@ import { css, html } from 'lit';
 import { JsonViewer } from '../src/JsonViewer.ts';
 import 'https://unpkg.com/comlink/dist/umd/comlink.js';
 
+import '../themes/default.css';
+import '../themes/light.css';
+
 customElements.define(
     'json-viewer',
     class extends JsonViewer {

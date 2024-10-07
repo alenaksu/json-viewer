@@ -15,7 +15,7 @@ import {
 } from './utils';
 import { toggleNode, expand, filter, highlight, resetFilter } from './stateChange';
 
-import styles from './styles.css';
+import styles from './JsonViewer.styles';
 import { JSONArray, JSONObject, JSONValue, JsonViewerState, Primitive } from './types';
 
 /**
@@ -36,6 +36,7 @@ import { JSONArray, JSONObject, JSONValue, JsonViewerState, Primitive } from './
  * @cssproperty [--color] - The text color.
  * @cssproperty [--font-family] - The font family.
  * @cssproperty [--font-size] - The font size.
+ * @cssproperty [--line-height] - The line height.
  * @cssproperty [--indent-size] - The size of the indentation of nested properties.
  * @cssproperty [--indentguide-size] - The width of the indentation line.
  * @cssproperty [--indentguide-style] - The style of the indentation line.
