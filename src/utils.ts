@@ -1,5 +1,5 @@
 import { ComplexAttributeConverter } from 'lit';
-import { JSONValue, Primitive, SupportedTypes } from './types';
+import { JSONObject, JSONValue, Primitive, SupportedTypes } from './types';
 
 export function isRegex(value: unknown) {
     return value instanceof RegExp;
@@ -90,8 +90,8 @@ export function* deepTraverse(obj: any): Generator<[any, string, string[]]> {
 
 /**
  * Matches a string using a glob-like syntax
- * 
- * @example 
+ *
+ * @example
  * checkGlob('a.b.c', 'a.*.c') // true
  * checkGlob('a.b.c.d.e.f', 'a.**.f') // true
  */
@@ -132,7 +132,10 @@ export const JSONConverter: ComplexAttributeConverter = {
     }
 };
 
-export const isDefined = (value: unknown): boolean => value !== void 0;
+export const isDefined = (value: unknown) => value !== void 0;
 
 export const isMatchingPath = (path: string, criteria: string | RegExp) =>
     isRegex(criteria) ? !!path.match(criteria as RegExp) : checkGlob(path, criteria as string);
+
+export const getValueByPath = (json: JSONValue, path: string) =>
+    path.split('.').reduce((acc, key) => (acc as JSONObject)![key], json);
