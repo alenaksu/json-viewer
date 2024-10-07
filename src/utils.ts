@@ -1,28 +1,28 @@
 import { ComplexAttributeConverter } from 'lit';
-import { SupportedTypes } from './types';
+import { JSONValue, Primitive, SupportedTypes } from './types';
 
-export function isRegex(obj: RegExp | any): boolean {
-    return obj instanceof RegExp;
+export function isRegex(value: unknown) {
+    return value instanceof RegExp;
 }
 
-export function getType(obj: any): SupportedTypes {
-    return obj === null
+export function getType(value: unknown): SupportedTypes {
+    return value === null
         ? SupportedTypes.Null
-        : Array.isArray(obj)
+        : Array.isArray(value)
         ? SupportedTypes.Array
-        : (obj!.constructor.name.toLowerCase() as SupportedTypes);
+        : (value!.constructor.name.toLowerCase() as SupportedTypes);
 }
 
-export function isPrimitive(obj: any): boolean {
-    return obj !== Object(obj);
+export function isPrimitive(value: unknown): value is Primitive {
+    return value !== Object(value);
 }
 
-export function isNode(obj: any): boolean {
-    return !!obj && !!(obj as Node).nodeType;
+export function isNode(value: unknown): value is Node {
+    return !!value && !!(value as Node).nodeType;
 }
 
-export function isPrimitiveOrNode(obj: any): boolean {
-    return isPrimitive(obj) || isNode(obj);
+export function isPrimitiveOrNode(value: unknown) {
+    return isPrimitive(value) || isNode(value);
 }
 
 export function generateNodePreview(
@@ -89,7 +89,11 @@ export function* deepTraverse(obj: any): Generator<[any, string, string[]]> {
 }
 
 /**
- * Matches a string using a glob-like syntax)
+ * Matches a string using a glob-like syntax
+ * 
+ * @example 
+ * checkGlob('a.b.c', 'a.*.c') // true
+ * checkGlob('a.b.c.d.e.f', 'a.**.f') // true
  */
 export function checkGlob(str: string, glob: string): boolean {
     const strParts = str.split('.');
@@ -120,15 +124,15 @@ export function checkGlob(str: string, glob: string): boolean {
 }
 
 export const JSONConverter: ComplexAttributeConverter = {
-    fromAttribute: (value: string): any => {
+    fromAttribute: (value: string): JSONValue => {
         return value && value.trim() ? JSON.parse(value) : undefined;
     },
-    toAttribute: (value: any): string => {
+    toAttribute: (value: JSONValue): string => {
         return JSON.stringify(value);
     }
 };
 
-export const isDefined = (value: any): boolean => value !== void 0;
+export const isDefined = (value: unknown): boolean => value !== void 0;
 
 export const isMatchingPath = (path: string, criteria: string | RegExp) =>
     isRegex(criteria) ? !!path.match(criteria as RegExp) : checkGlob(path, criteria as string);

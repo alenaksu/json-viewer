@@ -1,20 +1,13 @@
-import { html, LitElement, TemplateResult } from 'lit';
+import { html, LitElement, nothing, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { map } from 'lit/directives/map.js';
 
-import {
-    getType,
-    isPrimitiveOrNode,
-    generateNodePreview,
-    isNode,
-    deepTraverse,
-    JSONConverter,
-    isDefined
-} from './utils';
+import { getType, generateNodePreview, deepTraverse, JSONConverter, isDefined, isPrimitive } from './utils';
 import { toggleNode, expand, filter, highlight, resetFilter } from './stateChange';
 
 import styles from './styles.css';
-import { JsonViewerState, Primitive } from './types';
+import { JSONArray, JSONObject, JSONValue, JsonViewerState, Primitive } from './types';
 
 /**
  * @since 1.0
@@ -53,15 +46,16 @@ export class JsonViewer extends LitElement {
     static styles = [styles];
 
     @property({ converter: JSONConverter, type: Object })
-    data?: any;
+    data?: JSONValue;
 
-    @state() private state: JsonViewerState = {
+    @state()
+    private state: JsonViewerState = {
         expanded: {},
         filtered: {},
         highlight: null
     };
 
-    private async setState(stateFn: (state: JsonViewerState, el: JsonViewer) => Partial<JsonViewerState>) {
+    private async setState(stateFn: (state: JsonViewerState, element: JsonViewer) => Partial<JsonViewerState>) {
         const currentState = this.state;
 
         this.state = {
@@ -100,9 +94,9 @@ export class JsonViewer extends LitElement {
         this.setState(expand(glob, false));
     }
 
-    *search(criteria: string) {
+    *search(criteria: string | RegExp) {
         for (const [node, path] of deepTraverse(this.data)) {
-            if (isPrimitiveOrNode(node) && String(node).includes(criteria)) {
+            if (isPrimitive(node) && String(node).match(criteria)) {
                 this.expand(path);
                 this.updateComplete.then(() => {
                     const node = this.shadowRoot!.querySelector(`[data-path="${path}"]`) as HTMLElement;
@@ -135,13 +129,12 @@ export class JsonViewer extends LitElement {
         this.setState(resetFilter());
     }
 
-    renderObject(node: Record<string, unknown>, path: string): TemplateResult {
+    renderObject(node: JSONObject | JSONArray, path: string): TemplateResult {
         return html`
             <ul part="object">
-                ${Object.keys(node).map((key) => {
-                    const nodeData = node[key];
+                ${map(Object.entries(node), ([key, nodeData]) => {
                     const nodePath = path ? `${path}.${key}` : key;
-                    const isPrimitive = isPrimitiveOrNode(nodeData);
+                    const isPrimitiveNode = isPrimitive(nodeData);
 
                     return html`
                         <li part="property" data-path="${nodePath}" .hidden="${this.state.filtered[nodePath]}">
@@ -149,10 +142,10 @@ export class JsonViewer extends LitElement {
                                 part="key"
                                 class="${classMap({
                                     key: key,
-                                    collapsable: !isPrimitive,
+                                    collapsable: !isPrimitiveNode,
                                     collapsableCollapsed: !this.state.expanded[nodePath]
                                 })}"
-                                @click="${!isPrimitive ? this.handlePropertyClick(nodePath) : null}"
+                                @click="${!isPrimitiveNode ? this.handlePropertyClick(nodePath) : null}"
                             >
                                 ${key}:
                             </span>
@@ -165,26 +158,28 @@ export class JsonViewer extends LitElement {
     }
 
     renderNode(node: any, path = '') {
-        const isPrimitive = isPrimitiveOrNode(node);
-        const isExpanded = !path || this.state.expanded[path] || isPrimitive;
-
-        if (isExpanded) {
-            return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path);
-        } else {
-            return this.renderNodePreview(node);
+        if (isPrimitive(node)) {
+            return this.renderPrimitive(node, path);
         }
+
+        const isRootNode = !path;
+        const isExpanded = this.state.expanded[path];
+
+        return isRootNode || !isExpanded ? this.renderObject(node, path) : this.renderNodePreview(node);
     }
 
     renderNodePreview(node: any) {
-        return html` <span part="preview" class="preview"> ${generateNodePreview(node)} </span> `;
+        return html`<span part="preview" class="preview"> ${generateNodePreview(node)} </span>`;
     }
 
-    renderPrimitive(node: Primitive | null, path: string) {
+    renderPrimitive(node: Primitive, path: string) {
         const highlight = this.state.highlight;
         const nodeType = getType(node);
-        const value = isNode(node)
-            ? node
-            : html` <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+        const value = html`
+            <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">
+                ${JSON.stringify(node)}
+            </span>
+        `;
 
         return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
     }
@@ -192,6 +187,6 @@ export class JsonViewer extends LitElement {
     render() {
         const data = this.data;
 
-        return isDefined(data) ? this.renderNode(data) : null;
+        return isDefined(data) ? this.renderNode(data) : nothing;
     }
 }

@@ -13,4 +13,10 @@ export const enum SupportedTypes {
     Array = 'array'
 }
 
-export type Primitive = string | number | boolean;
+export type Primitive = string | number | boolean | null;
+
+export type JSONValue = Primitive | JSONObject | JSONArray;
+
+export type JSONObject = { [x: string]: JSONValue };
+
+export type JSONArray = Array<JSONValue>;
