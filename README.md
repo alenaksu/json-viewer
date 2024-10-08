@@ -21,6 +21,7 @@ A Web Component to visualize JSON data in a tree view
     -   [Basic Usage](#basic-usage)
     -   [Load the JSON dynamically](#load-the-json-dynamically)
     -   [Basic interactions](#basic-interactions)
+    -   [Custom renderer](#custom-renderer)
 -   [Demo](#demo)
 
 ## Installation
@@ -108,8 +109,9 @@ json-viewer {
     /* Background, font and indentation */
     --background-color: #2a2f3a;
     --color: #f8f8f2;
-    --font-family: monaco, Consolas, 'Lucida Console', monospace;
+    --font-family: Nimbus Mono PS, Courier New, monospace;
     --font-size: 1rem;
+    --line-height: 1.2rem;
     --indent-size: 1.5em;
     --indentguide-size: 1px;
     --indentguide-style: solid;
@@ -117,6 +119,9 @@ json-viewer {
     --indentguide-color-active: #666;
     --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
     --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
+    --outline-color: #e0e4e5;
+    --outline-width: 1px;
+    --outline-style: dotted;
 
     /* Types colors */
     --string-color: #a3eea0;
@@ -126,10 +131,10 @@ json-viewer {
     --property-color: #6fb3d2;
 
     /* Collapsed node preview */
-    --preview-color: rgba(222, 175, 143, 0.9);
+    --preview-color: #deae8f;
 
     /* Search highlight color */
-    --highlight-color: #6fb3d2;
+    --highlight-color: #fa5252;
 }
 ```
 
@@ -170,6 +175,46 @@ viewer.filter('test.*.name');
 const searchIterator = viewer.search('value');
 // Scrolls to the node and highlight the value
 searchIterator.next();
+```
+
+### Custom renderer
+_This is an experimental feature and it may change in the future_
+
+The rendering of the values can be customized by defining a static method `customRenderer` in the custom element class.
+The function receives the value and the path of the node and it should return a HTML node or a Lit's `TemplateResult` object.
+
+```js
+import { JsonViewer } from '@alenaksu/json-viewer/JsonViewer.js';
+
+customElements.define(
+    'json-viewer',
+    class extends JsonViewer {
+        static styles = [
+            JsonViewer.styles,
+            css`
+                a {
+                    color: white;
+                    text-decoration: underline;
+                }
+            `
+        ];
+
+        static customRenderer(value, path) {
+            if (typeof value === 'string') {
+                if (URL.canParse(value)) {
+                    return html`<a href="${value}" target="_blank">${value}</a>`;
+                } else if (Date.parse(value)) {
+                    return new Date(value).toLocaleString();
+                }
+            } else if (typeof value === 'number') {
+                return value.toFixed(2);
+            }
+
+            return super.customRenderer(value);
+        }
+    }
+);
+
 ```
 
 ## Demo
