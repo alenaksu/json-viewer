@@ -10,7 +10,7 @@ export default css`
         --null-color: #df9cf3;
         --property-color: #6fb3d2;
         --preview-color: rgba(222, 175, 143, 0.9);
-        --highlight-color: #fa5252;
+        --highlight-color:  #c92a2a;
         --outline-color: #e0e4e5;
         --outline-width: 1px;
         --outline-style: dotted;

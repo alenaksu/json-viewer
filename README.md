@@ -134,7 +134,7 @@ json-viewer {
     --preview-color: #deae8f;
 
     /* Search highlight color */
-    --highlight-color: #fa5252;
+    --highlight-color:  #c92a2a;
 }
 ```
 
