@@ -22,7 +22,7 @@ customElements.define(
             if (typeof value === 'string') {
                 if (URL.canParse(value)) {
                     return html`<a href="${value}" target="_blank">${value}</a>`;
-                } else if (Date.parse(value)) {
+                } else if (value instanceof Date || Date.parse(value)) {
                     return new Date(value).toLocaleString();
                 }
             } else if (typeof value === 'number') {
@@ -57,12 +57,12 @@ collapse.addEventListener('click', (e) => {
     viewer.collapseAll();
 });
 
-filter.addEventListener('sl-change', () => {
+filter.addEventListener('change', () => {
     if (!filter.value) viewer.resetFilter();
     else viewer.filter(filter.value);
 });
 
-search.addEventListener('sl-input', () => {
+search.addEventListener('input', () => {
     currentSearch = viewer.search(search.value);
 });
 search.addEventListener('keyup', (e) => {
