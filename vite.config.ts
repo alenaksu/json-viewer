@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import cssImportPlugin from './tools/cssImportPlugin';
+import path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -7,7 +7,6 @@ export default defineConfig({
     publicDir: './website',
     base: '/json-viewer/',
     build: {
-        outDir: '../docs',
-    },
-    plugins: [cssImportPlugin()]
+        outDir: '../docs'
+    }
 });

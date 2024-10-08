@@ -1,13 +1,9 @@
-:root {
-    --background: rgb(42, 47, 58);
-}
-
 html,
 body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--background);
+    background-color: var(--background-color);
 
     font-size: 16px;
 }
@@ -18,9 +14,11 @@ body {
     grid-template-rows: auto 1fr;
     grid-template-areas: 'header header' 'panel-left panel-right';
     grid-gap: 15px 15px;
+    margin: 0;
 
     height: 100%;
     width: 100%;
+    max-width: unset;
 }
 
 .container.collapsed {
@@ -44,6 +42,7 @@ body {
 .header > h1 {
     font-size: 1.3rem;
     padding: 0 20px;
+    margin: 0;
 }
 
 .menu {
@@ -80,9 +79,14 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to left, var(--background), transparent);
+    background: linear-gradient(to left, var(--background-color), transparent);
     z-index: 100;
     overflow: hidden;
+}
+
+button {
+    white-space: nowrap;
+    height: 100%;
 }
 
 #toggle-panel {
@@ -112,7 +116,7 @@ body {
 
 .github-corner > svg {
     fill: #fff;
-    color: var(--background);
+    color: var(--background-color);
     height: 100%;
 }
 
@@ -213,4 +217,5 @@ body {
 #actions-toolbar {
     display: flex;
     gap: 1rem;
+    padding-inline: 1rem;
 }

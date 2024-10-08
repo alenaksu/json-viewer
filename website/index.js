@@ -1,5 +1,38 @@
-import '../src/index.ts';
+import { css, html } from 'lit';
+import { JsonViewer } from '../src/JsonViewer.ts';
 import 'https://unpkg.com/comlink/dist/umd/comlink.js';
+
+import '../themes/default.css';
+import '../themes/light.css';
+
+customElements.define(
+    'json-viewer',
+    class extends JsonViewer {
+        static styles = [
+            JsonViewer.styles,
+            css`
+                a {
+                    color: white;
+                    text-decoration: underline;
+                }
+            `
+        ];
+
+        static customRenderer(value) {
+            if (typeof value === 'string') {
+                if (URL.canParse(value)) {
+                    return html`<a href="${value}" target="_blank">${value}</a>`;
+                } else if (Date.parse(value)) {
+                    return new Date(value).toLocaleString();
+                }
+            } else if (typeof value === 'number') {
+                return value.toFixed(2);
+            }
+
+            return super.customRenderer(value);
+        }
+    }
+);
 
 const worker = Comlink.wrap(new Worker(new URL('worker.js', import.meta.url)));
 
@@ -24,12 +57,12 @@ collapse.addEventListener('click', (e) => {
     viewer.collapseAll();
 });
 
-filter.addEventListener('sl-change', () => {
+filter.addEventListener('change', () => {
     if (!filter.value) viewer.resetFilter();
     else viewer.filter(filter.value);
 });
 
-search.addEventListener('sl-input', () => {
+search.addEventListener('input', () => {
     currentSearch = viewer.search(search.value);
 });
 search.addEventListener('keyup', (e) => {

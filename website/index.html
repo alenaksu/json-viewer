@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html class="sl-theme-dark">
+<html class="json-viewer-theme-default">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="stylesheet" href="./styles.css" />
         <link rel="stylesheet" href="https://unpkg.com/codemirror@5.50.0/lib/codemirror.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
         <link rel="stylesheet" href="./codemirror-custom.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.76/dist/themes/light.css" />
+        <link rel="stylesheet" href="./styles.css" />
     </head>
 
     <body>
@@ -73,10 +73,10 @@ Github"
             </div>
             <div class="panel panel-right">
                 <div id="actions-toolbar">
-                    <sl-button id="expand">Expand All</sl-button>
-                    <sl-button id="collapse">Collapse All</sl-button>
-                    <sl-input id="filter" placeholder="filter"></sl-input>
-                    <sl-input id="search" placeholder="search"></sl-input>
+                    <button id="expand">Expand All</button>
+                    <button id="collapse">Collapse All</button>
+                    <input id="filter" placeholder="filter"></input>
+                    <input id="search" placeholder="search"></input>
                 </div>
                 <json-viewer></json-viewer>
             </div>
@@ -85,7 +85,6 @@ Github"
         <script src="https://unpkg.com/codemirror@5.50.0/mode/javascript/javascript.js"></script>
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.76/dist/shoelace.js"></script>
         <script type="module" src="./index.js"></script>
     </body>
 </html>

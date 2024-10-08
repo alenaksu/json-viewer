@@ -1,0 +1,27 @@
+:host,
+.json-viewer-theme-light {
+    --background-color: #f5f5f5;
+    --color: #333333;
+    --string-color: #e03131;
+    --number-color: #12b886;
+    --boolean-color: #5f3dc4;
+    --null-color: #808080;
+    --property-color: #228be6;
+    --preview-color: #bd5f1b;
+    --highlight-color: #ff0000;
+    --outline-color: #666968;
+    --outline-width: 1px;
+    --outline-style: dotted;
+
+    --font-family: Nimbus Mono PS, Courier New, monospace;
+    --font-size: 1rem;
+    --line-height: 1.2rem;
+
+    --indent-size: 1.5em;
+    --indentguide-size: 1px;
+    --indentguide-style: solid;
+    --indentguide-color: #ccc;
+    --indentguide-color-active: #999;
+    --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
+    --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
+}

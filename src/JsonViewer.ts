@@ -1,20 +1,22 @@
 import { html, LitElement, TemplateResult } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property, queryAll, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { map } from 'lit/directives/map.js';
+import { when } from 'lit/directives/when.js';
 
 import {
     getType,
-    isPrimitiveOrNode,
     generateNodePreview,
-    isNode,
     deepTraverse,
     JSONConverter,
-    isDefined
+    isDefined,
+    isPrimitive,
+    getValueByPath
 } from './utils';
 import { toggleNode, expand, filter, highlight, resetFilter } from './stateChange';
 
-import styles from './styles.css';
-import { JsonViewerState, Primitive } from './types';
+import styles from './JsonViewer.styles';
+import { JSONArray, JSONObject, JSONValue, JsonViewerState, Primitive } from './types';
 
 /**
  * @since 1.0
@@ -34,6 +36,7 @@ import { JsonViewerState, Primitive } from './types';
  * @cssproperty [--color] - The text color.
  * @cssproperty [--font-family] - The font family.
  * @cssproperty [--font-size] - The font size.
+ * @cssproperty [--line-height] - The line height.
  * @cssproperty [--indent-size] - The size of the indentation of nested properties.
  * @cssproperty [--indentguide-size] - The width of the indentation line.
  * @cssproperty [--indentguide-style] - The style of the indentation line.
@@ -52,16 +55,27 @@ import { JsonViewerState, Primitive } from './types';
 export class JsonViewer extends LitElement {
     static styles = [styles];
 
-    @property({ converter: JSONConverter, type: Object })
-    data?: any;
+    static customRenderer(value: Primitive, _path: string): TemplateResult | Node | string {
+        return JSON.stringify(value);
+    }
 
-    @state() private state: JsonViewerState = {
+    @property({ converter: JSONConverter, type: Object })
+    data?: JSONValue;
+
+    @state()
+    private state: JsonViewerState = {
         expanded: {},
         filtered: {},
         highlight: null
     };
 
-    private async setState(stateFn: (state: JsonViewerState, el: JsonViewer) => Partial<JsonViewerState>) {
+    @state()
+    private lastFocusedItem: HTMLElement | null = null;
+
+    @queryAll('[role="treeitem"]')
+    private nodeElements!: HTMLElement[];
+
+    private async setState(stateFn: (state: JsonViewerState, element: JsonViewer) => Partial<JsonViewerState>) {
         const currentState = this.state;
 
         this.state = {
@@ -70,19 +84,125 @@ export class JsonViewer extends LitElement {
         };
     }
 
+    constructor() {
+        super();
+        this.addEventListener('focusin', this.#handleFocusIn);
+        this.addEventListener('focusout', this.#handleFocusOut);
+    }
+
     connectedCallback() {
         if (!this.hasAttribute('data') && !isDefined(this.data)) {
             this.setAttribute('data', this.innerText);
         }
 
+        this.setAttribute('role', 'node');
+        this.setAttribute('tabindex', '0');
+
         super.connectedCallback();
     }
 
-    handlePropertyClick = (path: string) => (e: Event) => {
+    #handlePropertyClick = (path: string) => (e: Event) => {
         e.preventDefault();
 
         this.setState(toggleNode(path));
     };
+
+    #handleFocusIn = (event: FocusEvent) => {
+        const target = event.target as HTMLElement;
+
+        // Restores the focus to the last focused item
+        if (event.target === this) {
+            this.#focusItem(this.lastFocusedItem || this.nodeElements[0]!);
+        }
+
+        // If the target is a property, update its tabIndex
+        if (target.matches('[role="treeitem"]')) {
+            if (this.lastFocusedItem) {
+                this.lastFocusedItem.tabIndex = -1;
+            }
+            this.lastFocusedItem = target;
+            this.tabIndex = -1;
+
+            target.tabIndex = 0;
+        }
+    };
+
+    #handleFocusOut = (event: FocusEvent) => {
+        const relatedTarget = event.relatedTarget as HTMLElement;
+
+        // If the element that got the focus is not in the node
+        if (!relatedTarget || !this.contains(relatedTarget)) {
+            this.tabIndex = 0;
+        }
+    };
+
+    #handleKeyDown(event: KeyboardEvent) {
+        // Ignore key presses we aren't interested in
+        if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) {
+            return;
+        }
+
+        const nodes = [...this.nodeElements];
+        const isLtr = this.matches(':dir(ltr)');
+        const isRtl = this.matches(':dir(rtl)');
+
+        if (nodes.length > 0) {
+            event.preventDefault();
+
+            const activeItemIndex = nodes.findIndex((item) => item.matches(':focus'));
+            const activeItem: HTMLElement | undefined = nodes[activeItemIndex];
+            const isExpanded = this.state.expanded[activeItem.dataset.path!];
+            const isLeaf = isPrimitive(getValueByPath(this.data!, activeItem.dataset.path!));
+
+            const focusItemAt = (index: number) => {
+                const item = nodes[Math.max(Math.min(index, nodes.length - 1), 0)];
+                this.#focusItem(item);
+            };
+            const toggleExpand = (expanded: boolean) => {
+                this.setState(toggleNode(activeItem!.dataset.path!, expanded));
+            };
+
+            if (event.key === 'ArrowDown') {
+                // Moves focus to the next node that is focusable without opening or closing a node.
+                focusItemAt(activeItemIndex + 1);
+            } else if (event.key === 'ArrowUp') {
+                // Moves focus to the next node that is focusable without opening or closing a node.
+                focusItemAt(activeItemIndex - 1);
+            } else if ((isLtr && event.key === 'ArrowRight') || (isRtl && event.key === 'ArrowLeft')) {
+                //
+                // When focus is on a closed node, opens the node; focus does not move.
+                // When focus is on a open node, moves focus to the first child node.
+                // When focus is on an end node (a node item with no children), does nothing.
+                //
+                if (!activeItem || isExpanded || isLeaf) {
+                    focusItemAt(activeItemIndex + 1);
+                } else {
+                    toggleExpand(true);
+                }
+            } else if ((isLtr && event.key === 'ArrowLeft') || (isRtl && event.key === 'ArrowRight')) {
+                //
+                // When focus is on an open node, closes the node.
+                // When focus is on a child node that is also either an end node or a closed node, moves focus to its parent node.
+                // When focus is on a closed `node`, does nothing.
+                //
+                if (!activeItem || !isExpanded || isLeaf) {
+                    focusItemAt(activeItemIndex - 1);
+                } else {
+                    toggleExpand(false);
+                }
+            } else if (event.key === 'Home') {
+                // Moves focus to the first node in the node without opening or closing a node.
+                focusItemAt(0);
+            } else if (event.key === 'End') {
+                // Moves focus to the last node in the node that is focusable without opening the node.
+                focusItemAt(nodes.length - 1);
+            }
+        }
+    }
+
+    #focusItem(item: HTMLElement) {
+        item.focus();
+    }
 
     expand(glob: string | RegExp) {
         this.setState(expand(glob, true));
@@ -100,9 +220,9 @@ export class JsonViewer extends LitElement {
         this.setState(expand(glob, false));
     }
 
-    *search(criteria: string) {
+    *search(criteria: string | RegExp) {
         for (const [node, path] of deepTraverse(this.data)) {
-            if (isPrimitiveOrNode(node) && String(node).includes(criteria)) {
+            if (isPrimitive(node) && String(node).match(criteria)) {
                 this.expand(path);
                 this.updateComplete.then(() => {
                     const node = this.shadowRoot!.querySelector(`[data-path="${path}"]`) as HTMLElement;
@@ -135,28 +255,37 @@ export class JsonViewer extends LitElement {
         this.setState(resetFilter());
     }
 
-    renderObject(node: Record<string, unknown>, path: string): TemplateResult {
+    renderObject(node: JSONObject | JSONArray, path: string): TemplateResult {
         return html`
-            <ul part="object">
-                ${Object.keys(node).map((key) => {
-                    const nodeData = node[key];
+            <ul part="object" role="group">
+                ${map(Object.entries(node), ([key, nodeData]) => {
                     const nodePath = path ? `${path}.${key}` : key;
-                    const isPrimitive = isPrimitiveOrNode(nodeData);
+                    const isPrimitiveNode = isPrimitive(nodeData);
+                    const isExpanded = this.state.expanded[nodePath];
 
                     return html`
-                        <li part="property" data-path="${nodePath}" .hidden="${this.state.filtered[nodePath]}">
+                        <li
+                            part="property"
+                            role="treeitem"
+                            data-path="${nodePath}"
+                            aria-expanded="${isExpanded ? 'true' : 'false'}"
+                            tabindex="-1"
+                            .hidden="${this.state.filtered[nodePath]}"
+                            aria-hidden="${this.state.filtered[nodePath]}"
+                        >
                             <span
                                 part="key"
                                 class="${classMap({
                                     key: key,
-                                    collapsable: !isPrimitive,
-                                    collapsableCollapsed: !this.state.expanded[nodePath]
+                                    collapsable: !isPrimitiveNode,
+                                    ['collapsable--collapsed']: !this.state.expanded[nodePath]
                                 })}"
-                                @click="${!isPrimitive ? this.handlePropertyClick(nodePath) : null}"
+                                @click="${!isPrimitiveNode ? this.#handlePropertyClick(nodePath) : null}"
                             >
-                                ${key}:
+                                ${key}: ${when(!isPrimitiveNode && !isExpanded, () => this.renderNodePreview(nodeData))}
                             </span>
-                            ${this.renderNode(nodeData, nodePath)}
+
+                            ${when(isPrimitiveNode || isExpanded, () => this.renderValue(nodeData, nodePath))}
                         </li>
                     `;
                 })}
@@ -164,34 +293,41 @@ export class JsonViewer extends LitElement {
         `;
     }
 
-    renderNode(node: any, path = '') {
-        const isPrimitive = isPrimitiveOrNode(node);
-        const isExpanded = !path || this.state.expanded[path] || isPrimitive;
-
-        if (isExpanded) {
-            return isPrimitive ? this.renderPrimitive(node, path) : this.renderObject(node, path);
-        } else {
-            return this.renderNodePreview(node);
+    renderValue(value: JSONValue, path = '') {
+        if (isPrimitive(value)) {
+            return this.renderPrimitive(value, path);
         }
+
+        return this.renderObject(value, path);
     }
 
-    renderNodePreview(node: any) {
-        return html` <span part="preview" class="preview"> ${generateNodePreview(node)} </span> `;
+    renderNodePreview(node: JSONValue) {
+        return html`<span part="preview" class="preview"> ${generateNodePreview(node)} </span>`;
     }
 
-    renderPrimitive(node: Primitive | null, path: string) {
+    renderPrimitive(node: Primitive, path: string) {
         const highlight = this.state.highlight;
         const nodeType = getType(node);
-        const value = isNode(node)
-            ? node
-            : html` <span part="primitive primitive-${nodeType}" tabindex="0" class="${getType(node)}">${JSON.stringify(node)}</span> `;
+        const renderedValue = (this.constructor as any).customRenderer(node, path);
+        const primitiveNode = html`
+            <span part="primitive primitive-${nodeType}" class="${getType(node)}"> ${renderedValue} </span>
+        `;
 
-        return path === highlight ? html`<mark part="highlight">${value}</mark>` : value;
+        return path === highlight ? html`<mark part="highlight">${primitiveNode}</mark>` : primitiveNode;
     }
 
     render() {
         const data = this.data;
 
-        return isDefined(data) ? this.renderNode(data) : null;
+        return html`
+            <div
+                part="base"
+                @keydown=${this.#handleKeyDown}
+                @focusin="${this.#handleFocusIn}"
+                @focusout="${this.#handleFocusOut}"
+            >
+                ${when(isDefined(data), () => this.renderValue(data!))}
+            </div>
+        `;
     }
 }

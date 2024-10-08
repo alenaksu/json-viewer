@@ -4,10 +4,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         
         <link rel="stylesheet" href="https://unpkg.com/codemirror@5.50.0/lib/codemirror.css" />
-        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.76/dist/themes/light.css" />
-      <script type="module" crossorigin src="/json-viewer/assets/index.e94a7a56.js"></script>
-      <link rel="stylesheet" href="/json-viewer/assets/index.d16606c6.css">
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+        >
+        <link rel="stylesheet" href="/json-viewer/assets/index.d16606c6.css">
+
+        <script type="module" crossorigin src="/json-viewer/assets/index.e94a7a56.js"></script>
     </head>
 
     <body>
@@ -75,10 +78,10 @@ Github"
             </div>
             <div class="panel panel-right">
                 <div id="actions-toolbar">
-                    <sl-button id="expand">Expand All</sl-button>
-                    <sl-button id="collapse">Collapse All</sl-button>
-                    <sl-input id="filter" placeholder="filter"></sl-input>
-                    <sl-input id="search" placeholder="search"></sl-input>
+                    <button id="expand">Expand All</button>
+                    <button id="collapse">Collapse All</button>
+                    <input id="filter" placeholder="filter"></input>
+                    <input id="search" placeholder="search"></input>
                 </div>
                 <json-viewer></json-viewer>
             </div>
