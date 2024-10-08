@@ -22,7 +22,7 @@ customElements.define(
             if (typeof value === 'string') {
                 if (URL.canParse(value)) {
                     return html`<a href="${value}" target="_blank">${value}</a>`;
-                } else if (value instanceof Date || Date.parse(value)) {
+                } else if (Date.parse(value)) {
                     return new Date(value).toLocaleString();
                 }
             } else if (typeof value === 'number') {
