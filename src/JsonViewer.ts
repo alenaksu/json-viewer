@@ -282,9 +282,10 @@ export class JsonViewer extends LitElement {
                                 })}"
                                 @click="${!isPrimitiveNode ? this.#handlePropertyClick(nodePath) : null}"
                             >
-                                ${key}:
+                                ${key}: ${when(!isPrimitiveNode && !isExpanded, () => this.renderNodePreview(nodeData))}
                             </span>
-                            ${this.renderValue(nodeData, nodePath)}
+
+                            ${when(isPrimitiveNode || isExpanded, () => this.renderValue(nodeData, nodePath))}
                         </li>
                     `;
                 })}
@@ -295,10 +296,6 @@ export class JsonViewer extends LitElement {
     renderValue(value: JSONValue, path = '') {
         if (isPrimitive(value)) {
             return this.renderPrimitive(value, path);
-        }
-
-        if (path && !this.state.expanded[path]) {
-            return this.renderNodePreview(value);
         }
 
         return this.renderObject(value, path);
@@ -313,9 +310,7 @@ export class JsonViewer extends LitElement {
         const nodeType = getType(node);
         const renderedValue = (this.constructor as any).customRenderer(node, path);
         const primitiveNode = html`
-            <span part="primitive primitive-${nodeType}" tabindex="-1" class="${getType(node)}">
-                ${renderedValue}
-            </span>
+            <span part="primitive primitive-${nodeType}" class="${getType(node)}"> ${renderedValue} </span>
         `;
 
         return path === highlight ? html`<mark part="highlight">${primitiveNode}</mark>` : primitiveNode;
