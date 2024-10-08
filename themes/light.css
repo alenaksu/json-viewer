@@ -10,6 +10,8 @@
     --preview-color: #bd5f1b;
     --highlight-color: #ff0000;
     --outline-color: #666968;
+    --outline-width: 1px;
+    --outline-style: dotted;
 
     --font-family: Nimbus Mono PS, Courier New, monospace;
     --font-size: 1rem;
