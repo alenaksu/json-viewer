@@ -31,7 +31,7 @@ A Web Component to visualize JSON data in a tree view
 The package contains a bundled version of the component which includes also the Lit library. It can be useful in case you want to import the package using a CDN.
 
 ```html
-<script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script>
+<script src="https://unpkg.com/@alenaksu/json-viewer@2.1.0/dist/json-viewer.bundle.js"></script>
 ```
 
 ### From NPM
@@ -52,7 +52,7 @@ import '@alenaksu/json-viewer';
 If you want to extend the component or if you just need to use it in scoped registries with a different tag name, then you can import the component class from the package:
 
 ```js
-import { JsonViewer } '@alenaksu/json-viewer/dist/JsonViewer.js';
+import { JsonViewer } '@alenaksu/json-viewer/JsonViewer.js';
 
 class MyJsonViewer extends JsonViewer {
     ...
