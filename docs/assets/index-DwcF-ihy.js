@@ -67,7 +67,7 @@ var Wt=Object.defineProperty;var mt=s=>{throw TypeError(s)};var Jt=(s,t,e)=>t in
         --font-size: 1rem;
         --line-height: 1.2rem;
 
-        --indent-size: 1.5em;
+        --indent-size: 0.5em;
         --indentguide-size: 1px;
         --indentguide-style: solid;
         --indentguide-color: #333;
