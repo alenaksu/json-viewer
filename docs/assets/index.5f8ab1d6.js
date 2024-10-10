@@ -13,7 +13,7 @@ import{css as _,LitElement as D,html as h}from"lit";import{property as J,state a
     --font-family: monaco, Consolas, 'Lucida Console', monospace;
     --font-size: 1rem;
 
-    --indent-size: 1.5em;
+    --indent-size: 0.5em;
     --indentguide-size: 1px;
     --indentguide-style: solid;
     --indentguide-color: #333;

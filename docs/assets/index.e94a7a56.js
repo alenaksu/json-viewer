@@ -53,7 +53,7 @@ import"https://unpkg.com/comlink/dist/umd/comlink.js";(function(){const t=docume
     --font-family: monaco, Consolas, 'Lucida Console', monospace;
     --font-size: 1rem;
 
-    --indent-size: 1.5em;
+    --indent-size: 0.5em;
     --indentguide-size: 1px;
     --indentguide-style: solid;
     --indentguide-color: #333;

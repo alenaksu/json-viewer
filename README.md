@@ -112,7 +112,7 @@ json-viewer {
     --font-family: Nimbus Mono PS, Courier New, monospace;
     --font-size: 1rem;
     --line-height: 1.2rem;
-    --indent-size: 1.5em;
+    --indent-size: 0.5em;
     --indentguide-size: 1px;
     --indentguide-style: solid;
     --indentguide-color: #333;

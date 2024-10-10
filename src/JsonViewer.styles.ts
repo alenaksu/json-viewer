@@ -19,11 +19,11 @@ export default css`
         --font-size: 1rem;
         --line-height: 1.2rem;
 
-        --indent-size: 1.5em;
+        --indent-size: 0.5rem;
         --indentguide-size: 1px;
         --indentguide-style: solid;
-        --indentguide-color: #333;
-        --indentguide-color-active: #666;
+        --indentguide-color: #495057;
+        --indentguide-color-active: #ced4da;
         --indentguide: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color);
         --indentguide-active: var(--indentguide-size) var(--indentguide-style) var(--indentguide-color-active);
     }
@@ -55,23 +55,21 @@ export default css`
         color: var(--property-color);
         display: inline-flex;
         align-items: flex-start;
-        gap: 0.25rem;
     }
 
     .collapsable::before {
         display: inline-flex;
-        color: var(--color);
         font-size: 0.8em;
         content: '▶';
-        width: 1rem;
-        height: 100%;
+        width: var(--line-height);
+        height: var(--line-height);
         align-items: center;
         justify-content: center;
 
         transition: transform 195ms ease-out;
         transform: rotate(90deg);
 
-        color: var(--property-color);
+        color: inherit;
     }
 
     .collapsable--collapsed::before {
@@ -108,7 +106,7 @@ export default css`
 
     li ul > li {
         position: relative;
-        margin-left: var(--indent-size);
+        margin-left: calc(var(--indent-size) + var(--line-height));
         padding-left: 0px;
     }
 
