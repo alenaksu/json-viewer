@@ -114,9 +114,9 @@ export default css`
         content: '';
         border-left: var(--indentguide);
         position: absolute;
-        left: calc(0.5em - var(--indentguide-size));
-        top: 0.3em;
-        bottom: 0.3em;
+        left: calc(var(--line-height) / 2 - var(--indentguide-size));
+        top: 0.2rem;
+        bottom: 0.2rem;
     }
 
     ul ul:hover::before {
