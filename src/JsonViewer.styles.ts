@@ -53,18 +53,20 @@ export default css`
 
     .key {
         color: var(--property-color);
-        display: inline-block;
+        display: inline-flex;
+        align-items: flex-start;
+        gap: 0.25rem;
     }
 
     .collapsable::before {
-        display: inline-block;
+        display: inline-flex;
         color: var(--color);
         font-size: 0.8em;
         content: '▶';
-        line-height: 1em;
-        width: 1em;
-        height: 1em;
-        text-align: center;
+        width: 1rem;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
 
         transition: transform 195ms ease-out;
         transform: rotate(90deg);
