@@ -1,4 +1,4 @@
-import { html, LitElement, TemplateResult } from 'lit';
+import { html, LitElement, nothing, TemplateResult } from 'lit';
 import { property, queryAll, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
@@ -262,32 +262,36 @@ export class JsonViewer extends LitElement {
                     const nodePath = path ? `${path}.${key}` : key;
                     const isPrimitiveNode = isPrimitive(nodeData);
                     const isExpanded = this.state.expanded[nodePath];
+                    const isFiltered = this.state.filtered[nodePath];
 
-                    return html`
-                        <li
-                            part="property"
-                            role="treeitem"
-                            data-path="${nodePath}"
-                            aria-expanded="${isExpanded ? 'true' : 'false'}"
-                            tabindex="-1"
-                            .hidden="${this.state.filtered[nodePath]}"
-                            aria-hidden="${this.state.filtered[nodePath]}"
-                        >
-                            <span
-                                part="key"
-                                class="${classMap({
-                                    key: key,
-                                    collapsable: !isPrimitiveNode,
-                                    ['collapsable--collapsed']: !this.state.expanded[nodePath]
-                                })}"
-                                @click="${!isPrimitiveNode ? this.#handlePropertyClick(nodePath) : null}"
-                            >
-                                ${key}: ${when(!isPrimitiveNode && !isExpanded, () => this.renderNodePreview(nodeData))}
-                            </span>
+                    return isFiltered
+                        ? nothing
+                        : html`
+                              <li
+                                  part="property"
+                                  role="treeitem"
+                                  data-path="${nodePath}"
+                                  aria-expanded="${isExpanded ? 'true' : 'false'}"
+                                  tabindex="-1"
+                                  .hidden="${this.state.filtered[nodePath]}"
+                                  aria-hidden="${this.state.filtered[nodePath]}"
+                              >
+                                  <span
+                                      part="key"
+                                      class="${classMap({
+                                          key: key,
+                                          collapsable: !isPrimitiveNode,
+                                          ['collapsable--collapsed']: !this.state.expanded[nodePath]
+                                      })}"
+                                      @click="${!isPrimitiveNode ? this.#handlePropertyClick(nodePath) : null}"
+                                  >
+                                      ${key}:
+                                      ${when(!isPrimitiveNode && !isExpanded, () => this.renderNodePreview(nodeData))}
+                                  </span>
 
-                            ${when(isPrimitiveNode || isExpanded, () => this.renderValue(nodeData, nodePath))}
-                        </li>
-                    `;
+                                  ${when(isPrimitiveNode || isExpanded, () => this.renderValue(nodeData, nodePath))}
+                              </li>
+                          `;
                 })}
             </ul>
         `;
